@@ -64,9 +64,19 @@ const HeroSection = () => {
         </div>
       </FadeIn>
 
-      {/* Bottom bar */}
-      <div className="relative z-20 mt-auto flex w-full items-end justify-between px-6 md:px-10 pb-7 sm:pb-8 md:pb-10 gap-4">
-          <FadeIn delay={0.35} y={20}>
+          {/* Mobile-only big tagline filling the empty space */}
+                <FadeIn delay={0.35} y={20} className="block sm:hidden relative z-20 px-6 pt-8">
+                  <p
+                    className="font-light uppercase tracking-wide leading-tight text-[#D7E2EA]/85"
+                    style={{ fontSize: 'clamp(1.5rem, 7vw, 2.5rem)' }}
+                  >
+                    a developer and designer driven by crafting striking and unforgettable projects
+                  </p>
+                </FadeIn>
+
+                {/* Bottom bar — desktop tagline + contact button */}
+                <div className="relative z-20 mt-auto flex w-full items-end justify-between px-6 md:px-10 pb-7 sm:pb-8 md:pb-10 gap-4">
+                  <FadeIn delay={0.35} y={20} className="hidden sm:block">
                     <p
                       className="font-light uppercase tracking-wide leading-snug text-[#D7E2EA] max-w-[280px] sm:max-w-[360px] md:max-w-[440px]"
                       style={{ fontSize: 'clamp(0.75rem, 1.1vw, 1.15rem)' }}
@@ -75,10 +85,10 @@ const HeroSection = () => {
                     </p>
                   </FadeIn>
 
-        <FadeIn delay={0.5} y={20}>
-          <ContactButton />
-        </FadeIn>
-      </div>
+                  <FadeIn delay={0.5} y={20} className="ml-auto">
+                    <ContactButton />
+                  </FadeIn>
+                </div>
     </section>
   );
 };
