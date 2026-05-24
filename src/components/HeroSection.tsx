@@ -44,12 +44,12 @@ const HeroSection = () => {
   useEffect(() => {
     let fired = false;
 
-    const goToAbout = () => {
-      if (fired) return;
-      fired = true;
-      const about = document.getElementById('about');
-      if (about) about.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
+      const goToAbout = () => {
+        if (fired) return;
+        fired = true;
+        const about = document.getElementById('about');
+        if (about) about.scrollIntoView({ behavior: 'auto', block: 'start' });
+      };
 
     const onWheel = (e: WheelEvent) => {
       if (fired) return;

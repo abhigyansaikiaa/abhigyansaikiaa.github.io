@@ -1,5 +1,6 @@
 import FadeIn from './FadeIn';
 
+
 const SERVICES = [
   {
     number: '01',
@@ -32,6 +33,7 @@ const SERVICES = [
       'Exploring datasets with Python (Pandas, NumPy, Seaborn) and Power BI — turning raw numbers into clear insights and dashboards stakeholders can act on.',
   },
 ];
+
 const ServicesSection = () => {
   return (
     <section
@@ -66,24 +68,24 @@ const ServicesSection = () => {
                 {service.number}
               </div>
 
-                                       <div className="group flex flex-col gap-3 sm:gap-4 md:gap-5 pt-2 sm:pt-3 md:pt-4">
-                                               <h3
-                                                 className="font-medium uppercase text-[#0C0C0C] leading-tight relative inline-block w-fit"
-                                                 style={{ fontSize: 'clamp(1rem, 2.2vw, 2.1rem)' }}
-                                               >
-                                                 {service.title}
-                                                 <span className="absolute left-0 -bottom-1 h-px w-0 bg-[#0C0C0C]/60 transition-all duration-500 group-hover:w-full" />
-                                               </h3>
-                                               <p
-                                                 className="font-light leading-relaxed text-[#0C0C0C] max-w-2xl"
-                                                 style={{
-                                                   fontSize: 'clamp(0.85rem, 1.6vw, 1.25rem)',
-                                                   opacity: 0.6,
-                                                 }}
-                                               >
-                                                 {service.description}
-                                               </p>
-                                             </div>
+              <div className="group flex flex-col gap-3 sm:gap-4 md:gap-5 pt-2 sm:pt-3 md:pt-4">
+                <h3
+                  className="font-medium uppercase text-[#0C0C0C] leading-tight relative inline-block w-fit"
+                  style={{ fontSize: 'clamp(1rem, 2.2vw, 2.1rem)' }}
+                >
+                  {service.title}
+                  <span className="absolute left-0 -bottom-1 h-px w-0 bg-[#0C0C0C]/60 transition-all duration-500 group-hover:w-full" />
+                </h3>
+                <p
+                  className="font-light leading-relaxed text-[#0C0C0C] max-w-2xl"
+                  style={{
+                    fontSize: 'clamp(0.85rem, 1.6vw, 1.25rem)',
+                    opacity: 0.6,
+                  }}
+                >
+                  {service.description}
+                </p>
+              </div>
             </div>
           </FadeIn>
         ))}
