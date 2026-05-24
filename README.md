@@ -1,6 +1,8 @@
-# Jack — 3D Creator
+# Harsh Goyal — Developer & Designer Portfolio
 
-A dark-themed 3D creator portfolio landing page built with **React + TypeScript + Vite + Tailwind CSS + Framer Motion**. Designed for one-click deployment on **Vercel**.
+A dark-themed personal portfolio for **Harsh Goyal** — Computer Science graduate from NSUT, currently a Content R&D Trainee at PhysicsWallah. Focused on UI/UX, front-end development, and GenAI integration.
+
+Built with **React + TypeScript + Vite + Tailwind CSS + Framer Motion**. Designed for one-click deployment on **Vercel**.
 
 ## Stack
 
@@ -8,8 +10,16 @@ A dark-themed 3D creator portfolio landing page built with **React + TypeScript 
 - Vite (build tool)
 - Tailwind CSS (utility-first styling)
 - Framer Motion (animations + scroll effects)
-- Lucide React (icon set, available for future additions)
+- Lucide React (icons)
 - Kanit font (Google Fonts, weights 300–900)
+
+## Sections
+
+1. **Hero** — name, tagline, magnetic-hover portrait
+2. **About** — bio + skills grouped by Languages / Frameworks / Tools / AI
+3. **Services** — UI/UX Design, Web Design, Front-end Development, GenAI Integration
+4. **Projects** — sticky-stacking cards for AI Tutor, PiLearn, ResumeIQ, Notch
+5. **Contact** — Email, WhatsApp, LinkedIn, GitHub
 
 ## Run locally
 
@@ -20,59 +30,53 @@ npm run build    # production build → /dist
 npm run preview  # serve /dist locally
 ```
 
+## Deploy to Vercel
+
+Push to GitHub → import the repo at [vercel.com/new](https://vercel.com/new) → click Deploy. No environment variables needed.
+
 ## Project structure
 
 ```
 src/
-├── App.tsx                  # composes all sections
-├── main.tsx                 # React entry
-├── index.css                # global styles + .hero-heading gradient
+├── App.tsx                    # composes all sections
+├── main.tsx                   # React entry
+├── index.css                  # global styles + .hero-heading gradient
 └── components/
-    ├── HeroSection.tsx      # navbar, massive heading, magnetic portrait
-    ├── MarqueeSection.tsx   # two scroll-driven horizontal image rows
-    ├── AboutSection.tsx     # corner 3D objects, animated paragraph
-    ├── ServicesSection.tsx  # white section with 5 numbered services
-    ├── ProjectsSection.tsx  # sticky-stacking project cards
+    ├── HeroSection.tsx        # navbar, massive heading, magnetic portrait
+    ├── AboutSection.tsx       # bio, animated text, skills grid
+    ├── ServicesSection.tsx    # white section, 4 numbered services
+    ├── ProjectsSection.tsx    # sticky-stacking project cards
+    ├── ContactSection.tsx     # 4 contact methods with icons
     │
-    ├── ContactButton.tsx    # gradient pill CTA
-    ├── LiveProjectButton.tsx# ghost outline pill
-    ├── FadeIn.tsx           # whileInView animation wrapper
-    ├── Magnet.tsx           # mouse-following magnetic hover
-    └── AnimatedText.tsx     # char-by-char scroll-driven reveal
+    ├── ContactButton.tsx      # gradient pill CTA
+    ├── LiveProjectButton.tsx  # ghost outline pill
+    ├── FadeIn.tsx             # whileInView animation wrapper
+    ├── Magnet.tsx             # mouse-following magnetic hover
+    └── AnimatedText.tsx       # char-by-char scroll-driven reveal
 ```
 
-## Deploy to Vercel
+## Featured projects
 
-### Option A — via the Vercel dashboard (easiest)
+| Project | Live | Built with |
+|---|---|---|
+| AI Tutor (PhysicsWallah) | [aitut2.vercel.app](https://aitut2.vercel.app) | React, GenAI, Vercel |
+| PiLearn | [pi-learn-app.vercel.app](https://pi-learn-app.vercel.app) | React, UI/UX, Vercel |
+| ResumeIQ | [resumeiq-harsh.vercel.app](https://resumeiq-harsh.vercel.app) | React, Gemini API, Vercel |
+| Notch | [notch-zeta.vercel.app](https://notch-zeta.vercel.app) | React, Tailwind, Framer Motion |
 
-1. Push this folder to a new GitHub / GitLab / Bitbucket repo.
-2. Go to [vercel.com/new](https://vercel.com/new) → import the repo.
-3. Vercel auto-detects **Vite**. Defaults are correct:
-   - Build command: `npm run build`
-   - Output directory: `dist`
-   - Install command: `npm install`
-4. Click **Deploy**.
+## Customisation
 
-### Option B — via the Vercel CLI
-
-```bash
-npm i -g vercel
-vercel        # follow prompts (first deploy = preview)
-vercel --prod # promote to production
-```
-
-A `vercel.json` is included with an SPA rewrite rule so deep links resolve to `index.html`.
-
-## Customisation pointers
-
-| Want to change… | Open this file |
+| Want to change | Open this file |
 |---|---|
-| Name / nav links / hero text | `src/components/HeroSection.tsx` |
-| Marquee images | `src/components/MarqueeSection.tsx` (top-level `IMAGES` array) |
-| About paragraph + decorative 3D images | `src/components/AboutSection.tsx` |
+| Name, nav links, hero text | `src/components/HeroSection.tsx` |
+| About paragraph, skills list | `src/components/AboutSection.tsx` |
 | Services list | `src/components/ServicesSection.tsx` (`SERVICES` array) |
-| Projects content + images | `src/components/ProjectsSection.tsx` (`PROJECTS` array) |
-| Brand gradient / dark colour / font | `src/index.css` and `tailwind.config.js` |
-| Page title / meta description | `index.html` |
+| Projects, screenshots, live URLs | `src/components/ProjectsSection.tsx` (`PROJECTS` array) |
+| Contact methods | `src/components/ContactSection.tsx` (`CONTACT_METHODS` array) |
+| Project screenshots | drop new images in `public/` and reference as `/filename.png` |
+| Brand gradient, font, dark colour | `src/index.css` and `tailwind.config.js` |
+| Page title, meta description | `index.html` |
 
-All images currently point to external URLs (Figma site CDN + motionsites.ai + higgs.ai CloudFront). To use your own assets, drop them in `public/` and reference them as `/your-image.png`.
+## Credits
+
+Designed & built by **Harsh Goyal** · [LinkedIn](https://www.linkedin.com/in/harsh-goyal-7900b2256/) · [GitHub](https://github.com/harshgoyal27)
