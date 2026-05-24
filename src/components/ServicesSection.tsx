@@ -3,30 +3,35 @@ import FadeIn from './FadeIn';
 const SERVICES = [
   {
     number: '01',
-    name: 'UI/UX Design',
+    title: 'UI/UX Design',
     description:
-      'Designing intuitive, user-centred interfaces that balance aesthetics and usability — from wireframes to polished, conversion-focused flows.',
+      'Designing clean, intuitive interfaces that prioritise user flow, hierarchy, and visual clarity — turning ideas into experiences people actually enjoy using.',
   },
   {
     number: '02',
-    name: 'Web Design',
+    title: 'Front-end Development',
     description:
-      'Crafting clean, modern, and engagement-focused websites with attention to layout, typography, and brand expression.',
+      'Building responsive, performant web apps with React, TypeScript, and Tailwind — pixel-perfect on every screen, deployed seamlessly on Vercel.',
   },
   {
     number: '03',
-    name: 'Front-end Development',
+    title: 'GenAI Integration',
     description:
-      'Building responsive, performant web apps with HTML, CSS, and modern JavaScript — shipped and live on Vercel.',
+      'Wiring large language models into real products via Gemini, Claude, and OpenAI APIs — from resume reviewers to AI tutors and beyond.',
   },
   {
     number: '04',
-    name: 'GenAI Integration',
+    title: 'Prompt Engineering & LLM Automation',
     description:
-      'Integrating large language models and AI capabilities into web apps to deliver dynamic, personalised experiences at scale.',
+      'Crafting reliable prompts and automation flows that turn LLMs into production-grade tools for content, analysis, and decision support.',
+  },
+  {
+    number: '05',
+    title: 'Data Analysis & Visualization',
+    description:
+      'Exploring datasets with Python (Pandas, NumPy, Seaborn) and Power BI — turning raw numbers into clear insights and dashboards stakeholders can act on.',
   },
 ];
-
 const ServicesSection = () => {
   return (
     <section
@@ -61,23 +66,24 @@ const ServicesSection = () => {
                 {service.number}
               </div>
 
-              <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 pt-2 sm:pt-3 md:pt-4">
-                <h3
-                  className="font-medium uppercase text-[#0C0C0C] leading-tight"
-                  style={{ fontSize: 'clamp(1rem, 2.2vw, 2.1rem)' }}
-                >
-                  {service.name}
-                </h3>
-                <p
-                  className="font-light leading-relaxed text-[#0C0C0C] max-w-2xl"
-                  style={{
-                    fontSize: 'clamp(0.85rem, 1.6vw, 1.25rem)',
-                    opacity: 0.6,
-                  }}
-                >
-                  {service.description}
-                </p>
-              </div>
+                                       <div className="group flex flex-col gap-3 sm:gap-4 md:gap-5 pt-2 sm:pt-3 md:pt-4">
+                                               <h3
+                                                 className="font-medium uppercase text-[#0C0C0C] leading-tight relative inline-block w-fit"
+                                                 style={{ fontSize: 'clamp(1rem, 2.2vw, 2.1rem)' }}
+                                               >
+                                                 {service.name}
+                                                 <span className="absolute left-0 -bottom-1 h-px w-0 bg-[#0C0C0C]/60 transition-all duration-500 group-hover:w-full" />
+                                               </h3>
+                                               <p
+                                                 className="font-light leading-relaxed text-[#0C0C0C] max-w-2xl"
+                                                 style={{
+                                                   fontSize: 'clamp(0.85rem, 1.6vw, 1.25rem)',
+                                                   opacity: 0.6,
+                                                 }}
+                                               >
+                                                 {service.description}
+                                               </p>
+                                             </div>
             </div>
           </FadeIn>
         ))}
