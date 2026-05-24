@@ -26,11 +26,11 @@ const PROJECTS: ProjectData[] = [
   {
       number: '02',
       category: 'Personal',
-      name: 'PiLearn',
-      liveUrl: 'https://pi-learn-app.vercel.app/',
-      col1Image1: '/pilearn-lesson.png',
-      col1Image2: '/pilearn-chat.png',
-      col2Image: '/pilearn-home.png',
+      name: 'LawLab',
+      liveUrl: 'https://lawlab-self.vercel.app',
+      col1Image1: '/lawlab.png',
+      col1Image2: '/lawlab1.png',
+      col2Image: '/lawlab2.png',
     },
   {
     number: '03',
