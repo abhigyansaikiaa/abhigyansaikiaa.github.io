@@ -16,12 +16,12 @@ interface ProjectData {
 const PROJECTS: ProjectData[] = [
     {
         number: '01',
-        category: 'Client · PhysicsWallah',
-        name: 'AI Tutor',
-        liveUrl: 'https://aitut2.vercel.app/',
-        col1Image1: '/aitut-tutor.png',
-        col1Image2: '/aitut-simulation.png',
-        col2Image: '/aitut-chapter.png',
+        category: 'Personal',
+        name: 'Forge',
+        liveUrl: 'https://forge-pink-seven.vercel.app/',
+        col1Image1: '/Forge.png',
+        col1Image2: '/Forge1.png',
+        col2Image: '/Forge2.png',
       },
   {
       number: '02',
