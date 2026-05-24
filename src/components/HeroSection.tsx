@@ -41,11 +41,11 @@ const HeroSection = () => {
                   </FadeIn>
                 </div>
 
-          {/* Portrait - magnetic, centered-bottom (peeks up over the heading) */}
+          {/* Portrait - magnetic; centered+smaller on mobile, large centered-bottom on desktop */}
                 <FadeIn
                   delay={0.6}
                   y={30}
-          className="pointer-events-none absolute z-10 left-1/2 -translate-x-1/2 bottom-0 sm:bottom-0 w-[260px] sm:w-[360px] md:w-[440px] lg:w-[520px]"
+                  className="pointer-events-none absolute z-10 left-1/2 -translate-x-1/2 bottom-24 sm:bottom-0 w-[220px] sm:w-[360px] md:w-[440px] lg:w-[520px]"
                 >
         <div className="pointer-events-auto">
           <Magnet
