@@ -71,7 +71,7 @@ const ServicesSection = () => {
                                                  className="font-medium uppercase text-[#0C0C0C] leading-tight relative inline-block w-fit"
                                                  style={{ fontSize: 'clamp(1rem, 2.2vw, 2.1rem)' }}
                                                >
-                                                 {service.name}
+                                                 {service.title}
                                                  <span className="absolute left-0 -bottom-1 h-px w-0 bg-[#0C0C0C]/60 transition-all duration-500 group-hover:w-full" />
                                                </h3>
                                                <p
