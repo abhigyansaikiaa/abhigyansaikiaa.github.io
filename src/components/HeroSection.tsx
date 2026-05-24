@@ -45,7 +45,7 @@ const HeroSection = () => {
                 <FadeIn
                   delay={0.6}
                   y={30}
-                  className="pointer-events-none absolute z-10 left-1/2 -translate-x-1/2 bottom-24 sm:bottom-0 w-[220px] sm:w-[360px] md:w-[440px] lg:w-[520px]"
+          className="pointer-events-none absolute z-10 left-1/2 -translate-x-1/2 bottom-8 sm:bottom-0 w-[300px] sm:w-[360px] md:w-[440px] lg:w-[520px]"
                 >
         <div className="pointer-events-auto">
           <Magnet
