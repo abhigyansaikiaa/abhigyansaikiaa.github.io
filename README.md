@@ -59,8 +59,6 @@ src/
 
 | Project | Live | Built with |
 |---|---|---|
-| AI Tutor (PhysicsWallah) | [aitut2.vercel.app](https://aitut2.vercel.app) | React, GenAI, Vercel |
-| PiLearn | [pi-learn-app.vercel.app](https://pi-learn-app.vercel.app) | React, UI/UX, Vercel |
 | ResumeIQ | [resumeiq-harsh.vercel.app](https://resumeiq-harsh.vercel.app) | React, Gemini API, Vercel |
 | Notch | [notch-zeta.vercel.app](https://notch-zeta.vercel.app) | React, Tailwind, Framer Motion |
 
