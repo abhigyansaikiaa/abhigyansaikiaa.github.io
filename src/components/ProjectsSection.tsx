@@ -7,48 +7,53 @@ interface ProjectData {
   number: string;
   category: string;
   name: string;
+  description: string;
+  techStack: string[];
   liveUrl: string;
-  col1Image1: string;
-  col1Image2: string;
-  col2Image: string;
+  image: string;
+  year: string;
 }
 
 const PROJECTS: ProjectData[] = [
-    {
-        number: '01',
-        category: 'Personal',
-        name: 'Forge',
-        liveUrl: 'https://forge-pink-seven.vercel.app/',
-        col1Image1: '/Forge.png',
-        col1Image2: '/Forge1.png',
-        col2Image: '/Forge2.png',
-      },
   {
-      number: '02',
-      category: 'Personal',
-      name: 'LawLab',
-      liveUrl: 'https://lawlab-self.vercel.app',
-      col1Image1: '/lawlab.png',
-      col1Image2: '/lawlab1.png',
-      col2Image: '/lawlab2.png',
-    },
+    number: '01',
+    category: 'Full Stack Web Application',
+    name: 'Qrivna',
+    description: 'Built for creators and businesses who needed QR tools that felt modern instead of outdated. A fast and minimal QR platform focused on customization, analytics, and clean user experience.',
+    techStack: ['React', 'Supabase', 'TailwindCSS'],
+    liveUrl: '#',
+    image: '/qrivna_demo_pro.png',
+    year: '2025',
+  },
+  {
+    number: '02',
+    category: 'AI SaaS Dashboard',
+    name: 'BrollWriter',
+    description: 'An AI-powered SaaS dashboard built to automate video script writing. Designed with an elegant, cinematic UI to help creators focus on storytelling rather than formatting.',
+    techStack: ['Next.js', 'TypeScript', 'OpenAI API'],
+    liveUrl: '#',
+    image: '/brollwriter_demo_pro.png',
+    year: '2025',
+  },
   {
     number: '03',
-    category: 'Personal · GenAI',
-    name: 'ResumeIQ',
-    liveUrl: 'https://resumeiq-harsh.vercel.app/',
-    col1Image1: '/resumeiq-hero.png',
-    col1Image2: '/resumeiq-feedback.png',
-    col2Image: '/resumeiq-score.png',
+    category: 'Analytics & Strategy Platform',
+    name: 'Dhankathaa',
+    description: 'A YouTube strategy and analytics platform. Designed to provide high-retention insights through a clean, data-rich interface that feels like a premium financial tool.',
+    techStack: ['React', 'TailwindCSS', 'Chart.js'],
+    liveUrl: '#',
+    image: '/dhankathaa_demo_pro.png',
+    year: '2024',
   },
   {
     number: '04',
-    category: 'Personal · Design',
-    name: 'Notch',
-    liveUrl: 'https://notch-zeta.vercel.app/',
-    col1Image1: '/notch-hero.png',
-    col1Image2: '/notch-pricing.png',
-    col2Image: '/notch-mockup.png',
+    category: 'Digital Showroom',
+    name: 'Freelance Portfolio',
+    description: 'A sophisticated digital portfolio showcase crafted to highlight high-end video editing and brand design. Built with smooth motion and minimal clutter.',
+    techStack: ['Next.js', 'Framer Motion'],
+    liveUrl: '#',
+    image: '/freelance_demo_pro.png',
+    year: '2024',
   },
 ];
 
@@ -61,102 +66,91 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ project, index, total, containerRef }: ProjectCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
 
-  // Scroll progress for THIS card relative to the whole projects scroll range.
+  // Scroll progress for the whole section to drive parallax
   const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ['start end', 'start start'],
+    target: containerRef,
+    offset: ['start end', 'end start'],
   });
 
-  // Cards further down the stack stay full-size; earlier cards scale DOWN
-  // as later cards stack on top of them.
-  const targetScale = 1 - (total - 1 - index) * 0.03;
-  const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale]);
+  // Unique parallax offset for the image to give it depth
+  const yParallax = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
 
   return (
-    <div
+    <motion.div
       ref={cardRef}
-      className="sticky top-24 md:top-32 h-[85vh] w-full"
-      style={{ top: `${96 + index * 28}px` }}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="relative flex flex-col lg:flex-row gap-12 lg:gap-20 w-full min-h-[60vh] items-center py-16 lg:py-24 border-b border-white/5 last:border-b-0"
     >
-      <motion.article
-        style={{ scale }}
-        className="origin-top mx-auto h-full w-full flex flex-col gap-4 sm:gap-6 md:gap-8 rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 sm:p-6 md:p-8"
-      >
-          {/* Top row: number + meta + button */}
-                  <div className="flex flex-col sm:flex-row items-start sm:justify-between gap-4 sm:gap-6">
-                    <div className="flex flex-row items-start gap-3 sm:gap-6 md:gap-10 min-w-0 w-full">
-                      <div
-                        className="shrink-0 font-black text-[#D7E2EA] leading-none"
-                        style={{ fontSize: 'clamp(2.5rem, 10vw, 140px)' }}
-                      >
-                        {project.number}
-                      </div>
-
-                      <div className="flex flex-col gap-1 sm:gap-3 pt-1 sm:pt-3 md:pt-4 min-w-0 flex-1">
-                        <span
-                          className="font-light uppercase tracking-widest text-[#D7E2EA]/60"
-                          style={{ fontSize: 'clamp(0.65rem, 1.2vw, 1rem)' }}
-                        >
-                          {project.category}
-                        </span>
-                        <h3
-                          className="font-medium uppercase text-[#D7E2EA] leading-tight"
-                          style={{ fontSize: 'clamp(1.1rem, 2.2vw, 2.1rem)' }}
-                        >
-                          {project.name}
-                        </h3>
-                      </div>
-                    </div>
-
-                    <div className="shrink-0 self-start sm:self-auto pt-1 sm:pt-2 md:pt-3 w-full sm:w-auto">
-                      <LiveProjectButton href={project.liveUrl} className="w-full sm:w-auto" />
-                    </div>
-                  </div>
-
-        {/* Bottom row: two-column image grid */}
-        <div className="grid grid-cols-[40%_60%] gap-3 sm:gap-4 md:gap-5 flex-1 min-h-0">
-          {/* Left column - 2 stacked */}
-          <div className="flex flex-col gap-3 sm:gap-4 md:gap-5 min-h-0">
-            <div
-              className="overflow-hidden rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
-              style={{ height: 'clamp(130px, 16vw, 230px)' }}
-            >
-              <img
-                src={project.col1Image1}
-                alt={`${project.name} preview 1`}
-                className="h-full w-full object-cover"
-                loading="lazy"
-                draggable={false}
-              />
-            </div>
-            <div
-              className="overflow-hidden rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
-              style={{ height: 'clamp(160px, 22vw, 340px)' }}
-            >
-              <img
-                src={project.col1Image2}
-                alt={`${project.name} preview 2`}
-                className="h-full w-full object-cover"
-                loading="lazy"
-                draggable={false}
-              />
-            </div>
-          </div>
-
-          {/* Right column - 1 tall */}
-          <div className="overflow-hidden rounded-[40px] sm:rounded-[50px] md:rounded-[60px] min-h-0">
-            <img
-              src={project.col2Image}
-              alt={`${project.name} preview 3`}
-              className="h-full w-full object-cover"
-              loading="lazy"
-              draggable={false}
-            />
-          </div>
+      {/* Left Content Area (Storytelling) */}
+      <div className="flex-1 flex flex-col gap-6 sm:gap-8 z-10 w-full">
+        <div className="flex items-center gap-4">
+          <span className="font-bold text-primary opacity-80" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
+            {project.number}
+          </span>
+          <span className="h-px w-12 bg-white/20" />
+          <span className="text-xs sm:text-sm font-medium tracking-[0.2em] text-[#D7E2EA]/50 uppercase">
+            {project.year} • LIVE
+          </span>
         </div>
-      </motion.article>
-    </div>
+
+        <div className="flex flex-col gap-2">
+          <span className="text-sm font-medium tracking-wider text-secondary uppercase">
+            {project.category}
+          </span>
+          <h3 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tighter leading-none">
+            {project.name}
+          </h3>
+        </div>
+
+        <p className="text-base sm:text-lg text-[#D7E2EA]/70 font-light leading-relaxed max-w-xl">
+          {project.description}
+        </p>
+
+        {/* Floating Tech Stack Chips */}
+        <div className="flex flex-wrap gap-3 mt-2">
+          {project.techStack.map((tech) => (
+            <span
+              key={tech}
+              className="px-4 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-white/80 hover:bg-white/10 hover:border-primary/50 hover:text-white transition-colors duration-300 cursor-default shadow-sm"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-4">
+          <LiveProjectButton href={project.liveUrl} />
+        </div>
+      </div>
+
+      {/* Right Presentation Area (Visual Mockup) */}
+      <div className="flex-1 w-full relative group perspective-1000">
+        {/* Ambient Glow behind image */}
+        <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        
+        {/* The Device / Glass Panel */}
+        <motion.div 
+          className="relative w-full aspect-[4/3] rounded-2xl sm:rounded-[32px] overflow-hidden border border-white/10 bg-[#0A0A0F] shadow-2xl transition-transform duration-700 ease-out group-hover:rotate-x-2 group-hover:rotate-y-[-2deg] group-hover:scale-[1.02]"
+          style={{ transformStyle: 'preserve-3d' }}
+        >
+          {/* Inner glass reflection */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none" />
+          
+          <motion.img
+            ref={imageRef}
+            src={project.image}
+            alt={`${project.name} Application Preview`}
+            style={{ y: yParallax, scale: 1.1 }}
+            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+          />
+        </motion.div>
+      </div>
+    </motion.div>
   );
 };
 
@@ -166,27 +160,39 @@ const ProjectsSection = () => {
   return (
     <section
       id="projects"
-      className="relative z-10 -mt-10 sm:-mt-12 md:-mt-14 w-full rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] bg-[#0C0C0C] px-4 sm:px-6 md:px-10 pt-20 sm:pt-24 md:pt-32 pb-24"
+      className="relative z-10 w-full bg-[#05050A] px-4 sm:px-6 md:px-10 pt-32 pb-32 overflow-hidden"
     >
-      <FadeIn y={40}>
-        <h2
-          className="hero-heading text-center font-black uppercase tracking-tight leading-none mb-16 sm:mb-20 md:mb-28"
-          style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
-        >
-          Project
-        </h2>
-      </FadeIn>
+      {/* Background Atmosphere */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-[#0A0A0F] to-transparent" />
+        {/* Subtle grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.03]"
+          style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px)', backgroundSize: '60px 60px' }}
+        />
+      </div>
 
-      <div ref={containerRef} className="mx-auto max-w-7xl">
-        {PROJECTS.map((project, i) => (
-          <ProjectCard
-            key={project.number}
-            project={project}
-            index={i}
-            total={PROJECTS.length}
-            containerRef={containerRef}
-          />
-        ))}
+      <div className="relative z-10 mx-auto max-w-7xl" ref={containerRef}>
+        <FadeIn y={40} className="mb-24 sm:mb-32">
+          <h2 className="text-5xl sm:text-6xl md:text-8xl font-black text-white tracking-tighter leading-none mb-6">
+            Selected Work.
+          </h2>
+          <p className="text-lg sm:text-xl text-[#D7E2EA]/50 font-light max-w-2xl">
+            A curated showcase of digital products, interfaces, and tools built with precision, performance, and purpose.
+          </p>
+        </FadeIn>
+
+        <div className="flex flex-col">
+          {PROJECTS.map((project, i) => (
+            <ProjectCard
+              key={project.number}
+              project={project}
+              index={i}
+              total={PROJECTS.length}
+              containerRef={containerRef}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

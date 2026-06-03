@@ -1,80 +1,40 @@
-# Harsh Goyal — Developer & Designer Portfolio
+# Abhigyan Saikia - Cinematic Portfolio
 
-A dark-themed personal portfolio for **Harsh Goyal** — Computer Science graduate from NSUT, currently a Content R&D Trainee at PhysicsWallah. Focused on UI/UX, front-end development, and GenAI integration.
+This is a premium, cinematic personal portfolio built with React, Vite, TailwindCSS, and Framer Motion. 
 
-Built with **React + TypeScript + Vite + Tailwind CSS + Framer Motion**. Designed for one-click deployment on **Vercel**.
+## 🔒 Security & Deployment Checklist
 
-## Stack
+This repository has been structured securely so you can safely upload it to a public GitHub repository and deploy it to Vercel.
 
-- React 18 / TypeScript
-- Vite (build tool)
-- Tailwind CSS (utility-first styling)
-- Framer Motion (animations + scroll effects)
-- Lucide React (icons)
-- Kanit font (Google Fonts, weights 300–900)
+### Security Features Implemented:
+1. **`.gitignore` Enforced:** All sensitive files (`.env`, `node_modules`, build outputs) are hidden from Git. Even if you accidentally create a `.env` file later with real API keys, it will never be uploaded to GitHub.
+2. **No Hardcoded Secrets:** There are no hardcoded API keys in the source code.
+3. **Security Headers:** The `vercel.json` file is configured with strict security headers (`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`) to protect the live site against clickjacking and XSS attacks.
 
-## Sections
+## 🚀 How to Upload to GitHub
+1. Open your terminal in this folder (`my-portfolio`).
+2. Run the following commands:
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial cinematic portfolio commit"
+   ```
+3. Go to GitHub, create a new repository (can be Public).
+4. Copy the "push an existing repository from the command line" code block and run it in your terminal. Example:
+   ```bash
+   git branch -M main
+   git remote add origin https://github.com/abhigyansaikiaa/your-repo-name.git
+   git push -u origin main
+   ```
 
-1. **Hero** — name, tagline, magnetic-hover portrait
-2. **About** — bio + skills grouped by Languages / Frameworks / Tools / AI
-3. **Services** — UI/UX Design, Web Design, Front-end Development, GenAI Integration
-4. **Projects** — sticky-stacking cards for AI Tutor, PiLearn, ResumeIQ, Notch
-5. **Contact** — Email, WhatsApp, LinkedIn, GitHub
+## 🌍 How to Deploy on Vercel
+1. Go to [Vercel.com](https://vercel.com) and log in with your GitHub account.
+2. Click **"Add New Project"**.
+3. Import your newly created GitHub repository.
+4. Vercel will automatically detect that this is a **Vite** project.
+   - **Framework Preset:** Vite
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+5. Click **Deploy**. Vercel will handle the rest!
 
-## Run locally
-
-```bash
-npm install
-npm run dev      # http://localhost:5173
-npm run build    # production build → /dist
-npm run preview  # serve /dist locally
-```
-
-## Deploy to Vercel
-
-Push to GitHub → import the repo at [vercel.com/new](https://vercel.com/new) → click Deploy. No environment variables needed.
-
-## Project structure
-
-```
-src/
-├── App.tsx                    # composes all sections
-├── main.tsx                   # React entry
-├── index.css                  # global styles + .hero-heading gradient
-└── components/
-    ├── HeroSection.tsx        # navbar, massive heading, magnetic portrait
-    ├── AboutSection.tsx       # bio, animated text, skills grid
-    ├── ServicesSection.tsx    # white section, 4 numbered services
-    ├── ProjectsSection.tsx    # sticky-stacking project cards
-    ├── ContactSection.tsx     # 4 contact methods with icons
-    │
-    ├── ContactButton.tsx      # gradient pill CTA
-    ├── LiveProjectButton.tsx  # ghost outline pill
-    ├── FadeIn.tsx             # whileInView animation wrapper
-    ├── Magnet.tsx             # mouse-following magnetic hover
-    └── AnimatedText.tsx       # char-by-char scroll-driven reveal
-```
-
-## Featured projects
-
-| Project | Live | Built with |
-|---|---|---|
-| ResumeIQ | [resumeiq-harsh.vercel.app](https://resumeiq-harsh.vercel.app) | React, Gemini API, Vercel |
-| Notch | [notch-zeta.vercel.app](https://notch-zeta.vercel.app) | React, Tailwind, Framer Motion |
-
-## Customisation
-
-| Want to change | Open this file |
-|---|---|
-| Name, nav links, hero text | `src/components/HeroSection.tsx` |
-| About paragraph, skills list | `src/components/AboutSection.tsx` |
-| Services list | `src/components/ServicesSection.tsx` (`SERVICES` array) |
-| Projects, screenshots, live URLs | `src/components/ProjectsSection.tsx` (`PROJECTS` array) |
-| Contact methods | `src/components/ContactSection.tsx` (`CONTACT_METHODS` array) |
-| Project screenshots | drop new images in `public/` and reference as `/filename.png` |
-| Brand gradient, font, dark colour | `src/index.css` and `tailwind.config.js` |
-| Page title, meta description | `index.html` |
-
-## Credits
-
-Designed & built by **Harsh Goyal** · [LinkedIn](https://www.linkedin.com/in/harsh-goyal-7900b2256/) · [GitHub](https://github.com/harshgoyal27)
+Your site will be live securely in seconds.

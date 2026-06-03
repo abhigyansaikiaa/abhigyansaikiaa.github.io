@@ -12,27 +12,20 @@ const CONTACT_METHODS: ContactMethod[] = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'goyalharsh642@gmail.com',
-    href: 'mailto:goyalharsh642@gmail.com',
-  },
-  {
-    icon: MessageCircle,
-    label: 'WhatsApp',
-    value: '+91 81682 94032',
-    // wa.me requires digits only — no +, no spaces, no hyphens
-    href: 'https://wa.me/918168294032',
+    value: 'abhigyannsaiki@gmail.com',
+    href: 'mailto:abhigyannsaiki@gmail.com',
   },
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    value: 'in/harsh-goyal-7900b2256',
-    href: 'https://www.linkedin.com/in/harsh-goyal-7900b2256/',
+    value: 'in/abhigyan-saikia-26641227b',
+    href: 'https://www.linkedin.com/in/abhigyan-saikia-26641227b',
   },
   {
     icon: Github,
     label: 'GitHub',
-    value: '@harshgoyal27',
-    href: 'https://github.com/harshgoyal27',
+    value: '@abhigyansaikiaa',
+    href: 'https://github.com/abhigyansaikiaa',
   },
 ];
 
@@ -48,7 +41,7 @@ const ContactSection = () => {
           className="hero-heading text-center font-black uppercase tracking-tight leading-none mb-4"
           style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
         >
-          Get in touch
+          Have an idea worth building?
         </h2>
       </FadeIn>
 
@@ -57,12 +50,12 @@ const ContactSection = () => {
           className="text-center font-light uppercase tracking-widest text-[#D7E2EA]/60 mb-12 sm:mb-16 md:mb-20"
           style={{ fontSize: 'clamp(0.85rem, 1.4vw, 1.1rem)' }}
         >
-          Pick whichever channel suits you
+          Good design gets noticed. Great design gets remembered. Let's create something people remember.
         </p>
       </FadeIn>
 
       {/* Contact cards */}
-          <div className="mx-auto grid max-w-5xl grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
+      <div className="mx-auto grid max-w-5xl grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
         {CONTACT_METHODS.map((method, i) => {
           const Icon = method.icon;
           const isExternal = method.href.startsWith('http');
@@ -73,7 +66,7 @@ const ContactSection = () => {
                 href={method.href}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
-                className="group relative flex h-full flex-col justify-between gap-8 sm:gap-10 rounded-[28px] sm:rounded-[32px] border-2 border-[#D7E2EA]/20 bg-[#141418] p-6 sm:p-7 md:p-8 transition-all duration-300 hover:border-[#D7E2EA]/60 hover:bg-[#1a1a20] hover:-translate-y-1"
+                className="group relative flex h-full flex-col justify-between gap-8 sm:gap-10 rounded-[28px] sm:rounded-[32px] border-2 border-primary/20 bg-[#0A0A0F]/80 backdrop-blur-md p-6 sm:p-7 md:p-8 transition-all duration-500 hover:border-primary hover:bg-[#12121A] hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(138,43,226,0.4)]"
               >
                 <div className="flex items-start justify-between">
                   <div className="rounded-full border border-[#D7E2EA]/20 p-3 sm:p-3.5 transition-colors duration-300 group-hover:border-[#D7E2EA]/50">
@@ -117,13 +110,13 @@ const ContactSection = () => {
             className="font-light uppercase tracking-widest text-[#D7E2EA]/50"
             style={{ fontSize: 'clamp(0.7rem, 1.1vw, 0.9rem)' }}
           >
-            © 2026 Harsh Goyal
+            © 2026 Abhigyan Saikia
           </span>
           <span
             className="font-light uppercase tracking-widest text-[#D7E2EA]/50"
             style={{ fontSize: 'clamp(0.7rem, 1.1vw, 0.9rem)' }}
           >
-            Designed & built in Delhi
+            Designed & built in Guwahati
           </span>
         </div>
       </FadeIn>

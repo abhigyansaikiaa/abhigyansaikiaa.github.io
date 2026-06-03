@@ -85,7 +85,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section ref={sectionRef} className="relative h-screen w-full overflow-hidden bg-black">
+    <section ref={sectionRef} className="relative h-screen w-full overflow-hidden bg-deep-space">
       {/* Video background */}
       <video
         ref={videoRef}
@@ -94,14 +94,14 @@ const HeroSection = () => {
         loop
         playsInline
         preload="auto"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover mix-blend-screen opacity-70"
       >
-        <source src="/intro.mp4" type="video/mp4" />
+        <source src="/me.mp4" type="video/mp4" />
       </video>
 
       {/* Cinematic gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/35 to-black/40" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-deep-space via-primary/20 to-secondary/20 mix-blend-overlay" />
+      <div className="absolute inset-0 bg-gradient-to-b from-deep-space/40 via-transparent to-deep-space/90" />
 
       {/* Content layer */}
       <div className="relative z-10 flex h-full flex-col">
@@ -144,13 +144,13 @@ const HeroSection = () => {
                 className="font-black uppercase leading-[0.88] tracking-tight text-white"
                 style={{ fontSize: 'clamp(3rem, 12vw, 10.5rem)' }}
               >
-                Harsh<br />Goyal
+                Abhigyan<br />Saikia
               </h1>
             </FadeIn>
 
             <FadeIn delay={0.85} y={20}>
-              <p className="mt-5 md:mt-7 text-[10px] sm:text-xs md:text-sm font-medium uppercase tracking-[0.3em] text-white/75">
-                Developer · Designer · GenAI Integration
+              <p className="mt-5 md:mt-7 text-[10px] sm:text-xs md:text-sm font-medium uppercase tracking-[0.3em] text-secondary/80 animate-glow-pulse">
+                Video Editor · Graphic Designer · Web Developer
               </p>
             </FadeIn>
           </div>
@@ -187,7 +187,7 @@ const HeroSection = () => {
               <button
                 onClick={toggleMute}
                 aria-label={muted ? 'Unmute video' : 'Mute video'}
-                className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition hover:bg-white/20 hover:scale-110"
+                className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-primary/40 bg-primary/10 text-primary backdrop-blur-md transition hover:bg-primary/20 hover:scale-110 hover:shadow-[0_0_15px_rgba(138,43,226,0.5)]"
               >
                 {muted ? (
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

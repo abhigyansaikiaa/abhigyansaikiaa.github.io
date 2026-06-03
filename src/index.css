@@ -13,8 +13,8 @@
 html,
 body,
 #root {
-  background: #0c0c0c;
-  font-family: 'Kanit', sans-serif;
+  background: #05050A;
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -26,17 +26,18 @@ body {
 }
 
 .hero-heading {
-  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  background: linear-gradient(135deg, #8A2BE2 0%, #00FFFF 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  filter: drop-shadow(0 0 15px rgba(138,43,226,0.3));
 }
 
 /* Subtle scrollbar that matches the dark theme */
 ::-webkit-scrollbar {
   width: 10px;
-  background: #0c0c0c;
+  background: #05050A;
 }
 
 ::-webkit-scrollbar-thumb {
