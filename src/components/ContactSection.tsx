@@ -12,8 +12,8 @@ const CONTACT_METHODS: ContactMethod[] = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'abhigyannsaiki@gmail.com',
-    href: 'mailto:abhigyannsaiki@gmail.com',
+    value: 'abhigyannsaikia@gmail.com',
+    href: 'mailto:abhigyannsaikia@gmail.com',
   },
   {
     icon: Linkedin,

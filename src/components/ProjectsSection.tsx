@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import FadeIn from './FadeIn';
-import LiveProjectButton from './LiveProjectButton';
 
 interface ProjectData {
   number: string;
@@ -123,9 +122,6 @@ const ProjectCard = ({ project, index, total, containerRef }: ProjectCardProps) 
           ))}
         </div>
 
-        <div className="mt-4">
-          <LiveProjectButton href={project.liveUrl} />
-        </div>
       </div>
 
       {/* Right Presentation Area (Visual Mockup) */}
