@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import FadeIn from './FadeIn';
+import LiveProjectButton from './LiveProjectButton';
 
 interface ProjectData {
   number: string;
@@ -16,6 +17,26 @@ interface ProjectData {
 const PROJECTS: ProjectData[] = [
   {
     number: '01',
+    category: 'Disaster Management Platform',
+    name: 'Arogya Relief',
+    description: 'A disaster management and emergency healthcare coordination platform designed to help people find emergency information, healthcare support, relief resources, and relevant organizations during disasters and emergencies.',
+    techStack: ['Next.js', 'TypeScript', 'TailwindCSS', 'Supabase'],
+    liveUrl: 'https://www.arogyarelief.in/',
+    image: '/arogya_demo.png',
+    year: '2025',
+  },
+  {
+    number: '02',
+    category: 'Freelancer Marketplace',
+    name: 'Brandcey',
+    description: 'A freelancer and client marketplace designed to help freelancers showcase their work and connect with clients through project-based work.',
+    techStack: ['Next.js', 'TypeScript', 'TailwindCSS', 'Clerk'],
+    liveUrl: 'https://www.brandcey.in/',
+    image: '/brandcey_demo.png',
+    year: '2025',
+  },
+  {
+    number: '03',
     category: 'Full Stack Web Application',
     name: 'Qrivna',
     description: 'Built for creators and businesses who needed QR tools that felt modern instead of outdated. A fast and minimal QR platform focused on customization, analytics, and clean user experience.',
@@ -25,7 +46,7 @@ const PROJECTS: ProjectData[] = [
     year: '2025',
   },
   {
-    number: '02',
+    number: '04',
     category: 'AI SaaS Dashboard',
     name: 'BrollWriter',
     description: 'An AI-powered SaaS dashboard built to automate video script writing. Designed with an elegant, cinematic UI to help creators focus on storytelling rather than formatting.',
@@ -35,7 +56,7 @@ const PROJECTS: ProjectData[] = [
     year: '2025',
   },
   {
-    number: '03',
+    number: '05',
     category: 'Analytics & Strategy Platform',
     name: 'Dhankathaa',
     description: 'A YouTube strategy and analytics platform. Designed to provide high-retention insights through a clean, data-rich interface that feels like a premium financial tool.',
@@ -45,7 +66,7 @@ const PROJECTS: ProjectData[] = [
     year: '2024',
   },
   {
-    number: '04',
+    number: '06',
     category: 'Digital Showroom',
     name: 'Freelance Portfolio',
     description: 'A sophisticated digital portfolio showcase crafted to highlight high-end video editing and brand design. Built with smooth motion and minimal clutter.',
@@ -121,6 +142,12 @@ const ProjectCard = ({ project, index, total, containerRef }: ProjectCardProps) 
             </span>
           ))}
         </div>
+
+        {project.liveUrl !== '#' && (
+          <div className="mt-6 flex">
+            <LiveProjectButton href={project.liveUrl} />
+          </div>
+        )}
 
       </div>
 

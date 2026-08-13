@@ -32,12 +32,12 @@ const AboutSection = () => {
           <div className="flex flex-col gap-6 text-lg sm:text-xl md:text-2xl text-[#D7E2EA]/70 font-light leading-relaxed max-w-3xl mt-4">
             <FadeIn delay={0.3} y={20}>
               <p>
-                I work at the intersection of design, code, and storytelling. From building robust full-stack products to editing high-retention content and crafting cohesive brand identities, my focus is on creating work that feels sharp, useful, and impossible to ignore.
+                I am currently pursuing a Bachelor of Medical Laboratory Science (BMLS) at RIPANS. 
               </p>
             </FadeIn>
             <FadeIn delay={0.4} y={20}>
               <p>
-                I don't just write code or cut video—I build digital experiences that stick. Whether I'm architecting a new SaaS platform or structuring a YouTube strategy, my approach is rooted in logic, driven by obsession, and refined through execution.
+                Alongside my studies, I am interested in full stack web development and have been building real-world websites and web applications.
               </p>
             </FadeIn>
           </div>
@@ -62,7 +62,7 @@ const AboutSection = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3 w-3 bg-secondary"></span>
             </span>
-            Currently building digital products, editing cinematic content, and experimenting with interfaces that feel alive.
+            Currently building real-world web applications and experimenting with full stack development.
           </p>
         </div>
       </FadeIn>
