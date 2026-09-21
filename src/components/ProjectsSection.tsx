@@ -164,6 +164,38 @@ const SECONDARY_PROJECTS: ProjectData[] = [
   },
 ];
 
+const AbstractProjectVisual = ({ project, yParallax }: { project: ProjectData, yParallax: any }) => {
+  return (
+    <motion.div
+      style={{ y: yParallax, scale: 1.05 }}
+      className="w-full h-full opacity-90 group-hover:opacity-100 transition-all duration-700 ease-cinematic flex flex-col items-center justify-center bg-[#07070B] overflow-hidden relative"
+    >
+      {/* Cinematic animated mesh background */}
+      <div className="absolute inset-0 opacity-40">
+        <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-primary/20 rounded-full blur-[80px] mix-blend-screen animate-pulse" style={{ animationDuration: '6s' }} />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-secondary/10 rounded-full blur-[80px] mix-blend-screen animate-pulse" style={{ animationDuration: '8s', animationDelay: '1s' }} />
+      </div>
+      
+      {/* Grid overlay */}
+      <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+
+      {/* Kinetic Typography */}
+      <div className="relative z-10 flex flex-col items-center justify-center mix-blend-plus-lighter">
+        <motion.div 
+          className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white/90 to-white/20 uppercase text-center px-6 leading-none"
+          whileHover={{ scale: 1.02, letterSpacing: '0.02em' }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
+          {project.name}
+        </motion.div>
+        <div className="text-[10px] sm:text-xs font-medium tracking-[0.4em] text-secondary/60 uppercase mt-6 text-center px-6">
+          {project.category}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 interface ProjectCardProps {
   project: ProjectData;
   index: number;
@@ -171,7 +203,7 @@ interface ProjectCardProps {
   containerRef: React.RefObject<HTMLDivElement>;
 }
 
-const ProjectCard = ({ project, index, total, containerRef }: ProjectCardProps) => {
+const ProjectCard = ({ project, index, containerRef }: ProjectCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -182,48 +214,48 @@ const ProjectCard = ({ project, index, total, containerRef }: ProjectCardProps) 
   });
 
   // Unique parallax offset for the image to give it depth
-  const yParallax = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
+  const yParallax = useTransform(scrollYProgress, [0, 1], ['-5%', '5%']);
 
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="relative flex flex-col lg:flex-row gap-12 lg:gap-20 w-full min-h-[60vh] items-center py-16 lg:py-24 border-b border-white/5 last:border-b-0"
+      transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+      className="relative flex flex-col lg:flex-row gap-12 lg:gap-24 w-full min-h-[60vh] items-center py-20 lg:py-32 border-b border-white/5 last:border-b-0"
     >
       {/* Left Content Area (Storytelling) */}
-      <div className="flex-1 flex flex-col gap-6 sm:gap-8 z-10 w-full">
-        <div className="flex items-center gap-4">
-          <span className="font-bold text-primary opacity-80" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
+      <div className="flex-1 flex flex-col gap-8 sm:gap-10 z-10 w-full">
+        <div className="flex items-center gap-5">
+          <span className="font-bold text-primary opacity-90" style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)' }}>
             {project.number}
           </span>
           <span className="h-px w-12 bg-white/20" />
-          <span className="text-xs sm:text-sm font-medium tracking-[0.2em] text-[#D7E2EA]/50 uppercase">
+          <span className="text-[10px] sm:text-xs font-medium tracking-[0.3em] text-[#D7E2EA]/50 uppercase">
             {project.year} • {project.status || 'LIVE'}
           </span>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <span className="text-sm font-medium tracking-wider text-secondary uppercase">
+        <div className="flex flex-col gap-3">
+          <span className="text-[11px] sm:text-xs font-medium tracking-[0.25em] text-secondary uppercase">
             {project.category}
           </span>
-          <h3 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tighter leading-none">
+          <h3 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white tracking-tighter leading-[0.9]">
             {project.name}
           </h3>
         </div>
 
-        <p className="text-base sm:text-lg text-[#D7E2EA]/70 font-light leading-relaxed max-w-xl">
+        <p className="text-base sm:text-lg lg:text-xl text-[#D7E2EA]/70 font-light leading-relaxed max-w-xl">
           {project.description}
         </p>
 
         {/* Floating Tech Stack Chips */}
-        <div className="flex flex-wrap gap-3 mt-2">
+        <div className="flex flex-wrap gap-3 mt-4">
           {project.techStack.map((tech) => (
             <span
               key={tech}
-              className="px-4 py-1.5 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-white/80 hover:bg-white/10 hover:border-primary/50 hover:text-white transition-colors duration-300 cursor-default shadow-sm"
+              className="px-4 py-2 rounded-full text-[10px] sm:text-xs font-medium bg-white/5 border border-white/10 text-white/80 transition-colors duration-300 ease-cinematic cursor-default shadow-sm hover:bg-white/10 hover:border-primary/40 hover:text-white"
             >
               {tech}
             </span>
@@ -231,7 +263,7 @@ const ProjectCard = ({ project, index, total, containerRef }: ProjectCardProps) 
         </div>
 
         {project.liveUrl !== '#' && (
-          <div className="mt-6 flex">
+          <div className="mt-8 flex">
             <LiveProjectButton href={project.liveUrl} />
           </div>
         )}
@@ -241,34 +273,29 @@ const ProjectCard = ({ project, index, total, containerRef }: ProjectCardProps) 
       {/* Right Presentation Area (Visual Mockup) */}
       <div className="flex-1 w-full relative group perspective-1000">
         {/* Ambient Glow behind image */}
-        <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="absolute inset-0 bg-primary/10 blur-[120px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-cinematic pointer-events-none" />
         
-        {/* The Device / Glass Panel */}
-        <motion.div 
-          className="relative w-full aspect-[4/3] rounded-2xl sm:rounded-[32px] overflow-hidden border border-white/10 bg-[#0A0A0F] shadow-2xl transition-transform duration-700 ease-out group-hover:rotate-x-2 group-hover:rotate-y-[-2deg] group-hover:scale-[1.02]"
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          {/* Inner glass reflection */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none" />
-          
-          {project.image === 'none' ? (
-            <motion.div
-              style={{ y: yParallax, scale: 1.1 }}
-              className="w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-700 flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10"
-            >
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-widest text-white/60 uppercase text-center px-6 leading-tight">{project.name}</div>
-              <div className="text-xs sm:text-sm font-medium tracking-[0.3em] text-white/30 uppercase mt-4 text-center px-6">{project.category}</div>
-            </motion.div>
-          ) : (
-            <motion.img
-              ref={imageRef}
-              src={project.image}
-              alt={`${project.name} Application Preview`}
-              style={{ y: yParallax, scale: 1.1 }}
-              className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
-            />
-          )}
-        </motion.div>
+        {/* The Device / Glass Panel (Doppelrand outer shell) */}
+        <div className="relative w-full aspect-[4/3] rounded-2xl sm:rounded-[2rem] p-1.5 sm:p-2 bg-white/[0.02] border border-white/5 shadow-2xl transition-transform duration-700 ease-cinematic group-hover:scale-[1.01]">
+          <motion.div 
+            className="relative w-full h-full rounded-[calc(2rem-0.5rem)] sm:rounded-[calc(2rem-0.5rem)] overflow-hidden bg-[#0A0A0F] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
+          >
+            {/* Inner glass reflection */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-cinematic z-10 pointer-events-none" />
+            
+            {project.image === 'none' ? (
+              <AbstractProjectVisual project={project} yParallax={yParallax} />
+            ) : (
+              <motion.img
+                ref={imageRef}
+                src={project.image}
+                alt={`${project.name} Application Preview`}
+                style={{ y: yParallax, scale: 1.05 }}
+                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700 ease-cinematic"
+              />
+            )}
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );
@@ -277,25 +304,25 @@ const ProjectCard = ({ project, index, total, containerRef }: ProjectCardProps) 
 const SecondaryProjectCard = ({ project, index }: { project: ProjectData, index: number }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: (index % 3) * 0.1 }}
-      className="group relative flex flex-col p-6 sm:p-8 rounded-2xl sm:rounded-[32px] border border-white/5 bg-[#0A0A0F] hover:bg-[#0f0f15] transition-colors duration-500 overflow-hidden"
+      transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1], delay: (index % 3) * 0.1 }}
+      className="group relative flex flex-col p-8 sm:p-10 rounded-2xl sm:rounded-[2rem] border border-white/5 bg-[#08080C] transition-all duration-500 ease-cinematic overflow-hidden hover:bg-[#0A0A0F] hover:border-white/10 hover:-translate-y-1"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-cinematic pointer-events-none" />
       
       <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-center justify-between mb-6 gap-2">
-          <span className="text-xs sm:text-sm font-medium tracking-wider text-secondary uppercase">
+        <div className="flex items-center justify-between mb-8 gap-3">
+          <span className="text-[10px] sm:text-xs font-medium tracking-[0.2em] text-secondary/80 uppercase">
             {project.category}
           </span>
-          <span className="text-[10px] sm:text-xs font-medium tracking-[0.1em] text-[#D7E2EA]/40 uppercase text-right whitespace-nowrap">
+          <span className="text-[9px] sm:text-[10px] font-medium tracking-[0.2em] text-[#D7E2EA]/40 uppercase text-right whitespace-nowrap">
             {project.year} • {project.status || 'LIVE'}
           </span>
         </div>
 
-        <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-4">
+        <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tighter leading-tight mb-5">
           {project.name}
         </h3>
         
@@ -303,11 +330,11 @@ const SecondaryProjectCard = ({ project, index }: { project: ProjectData, index:
           {project.description}
         </p>
 
-        <div className="flex flex-wrap gap-2 mt-8 mb-6">
+        <div className="flex flex-wrap gap-2 mt-10 mb-8">
           {project.techStack.map((tech) => (
             <span
               key={tech}
-              className="px-3 py-1 rounded-full text-[10px] font-medium bg-white/5 border border-white/10 text-white/70 shadow-sm"
+              className="px-3 py-1.5 rounded-full text-[9px] sm:text-[10px] font-medium tracking-wide bg-white/[0.03] border border-white/5 text-white/60 shadow-sm"
             >
               {tech}
             </span>
@@ -330,24 +357,24 @@ const ProjectsSection = () => {
   return (
     <section
       id="projects"
-      className="relative z-10 w-full bg-[#05050A] px-4 sm:px-6 md:px-10 pt-32 pb-32 overflow-hidden"
+      className="relative z-10 w-full bg-[#05050A] px-6 md:px-12 pt-40 pb-40 overflow-hidden"
     >
       {/* Background Atmosphere */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-[#0A0A0F] to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-deep-space to-transparent" />
         {/* Subtle grid pattern */}
         <div 
-          className="absolute inset-0 opacity-[0.03]"
-          style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px)', backgroundSize: '60px 60px' }}
+          className="absolute inset-0 opacity-[0.02]"
+          style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px)', backgroundSize: '80px 80px' }}
         />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl" ref={containerRef}>
-        <FadeIn y={40} className="mb-24 sm:mb-32">
-          <h2 className="text-5xl sm:text-6xl md:text-8xl font-black text-white tracking-tighter leading-none mb-6">
+        <FadeIn y={40} className="mb-32 sm:mb-40">
+          <h2 className="text-6xl sm:text-7xl md:text-9xl font-black text-white tracking-tighter leading-none mb-8">
             Selected Work.
           </h2>
-          <p className="text-lg sm:text-xl text-[#D7E2EA]/50 font-light max-w-2xl">
+          <p className="text-lg sm:text-xl md:text-2xl text-[#D7E2EA]/60 font-light max-w-3xl leading-relaxed">
             Things I've built, tested, and taken from idea to working product.
           </p>
         </FadeIn>
@@ -364,16 +391,16 @@ const ProjectsSection = () => {
           ))}
         </div>
 
-        <FadeIn y={40} className="mt-32 mb-16">
-          <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+        <FadeIn y={40} className="mt-48 mb-20">
+          <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-tight mb-6">
             More Work & Experiments
           </h3>
-          <p className="text-base sm:text-lg text-[#D7E2EA]/50 font-light max-w-2xl">
+          <p className="text-base sm:text-lg md:text-xl text-[#D7E2EA]/50 font-light max-w-3xl leading-relaxed">
             Additional products, prototypes, and developer tools exploring different technologies.
           </p>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
           {SECONDARY_PROJECTS.map((project, i) => (
             <SecondaryProjectCard
               key={project.number}
