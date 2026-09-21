@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const HeroSection = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  // Attempt to autoplay on mount in case browser policies blocked it initially
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+    }
+  }, []);
+
   return (
     <section 
       className="relative min-h-[100svh] w-full flex flex-col justify-center items-center overflow-hidden bg-[var(--bg-light)] pt-32 pb-16"
@@ -32,9 +42,20 @@ const HeroSection = () => {
         initial={{ scale: 0.8, opacity: 0, y: 50 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1], delay: 0.4 }}
-        className="relative z-10 w-[80vw] max-w-[600px] aspect-[3/4] md:aspect-square lg:aspect-video rounded-[40px] overflow-hidden shadow-2xl mt-8 md:mt-24"
+        className="relative z-10 w-[80vw] max-w-[600px] aspect-[3/4] md:aspect-square lg:aspect-video rounded-[40px] overflow-hidden shadow-2xl mt-8 md:mt-24 cursor-pointer group"
+        onClick={() => {
+          if (videoRef.current) {
+            if (isPlaying) {
+              videoRef.current.pause();
+            } else {
+              videoRef.current.play().catch(console.error);
+            }
+            setIsPlaying(!isPlaying);
+          }
+        }}
       >
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
@@ -43,12 +64,19 @@ const HeroSection = () => {
         >
           <source src="/me.mp4" type="video/mp4" />
         </video>
-        {/* Play icon overlay */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        {/* Play/Pause icon overlay */}
+        <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
           <div className="w-16 h-16 md:w-24 md:h-24 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 text-white shadow-lg">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
+            {!isPlaying ? (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            ) : (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+              </svg>
+            )}
           </div>
         </div>
       </motion.div>
