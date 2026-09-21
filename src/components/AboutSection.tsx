@@ -37,7 +37,7 @@ const AboutSection = () => {
             </FadeIn>
             <FadeIn delay={0.4} y={20}>
               <p>
-                Alongside my studies, I am interested in full stack web development and have been building real-world websites and web applications.
+                Alongside my studies, I focus on full-stack development, building real products, and experimenting with new tools. I enjoy taking ideas from concept to working software.
               </p>
             </FadeIn>
           </div>
@@ -62,7 +62,7 @@ const AboutSection = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3 w-3 bg-secondary"></span>
             </span>
-            Currently building real-world web applications and experimenting with full stack development.
+            Currently building real products and experimenting with developer tools.
           </p>
         </div>
       </FadeIn>

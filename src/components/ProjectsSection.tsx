@@ -12,31 +12,59 @@ interface ProjectData {
   liveUrl: string;
   image: string;
   year: string;
+  status?: string;
 }
 
-const PROJECTS: ProjectData[] = [
+const FEATURED_PROJECTS: ProjectData[] = [
   {
     number: '01',
-    category: 'Disaster Management Platform',
+    category: 'Healthcare / Disaster Relief',
     name: 'Arogya Relief',
-    description: 'A disaster management and emergency healthcare coordination platform designed to help people find emergency information, healthcare support, relief resources, and relevant organizations during disasters and emergencies.',
-    techStack: ['Next.js', 'TypeScript', 'TailwindCSS', 'Supabase'],
+    description: 'A disaster healthcare and relief coordination platform focused on helping people find emergency healthcare resources, disaster-readiness information, government schemes and relief resources.',
+    techStack: ['Next.js', 'TypeScript', 'TailwindCSS', 'Supabase', 'Leaflet', 'OpenStreetMap'],
     liveUrl: 'https://www.arogyarelief.in/',
     image: '/arogya_demo.png',
     year: '2025',
+    status: 'LIVE / IN DEVELOPMENT',
   },
   {
     number: '02',
-    category: 'Freelancer Marketplace',
+    category: 'Creator Tool / Video Processing',
+    name: 'Motion Subtitle Studio',
+    description: 'A browser-based caption generation tool designed for short-form video creators. Features automatic transcription, styling, and ASS subtitle rendering.',
+    techStack: ['React', 'Whisper', 'FFmpeg', 'TailwindCSS'],
+    liveUrl: '#',
+    image: 'none',
+    year: '2025',
+    status: 'PROTOTYPE',
+  },
+  {
+    number: '03',
+    category: 'FinTech / Trading Analysis',
+    name: 'TradeGate',
+    description: 'An educational trading decision platform focused on helping traders evaluate market structure, liquidity and risk before taking a trade. Built on the core idea that most losing trades should never be taken.',
+    techStack: ['React', 'TypeScript', 'TailwindCSS'],
+    liveUrl: '#',
+    image: 'none',
+    year: '2025',
+    status: 'PROTOTYPE',
+  },
+  {
+    number: '04',
+    category: 'Freelance Marketplace',
     name: 'Brandcey',
-    description: 'A freelancer and client marketplace designed to help freelancers showcase their work and connect with clients through project-based work.',
+    description: 'A freelancer-client marketplace designed to make hiring, project management and freelancer discovery easier with verified profiles and project workflows.',
     techStack: ['Next.js', 'TypeScript', 'TailwindCSS', 'Clerk'],
     liveUrl: 'https://www.brandcey.in/',
     image: '/brandcey_demo.png',
     year: '2025',
+    status: 'PROTOTYPE',
   },
+];
+
+const SECONDARY_PROJECTS: ProjectData[] = [
   {
-    number: '03',
+    number: '05',
     category: 'Full Stack Web Application',
     name: 'Qrivna',
     description: 'Built for creators and businesses who needed QR tools that felt modern instead of outdated. A fast and minimal QR platform focused on customization, analytics, and clean user experience.',
@@ -44,9 +72,10 @@ const PROJECTS: ProjectData[] = [
     liveUrl: '#',
     image: '/qrivna_demo_pro.png',
     year: '2025',
+    status: 'LIVE',
   },
   {
-    number: '04',
+    number: '06',
     category: 'AI SaaS Dashboard',
     name: 'BrollWriter',
     description: 'An AI-powered SaaS dashboard built to automate video script writing. Designed with an elegant, cinematic UI to help creators focus on storytelling rather than formatting.',
@@ -54,9 +83,10 @@ const PROJECTS: ProjectData[] = [
     liveUrl: '#',
     image: '/brollwriter_demo_pro.png',
     year: '2025',
+    status: 'LIVE',
   },
   {
-    number: '05',
+    number: '07',
     category: 'Analytics & Strategy Platform',
     name: 'Dhankathaa',
     description: 'A YouTube strategy and analytics platform. Designed to provide high-retention insights through a clean, data-rich interface that feels like a premium financial tool.',
@@ -64,16 +94,73 @@ const PROJECTS: ProjectData[] = [
     liveUrl: '#',
     image: '/dhankathaa_demo_pro.png',
     year: '2024',
+    status: 'LIVE',
   },
   {
-    number: '06',
-    category: 'Digital Showroom',
-    name: 'Freelance Portfolio',
-    description: 'A sophisticated digital portfolio showcase crafted to highlight high-end video editing and brand design. Built with smooth motion and minimal clutter.',
-    techStack: ['Next.js', 'Framer Motion'],
+    number: '08',
+    category: 'Professional / Freelance Platform',
+    name: 'GCMR.IN',
+    description: 'A platform concept focused on connecting clients and freelancers with structured onboarding, verification, communication and project workflows.',
+    techStack: ['Next.js', 'TypeScript', 'TailwindCSS'],
     liveUrl: '#',
-    image: '/freelance_demo_pro.png',
+    image: 'none',
+    year: '2025',
+    status: 'IN DEVELOPMENT',
+  },
+  {
+    number: '09',
+    category: 'Computer Vision / Hardware',
+    name: 'ESR Analyzer',
+    description: 'An experimental ESR measurement system using an ESP32-CAM to capture ESR tube images and assist with automated ESR measurement estimations.',
+    techStack: ['Python', 'ESP32-CAM'],
+    liveUrl: '#',
+    image: 'none',
     year: '2024',
+    status: 'EXPERIMENTAL',
+  },
+  {
+    number: '10',
+    category: 'Automation / Business Operations',
+    name: 'Revenue Command Center',
+    description: 'A prospecting and verification workflow designed to find businesses that may need website improvements, SEO work or digital services through browser automation.',
+    techStack: ['Playwright', 'Node.js'],
+    liveUrl: '#',
+    image: 'none',
+    year: '2024',
+    status: 'EXPERIMENTAL',
+  },
+  {
+    number: '11',
+    category: 'Developer Tool',
+    name: 'Vibe-Code Bug Tester',
+    description: 'An experimental developer tool for automatically inspecting websites and detecting common frontend, layout, responsiveness and basic runtime issues.',
+    techStack: ['Playwright', 'Node.js'],
+    liveUrl: '#',
+    image: 'none',
+    year: '2024',
+    status: 'EXPERIMENTAL',
+  },
+  {
+    number: '12',
+    category: 'Web Application',
+    name: 'Orchids',
+    description: 'A modern web application built with a focus on seamless user experience and performant frontend architecture.',
+    techStack: ['React', 'TailwindCSS'],
+    liveUrl: '#',
+    image: 'none',
+    year: '2024',
+    status: 'LIVE',
+  },
+  {
+    number: '13',
+    category: 'Web Development',
+    name: 'TheTapeChart',
+    description: 'A web development project exploring advanced frontend patterns, responsive layouts, and data visualization integrations.',
+    techStack: ['React', 'JavaScript', 'CSS'],
+    liveUrl: '#',
+    image: 'none',
+    year: '2024',
+    status: 'LIVE',
   },
 ];
 
@@ -114,7 +201,7 @@ const ProjectCard = ({ project, index, total, containerRef }: ProjectCardProps) 
           </span>
           <span className="h-px w-12 bg-white/20" />
           <span className="text-xs sm:text-sm font-medium tracking-[0.2em] text-[#D7E2EA]/50 uppercase">
-            {project.year} • LIVE
+            {project.year} • {project.status || 'LIVE'}
           </span>
         </div>
 
@@ -164,14 +251,74 @@ const ProjectCard = ({ project, index, total, containerRef }: ProjectCardProps) 
           {/* Inner glass reflection */}
           <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none" />
           
-          <motion.img
-            ref={imageRef}
-            src={project.image}
-            alt={`${project.name} Application Preview`}
-            style={{ y: yParallax, scale: 1.1 }}
-            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
-          />
+          {project.image === 'none' ? (
+            <motion.div
+              style={{ y: yParallax, scale: 1.1 }}
+              className="w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-700 flex flex-col items-center justify-center bg-gradient-to-br from-primary/10 to-secondary/10"
+            >
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-widest text-white/60 uppercase text-center px-6 leading-tight">{project.name}</div>
+              <div className="text-xs sm:text-sm font-medium tracking-[0.3em] text-white/30 uppercase mt-4 text-center px-6">{project.category}</div>
+            </motion.div>
+          ) : (
+            <motion.img
+              ref={imageRef}
+              src={project.image}
+              alt={`${project.name} Application Preview`}
+              style={{ y: yParallax, scale: 1.1 }}
+              className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+            />
+          )}
         </motion.div>
+      </div>
+    </motion.div>
+  );
+};
+
+const SecondaryProjectCard = ({ project, index }: { project: ProjectData, index: number }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: (index % 3) * 0.1 }}
+      className="group relative flex flex-col p-6 sm:p-8 rounded-2xl sm:rounded-[32px] border border-white/5 bg-[#0A0A0F] hover:bg-[#0f0f15] transition-colors duration-500 overflow-hidden"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      
+      <div className="relative z-10 flex flex-col h-full">
+        <div className="flex items-center justify-between mb-6 gap-2">
+          <span className="text-xs sm:text-sm font-medium tracking-wider text-secondary uppercase">
+            {project.category}
+          </span>
+          <span className="text-[10px] sm:text-xs font-medium tracking-[0.1em] text-[#D7E2EA]/40 uppercase text-right whitespace-nowrap">
+            {project.year} • {project.status || 'LIVE'}
+          </span>
+        </div>
+
+        <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-4">
+          {project.name}
+        </h3>
+        
+        <p className="text-sm sm:text-base text-[#D7E2EA]/60 font-light leading-relaxed flex-grow">
+          {project.description}
+        </p>
+
+        <div className="flex flex-wrap gap-2 mt-8 mb-6">
+          {project.techStack.map((tech) => (
+            <span
+              key={tech}
+              className="px-3 py-1 rounded-full text-[10px] font-medium bg-white/5 border border-white/10 text-white/70 shadow-sm"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        {project.liveUrl !== '#' && (
+          <div className="mt-auto flex">
+            <LiveProjectButton href={project.liveUrl} />
+          </div>
+        )}
       </div>
     </motion.div>
   );
@@ -201,21 +348,41 @@ const ProjectsSection = () => {
             Selected Work.
           </h2>
           <p className="text-lg sm:text-xl text-[#D7E2EA]/50 font-light max-w-2xl">
-            A curated showcase of digital products, interfaces, and tools built with precision, performance, and purpose.
+            Things I've built, tested, and taken from idea to working product.
           </p>
         </FadeIn>
 
         <div className="flex flex-col">
-          {PROJECTS.map((project, i) => (
+          {FEATURED_PROJECTS.map((project, i) => (
             <ProjectCard
               key={project.number}
               project={project}
               index={i}
-              total={PROJECTS.length}
+              total={FEATURED_PROJECTS.length}
               containerRef={containerRef}
             />
           ))}
         </div>
+
+        <FadeIn y={40} className="mt-32 mb-16">
+          <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+            More Work & Experiments
+          </h3>
+          <p className="text-base sm:text-lg text-[#D7E2EA]/50 font-light max-w-2xl">
+            Additional products, prototypes, and developer tools exploring different technologies.
+          </p>
+        </FadeIn>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {SECONDARY_PROJECTS.map((project, i) => (
+            <SecondaryProjectCard
+              key={project.number}
+              project={project}
+              index={i}
+            />
+          ))}
+        </div>
+
       </div>
     </section>
   );
