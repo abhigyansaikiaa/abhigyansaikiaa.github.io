@@ -3,12 +3,13 @@ import { motion } from 'framer-motion';
 
 const HeroSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  // Attempt to autoplay on mount in case browser policies blocked it initially
+  // We no longer attempt to force autoplay on mount, because we want the user 
+  // to explicitly click "Play" so the browser allows audio to play.
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+      videoRef.current.pause();
     }
   }, []);
 
@@ -56,9 +57,7 @@ const HeroSection = () => {
       >
         <video
           ref={videoRef}
-          autoPlay
           loop
-          muted
           playsInline
           className="w-full h-full object-cover"
         >
