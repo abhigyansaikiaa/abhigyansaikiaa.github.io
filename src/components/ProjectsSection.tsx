@@ -65,6 +65,17 @@ const FEATURED_PROJECTS: ProjectData[] = [
 const SECONDARY_PROJECTS: ProjectData[] = [
   {
     number: '05',
+    category: 'Web Tool / Image Processing',
+    name: 'ToolKB',
+    description: 'A client-side web utility for compressing, resizing, cropping, and converting images. Processes files entirely within the browser for privacy and speed, allowing users to hit exact KB size targets.',
+    techStack: ['Frontend', 'Canvas API', 'Web APIs'],
+    liveUrl: 'https://toolkb.in/',
+    image: 'none',
+    year: '2026',
+    status: 'LIVE',
+  },
+  {
+    number: '06',
     category: 'Full Stack Web Application',
     name: 'Qrivna',
     description: 'Built for creators and businesses who needed QR tools that felt modern instead of outdated. A fast and minimal QR platform focused on customization, analytics, and clean user experience.',
@@ -75,7 +86,7 @@ const SECONDARY_PROJECTS: ProjectData[] = [
     status: 'LIVE',
   },
   {
-    number: '06',
+    number: '07',
     category: 'AI SaaS Dashboard',
     name: 'BrollWriter',
     description: 'An AI-powered SaaS dashboard built to automate video script writing. Designed with an elegant, cinematic UI to help creators focus on storytelling rather than formatting.',
@@ -86,7 +97,7 @@ const SECONDARY_PROJECTS: ProjectData[] = [
     status: 'LIVE',
   },
   {
-    number: '07',
+    number: '08',
     category: 'Analytics & Strategy Platform',
     name: 'Dhankathaa',
     description: 'A YouTube strategy and analytics platform. Designed to provide high-retention insights through a clean, data-rich interface that feels like a premium financial tool.',
@@ -97,7 +108,7 @@ const SECONDARY_PROJECTS: ProjectData[] = [
     status: 'LIVE',
   },
   {
-    number: '08',
+    number: '09',
     category: 'Professional / Freelance Platform',
     name: 'GCMR.IN',
     description: 'A platform concept focused on connecting clients and freelancers with structured onboarding, verification, communication and project workflows.',
@@ -108,7 +119,7 @@ const SECONDARY_PROJECTS: ProjectData[] = [
     status: 'IN DEVELOPMENT',
   },
   {
-    number: '09',
+    number: '10',
     category: 'Computer Vision / Hardware',
     name: 'ESR Analyzer',
     description: 'An experimental ESR measurement system using an ESP32-CAM to capture ESR tube images and assist with automated ESR measurement estimations.',
@@ -119,7 +130,7 @@ const SECONDARY_PROJECTS: ProjectData[] = [
     status: 'EXPERIMENTAL',
   },
   {
-    number: '10',
+    number: '11',
     category: 'Automation / Business Operations',
     name: 'Revenue Command Center',
     description: 'A prospecting and verification workflow designed to find businesses that may need website improvements, SEO work or digital services through browser automation.',
@@ -130,7 +141,7 @@ const SECONDARY_PROJECTS: ProjectData[] = [
     status: 'EXPERIMENTAL',
   },
   {
-    number: '11',
+    number: '12',
     category: 'Developer Tool',
     name: 'Vibe-Code Bug Tester',
     description: 'An experimental developer tool for automatically inspecting websites and detecting common frontend, layout, responsiveness and basic runtime issues.',
@@ -141,7 +152,7 @@ const SECONDARY_PROJECTS: ProjectData[] = [
     status: 'EXPERIMENTAL',
   },
   {
-    number: '12',
+    number: '13',
     category: 'Web Application',
     name: 'Orchids',
     description: 'A modern web application built with a focus on seamless user experience and performant frontend architecture.',
@@ -152,7 +163,7 @@ const SECONDARY_PROJECTS: ProjectData[] = [
     status: 'LIVE',
   },
   {
-    number: '13',
+    number: '14',
     category: 'Web Development',
     name: 'TheTapeChart',
     description: 'A web development project exploring advanced frontend patterns, responsive layouts, and data visualization integrations.',
