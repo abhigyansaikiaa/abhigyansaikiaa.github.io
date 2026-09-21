@@ -9,6 +9,8 @@ export default {
         'deep-space': '#05050A',
       },
       fontFamily: {
+        satoshi: ['Satoshi', 'sans-serif'],
+        clash: ['Clash Display', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
       },
       animation: {

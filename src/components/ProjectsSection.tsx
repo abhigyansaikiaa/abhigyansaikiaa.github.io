@@ -164,252 +164,264 @@ const SECONDARY_PROJECTS: ProjectData[] = [
   },
 ];
 
-const AbstractProjectVisual = ({ project, yParallax }: { project: ProjectData, yParallax: any }) => {
+const AbstractProjectVisual = ({ project }: { project: ProjectData }) => {
   return (
-    <motion.div
-      style={{ y: yParallax, scale: 1.05 }}
-      className="w-full h-full opacity-90 group-hover:opacity-100 transition-all duration-700 ease-cinematic flex flex-col items-center justify-center bg-[#07070B] overflow-hidden relative"
-    >
+    <div className="w-full h-full flex flex-col items-center justify-center bg-black overflow-hidden relative border border-white/5">
       {/* Cinematic animated mesh background */}
       <div className="absolute inset-0 opacity-40">
-        <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-primary/20 rounded-full blur-[80px] mix-blend-screen animate-pulse" style={{ animationDuration: '6s' }} />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-secondary/10 rounded-full blur-[80px] mix-blend-screen animate-pulse" style={{ animationDuration: '8s', animationDelay: '1s' }} />
+        <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-primary/20 rounded-full blur-[80px] mix-blend-screen animate-[glow-pulse_6s_ease-in-out_infinite]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-secondary/10 rounded-full blur-[80px] mix-blend-screen animate-[glow-pulse_8s_ease-in-out_infinite_1s]" />
       </div>
       
       {/* Grid overlay */}
-      <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
       {/* Kinetic Typography */}
-      <div className="relative z-10 flex flex-col items-center justify-center mix-blend-plus-lighter">
-        <motion.div 
-          className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white/90 to-white/20 uppercase text-center px-6 leading-none"
-          whileHover={{ scale: 1.02, letterSpacing: '0.02em' }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
+      <div className="relative z-10 flex flex-col items-center justify-center mix-blend-plus-lighter text-center px-4">
+        <div className="font-clash text-4xl sm:text-5xl lg:text-7xl font-semibold tracking-tight text-white/90 uppercase leading-none drop-shadow-2xl">
           {project.name}
-        </motion.div>
-        <div className="text-[10px] sm:text-xs font-medium tracking-[0.4em] text-secondary/60 uppercase mt-6 text-center px-6">
+        </div>
+        <div className="text-[10px] sm:text-xs font-semibold tracking-[0.4em] text-secondary/60 uppercase mt-4 sm:mt-6">
           {project.category}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-interface ProjectCardProps {
-  project: ProjectData;
-  index: number;
-  total: number;
-  containerRef: React.RefObject<HTMLDivElement>;
-}
+const ToolKBPresentation = ({ project }: { project: ProjectData }) => {
+  return (
+    <div className="relative w-full mb-32 md:mb-48 group">
+      <FadeIn y={40}>
+        <div className="flex flex-col gap-8">
+          {/* Top Info Bar */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-4">
+                <span className="font-clash font-bold text-primary text-xl sm:text-2xl">{project.number}</span>
+                <span className="text-[10px] sm:text-xs font-bold tracking-[0.3em] text-[#D7E2EA]/50 uppercase">
+                  {project.year} • {project.status}
+                </span>
+              </div>
+              <h3 className="font-clash text-5xl sm:text-6xl md:text-8xl font-semibold text-white tracking-tight uppercase leading-[0.9]">
+                {project.name}
+              </h3>
+            </div>
+            <div className="md:text-right max-w-sm">
+              <p className="text-sm sm:text-base text-[#D7E2EA]/70 leading-relaxed mb-4">
+                {project.description}
+              </p>
+              {project.liveUrl !== '#' && (
+                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-xs font-bold uppercase tracking-[0.2em] text-white hover:text-primary transition-colors">
+                  View Live <span className="ml-2">↗</span>
+                </a>
+              )}
+            </div>
+          </div>
+          
+          {/* Massive Cinematic Visual */}
+          <div className="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-2xl md:rounded-[2rem] overflow-hidden bg-black border border-white/10 shadow-2xl">
+            {/* Ambient Background Engine */}
+            <div className="absolute inset-0 bg-[#05050A]">
+              <div className="absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/30 via-[#05050A] to-[#05050A] animate-[glow-pulse_8s_ease-in-out_infinite]" />
+              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-secondary/40 via-transparent to-transparent animate-[glow-pulse_12s_ease-in-out_infinite_2s]" />
+              <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+            </div>
 
-const ProjectCard = ({ project, index, containerRef }: ProjectCardProps) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+            {/* Content */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+              <span className="font-clash text-5xl sm:text-7xl md:text-9xl lg:text-[11rem] font-bold tracking-tight text-white drop-shadow-2xl opacity-90 transition-transform duration-1000 ease-cinematic group-hover:scale-105">
+                TOOLKB
+              </span>
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                {project.techStack.map(tech => (
+                  <span key={tech} className="px-4 py-2 rounded-full border border-white/20 bg-black/50 backdrop-blur-md text-xs font-medium text-white/80 uppercase tracking-widest">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+    </div>
+  );
+};
 
-  // Scroll progress for the whole section to drive parallax
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  });
+const StickyFeaturedProject = ({ project, index }: { project: ProjectData, index: number }) => {
+  return (
+    <div className="relative flex flex-col lg:flex-row w-full mb-32 md:mb-48 gap-12 lg:gap-24">
+      {/* Sticky Left: Information */}
+      <div className="w-full lg:w-5/12 lg:sticky lg:top-32 lg:h-[max-content] z-10 flex flex-col gap-6 sm:gap-8">
+        <FadeIn y={20}>
+          <div className="flex items-center gap-4">
+            <span className="font-clash font-bold text-primary text-xl sm:text-2xl">{project.number}</span>
+            <span className="text-[10px] sm:text-xs font-bold tracking-[0.3em] text-[#D7E2EA]/50 uppercase">
+              {project.year} • {project.status}
+            </span>
+          </div>
+          
+          <div className="flex flex-col gap-3 mt-4">
+            <span className="text-[10px] sm:text-xs font-semibold tracking-[0.25em] text-secondary uppercase">
+              {project.category}
+            </span>
+            <h3 className="font-clash text-4xl sm:text-5xl lg:text-7xl font-semibold text-white tracking-tight leading-[0.9]">
+              {project.name}
+            </h3>
+          </div>
 
-  // Unique parallax offset for the image to give it depth
-  const yParallax = useTransform(scrollYProgress, [0, 1], ['-5%', '5%']);
+          <p className="text-base sm:text-lg text-[#D7E2EA]/70 leading-relaxed mt-4 max-w-md">
+            {project.description}
+          </p>
+
+          <div className="flex flex-wrap gap-2 mt-6">
+            {project.techStack.map((tech) => (
+              <span
+                key={tech}
+                className="px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-medium border border-white/10 text-white/70 tracking-wider uppercase"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          {project.liveUrl !== '#' && (
+            <div className="mt-8">
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-xs font-bold uppercase tracking-[0.2em] text-white hover:text-primary transition-colors">
+                View Live <span className="ml-2">↗</span>
+              </a>
+            </div>
+          )}
+        </FadeIn>
+      </div>
+
+      {/* Scrolling Right: Visuals */}
+      <div className="w-full lg:w-7/12 flex flex-col gap-8">
+        <FadeIn y={40} delay={0.2}>
+          <div className="relative w-full aspect-[4/3] rounded-2xl md:rounded-[2rem] bg-white/[0.02] border border-white/10 p-2 shadow-2xl group overflow-hidden">
+            <div className="relative w-full h-full rounded-[calc(2rem-0.5rem)] overflow-hidden bg-[#0A0A0F]">
+              {project.image === 'none' ? (
+                <AbstractProjectVisual project={project} />
+              ) : (
+                <img
+                  src={project.image}
+                  alt={`${project.name} Application Preview`}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-cinematic group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                  loading="lazy"
+                />
+              )}
+            </div>
+          </div>
+        </FadeIn>
+      </div>
+    </div>
+  );
+};
+
+const BentoSecondaryProject = ({ project, index }: { project: ProjectData, index: number }) => {
+  // Creating an asymmetric grid logic
+  const isLarge = index === 0 || index === 4 || index === 7;
+  const colSpan = isLarge ? 'md:col-span-2' : 'md:col-span-1';
 
   return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
-      className="relative flex flex-col lg:flex-row gap-12 lg:gap-24 w-full min-h-[60vh] items-center py-20 lg:py-32 border-b border-white/5 last:border-b-0"
-    >
-      {/* Left Content Area (Storytelling) */}
-      <div className="flex-1 flex flex-col gap-8 sm:gap-10 z-10 w-full">
-        <div className="flex items-center gap-5">
-          <span className="font-bold text-primary opacity-90" style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)' }}>
-            {project.number}
-          </span>
-          <span className="h-px w-12 bg-white/20" />
-          <span className="text-[10px] sm:text-xs font-medium tracking-[0.3em] text-[#D7E2EA]/50 uppercase">
-            {project.year} • {project.status || 'LIVE'}
-          </span>
-        </div>
+    <FadeIn y={30} delay={(index % 3) * 0.1} className={`relative flex flex-col w-full h-full ${colSpan}`}>
+      <div className="group relative flex flex-col h-full min-h-[360px] p-8 sm:p-10 rounded-2xl md:rounded-[2rem] border border-white/10 bg-[#08080C] hover:bg-[#0A0A0F] hover:border-white/20 transition-colors duration-500 overflow-hidden">
+        
+        {/* Subtle hover gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-        <div className="flex flex-col gap-3">
-          <span className="text-[11px] sm:text-xs font-medium tracking-[0.25em] text-secondary uppercase">
-            {project.category}
-          </span>
-          <h3 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white tracking-tighter leading-[0.9]">
+        <div className="relative z-10 flex flex-col h-full">
+          <div className="flex items-start justify-between mb-8 gap-4">
+            <span className="text-[9px] sm:text-[10px] font-bold tracking-[0.2em] text-secondary/80 uppercase">
+              {project.category}
+            </span>
+            <span className="text-[9px] sm:text-[10px] font-bold tracking-[0.2em] text-[#D7E2EA]/40 uppercase whitespace-nowrap text-right">
+              {project.year}
+            </span>
+          </div>
+
+          <h3 className="font-clash text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-tight mb-4">
             {project.name}
           </h3>
-        </div>
+          
+          <p className="text-sm sm:text-base text-[#D7E2EA]/60 leading-relaxed flex-grow">
+            {project.description}
+          </p>
 
-        <p className="text-base sm:text-lg lg:text-xl text-[#D7E2EA]/70 font-light leading-relaxed max-w-xl">
-          {project.description}
-        </p>
-
-        {/* Floating Tech Stack Chips */}
-        <div className="flex flex-wrap gap-3 mt-4">
-          {project.techStack.map((tech) => (
-            <span
-              key={tech}
-              className="px-4 py-2 rounded-full text-[10px] sm:text-xs font-medium bg-white/5 border border-white/10 text-white/80 transition-colors duration-300 ease-cinematic cursor-default shadow-sm hover:bg-white/10 hover:border-primary/40 hover:text-white"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-
-        {project.liveUrl !== '#' && (
-          <div className="mt-8 flex">
-            <LiveProjectButton href={project.liveUrl} />
+          <div className="flex flex-wrap gap-2 mt-8 mb-6">
+            {project.techStack.map((tech) => (
+              <span
+                key={tech}
+                className="px-2.5 py-1 rounded border border-white/10 text-[9px] sm:text-[10px] font-semibold text-white/50 tracking-wider uppercase"
+              >
+                {tech}
+              </span>
+            ))}
           </div>
-        )}
 
-      </div>
-
-      {/* Right Presentation Area (Visual Mockup) */}
-      <div className="flex-1 w-full relative group perspective-1000">
-        {/* Ambient Glow behind image */}
-        <div className="absolute inset-0 bg-primary/10 blur-[120px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000 ease-cinematic pointer-events-none" />
-        
-        {/* The Device / Glass Panel (Doppelrand outer shell) */}
-        <div className="relative w-full aspect-[4/3] rounded-2xl sm:rounded-[2rem] p-1.5 sm:p-2 bg-white/[0.02] border border-white/5 shadow-2xl transition-transform duration-700 ease-cinematic group-hover:scale-[1.01]">
-          <motion.div 
-            className="relative w-full h-full rounded-[calc(2rem-0.5rem)] sm:rounded-[calc(2rem-0.5rem)] overflow-hidden bg-[#0A0A0F] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
-          >
-            {/* Inner glass reflection */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-cinematic z-10 pointer-events-none" />
-            
-            {project.image === 'none' ? (
-              <AbstractProjectVisual project={project} yParallax={yParallax} />
-            ) : (
-              <motion.img
-                ref={imageRef}
-                src={project.image}
-                alt={`${project.name} Application Preview`}
-                style={{ y: yParallax, scale: 1.05 }}
-                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700 ease-cinematic"
-              />
-            )}
-          </motion.div>
+          {project.liveUrl !== '#' && (
+            <div className="mt-auto flex">
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-[10px] font-bold uppercase tracking-[0.2em] text-white hover:text-primary transition-colors">
+                Visit <span className="ml-1">↗</span>
+              </a>
+            </div>
+          )}
         </div>
       </div>
-    </motion.div>
-  );
-};
-
-const SecondaryProjectCard = ({ project, index }: { project: ProjectData, index: number }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1], delay: (index % 3) * 0.1 }}
-      className="group relative flex flex-col p-8 sm:p-10 rounded-2xl sm:rounded-[2rem] border border-white/5 bg-[#08080C] transition-all duration-500 ease-cinematic overflow-hidden hover:bg-[#0A0A0F] hover:border-white/10 hover:-translate-y-1"
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-cinematic pointer-events-none" />
-      
-      <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-center justify-between mb-8 gap-3">
-          <span className="text-[10px] sm:text-xs font-medium tracking-[0.2em] text-secondary/80 uppercase">
-            {project.category}
-          </span>
-          <span className="text-[9px] sm:text-[10px] font-medium tracking-[0.2em] text-[#D7E2EA]/40 uppercase text-right whitespace-nowrap">
-            {project.year} • {project.status || 'LIVE'}
-          </span>
-        </div>
-
-        <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tighter leading-tight mb-5">
-          {project.name}
-        </h3>
-        
-        <p className="text-sm sm:text-base text-[#D7E2EA]/60 font-light leading-relaxed flex-grow">
-          {project.description}
-        </p>
-
-        <div className="flex flex-wrap gap-2 mt-10 mb-8">
-          {project.techStack.map((tech) => (
-            <span
-              key={tech}
-              className="px-3 py-1.5 rounded-full text-[9px] sm:text-[10px] font-medium tracking-wide bg-white/[0.03] border border-white/5 text-white/60 shadow-sm"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-
-        {project.liveUrl !== '#' && (
-          <div className="mt-auto flex">
-            <LiveProjectButton href={project.liveUrl} />
-          </div>
-        )}
-      </div>
-    </motion.div>
+    </FadeIn>
   );
 };
 
 const ProjectsSection = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   return (
     <section
       id="projects"
-      className="relative z-10 w-full bg-[#05050A] px-6 md:px-12 pt-40 pb-40 overflow-hidden"
+      className="relative z-10 w-full bg-[#05050A] px-6 md:px-12 pt-32 pb-40 overflow-hidden"
     >
-      {/* Background Atmosphere */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-deep-space to-transparent" />
-        {/* Subtle grid pattern */}
-        <div 
-          className="absolute inset-0 opacity-[0.02]"
-          style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px)', backgroundSize: '80px 80px' }}
-        />
-      </div>
-
-      <div className="relative z-10 mx-auto max-w-7xl" ref={containerRef}>
-        <FadeIn y={40} className="mb-32 sm:mb-40">
-          <h2 className="text-6xl sm:text-7xl md:text-9xl font-black text-white tracking-tighter leading-none mb-8">
-            Selected Work.
+      <div className="relative z-10 mx-auto max-w-screen-2xl">
+        <FadeIn y={30} className="mb-24 md:mb-40 flex flex-col md:flex-row md:items-end justify-between gap-8 border-t border-white/10 pt-16">
+          <h2 className="font-clash text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] font-semibold text-white tracking-tight leading-[0.8] uppercase">
+            Selected<br />Work.
           </h2>
-          <p className="text-lg sm:text-xl md:text-2xl text-[#D7E2EA]/60 font-light max-w-3xl leading-relaxed">
-            Things I've built, tested, and taken from idea to working product.
+          <p className="text-sm md:text-base text-[#D7E2EA]/60 max-w-sm leading-relaxed uppercase tracking-widest font-semibold">
+            Architecting and building production-ready products, systems, and utilities.
           </p>
         </FadeIn>
 
-        <div className="flex flex-col">
-          {FEATURED_PROJECTS.map((project, i) => (
-            <ProjectCard
-              key={project.number}
-              project={project}
-              index={i}
-              total={FEATURED_PROJECTS.length}
-              containerRef={containerRef}
-            />
-          ))}
+        <div className="flex flex-col w-full">
+          {FEATURED_PROJECTS.map((project, i) => {
+            if (i === 0) {
+              return <ToolKBPresentation key={project.number} project={project} />;
+            }
+            return (
+              <StickyFeaturedProject
+                key={project.number}
+                project={project}
+                index={i}
+              />
+            );
+          })}
         </div>
 
-        <FadeIn y={40} className="mt-48 mb-20">
-          <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tighter leading-tight mb-6">
-            More Work & Experiments
+        <FadeIn y={40} className="mt-32 md:mt-48 mb-16 md:mb-24 border-t border-white/10 pt-16">
+          <h3 className="font-clash text-4xl sm:text-5xl md:text-7xl font-semibold text-white tracking-tight leading-tight uppercase mb-6">
+            More Work &<br />Experiments.
           </h3>
-          <p className="text-base sm:text-lg md:text-xl text-[#D7E2EA]/50 font-light max-w-3xl leading-relaxed">
-            Additional products, prototypes, and developer tools exploring different technologies.
+          <p className="text-sm md:text-base text-[#D7E2EA]/50 max-w-xl leading-relaxed uppercase tracking-widest font-semibold">
+            Additional products, prototypes, and tools.
           </p>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+        {/* Asymmetric Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {SECONDARY_PROJECTS.map((project, i) => (
-            <SecondaryProjectCard
+            <BentoSecondaryProject
               key={project.number}
               project={project}
               index={i}
             />
           ))}
         </div>
-
       </div>
     </section>
   );
