@@ -1,71 +1,79 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import FadeIn from './FadeIn';
+import React from 'react';
 
 const SERVICES = [
   {
-    number: '01',
-    title: 'Content & Analysis',
-    description:
-      'Leveraging media data analysis and YouTube strategy to craft engaging scripts and content that maximize audience retention and drive growth.',
+    num: '01',
+    title: 'FULL STACK',
+    desc: 'End-to-end development bridging robust backend architecture with seamless user experiences.',
+    color: 'bg-purple-500'
   },
   {
-    number: '02',
-    title: 'Full Stack Web Development',
-    description:
-      'Building robust, full-stack applications with React, Next.js, TypeScript, Tailwind CSS, and Supabase to deliver responsive and user-centric digital products.',
+    num: '02',
+    title: 'WEB APP',
+    desc: 'Building high-performance, client-heavy web applications optimized for speed and scale.',
+    color: 'bg-cyan-400'
   },
   {
-    number: '03',
-    title: 'Digital Media & Design',
-    description:
-      'Executing professional video editing, brand identity creation, and high-CTR thumbnail design to create cohesive and high-impact digital experiences.',
+    num: '03',
+    title: 'PRODUCT',
+    desc: 'Taking ideas from zero to one with strong product strategy and user-centric design.',
+    color: 'bg-orange-400'
   },
+  {
+    num: '04',
+    title: 'AUTOMATION',
+    desc: 'Streamlining workflows and data processing through custom scripts and internal tooling.',
+    color: 'bg-emerald-400'
+  }
 ];
 
 const ServicesSection = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-66.66%']);
-
   return (
-    <section id="services" ref={containerRef} className="relative h-[300vh] bg-[#05050A]">
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden border-t border-white/5 pt-12">
-        <FadeIn y={30} className="w-full max-w-screen-2xl mx-auto px-6 md:px-12 mb-12">
-          <h2 className="font-clash text-5xl sm:text-7xl md:text-[8rem] font-semibold text-white tracking-tighter uppercase leading-[0.8]">
-            Services.
-          </h2>
-        </FadeIn>
-
-        <div className="w-full overflow-hidden">
-          <motion.div 
-            style={{ x }} 
-            className="flex w-[300vw] h-full items-center"
-          >
-            {SERVICES.map((service, index) => (
-              <div key={service.number} className="w-[100vw] px-6 md:px-12 flex-shrink-0 flex items-center justify-center">
-                <div className="max-w-4xl w-full flex flex-col md:flex-row gap-8 md:gap-16 items-start md:items-center">
-                  <span className="font-clash font-bold text-[6rem] md:text-[12rem] leading-none text-white/5 tracking-tighter">
-                    {service.number}
-                  </span>
-                  <div className="flex flex-col gap-6">
-                    <h3 className="font-clash text-3xl sm:text-5xl md:text-6xl font-semibold text-white uppercase tracking-tight leading-[0.9]">
-                      {service.title}
-                    </h3>
-                    <p className="text-base sm:text-lg md:text-xl text-[#D7E2EA]/60 font-light leading-relaxed max-w-xl">
-                      {service.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </motion.div>
+    <section id="services" className="relative w-full bg-[#121212] pt-32 pb-32 md:pb-48 rounded-t-[40px] md:rounded-t-[80px] -mt-10 z-20 overflow-hidden">
+      
+      <div className="w-full max-w-screen-2xl mx-auto px-6 md:px-12 mb-20 flex justify-between items-end">
+        <h2 className="font-clash font-bold text-[10vw] md:text-[8vw] text-white uppercase tracking-tighter leading-[0.8] m-0">
+          EXPERTISE.
+        </h2>
+        <div className="hidden md:block w-1/3">
+          <p className="font-satoshi text-sm text-white/50 leading-relaxed">
+            Delivering complete digital solutions from system architecture to polished user interfaces.
+          </p>
         </div>
       </div>
+
+      <div className="w-full max-w-screen-2xl mx-auto px-6 md:px-12 flex flex-col gap-6">
+        {SERVICES.map((service) => (
+          <div 
+            key={service.num} 
+            className="group relative w-full border border-white/10 rounded-[32px] md:stadium-border p-6 md:p-12 lg:p-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 hover:bg-white/[0.03] transition-colors duration-500"
+          >
+            {/* Left: Number & Title */}
+            <div className="flex items-center gap-6 md:gap-12 w-full md:w-1/2">
+              <span className="font-satoshi font-bold text-lg md:text-2xl text-cyan-400">
+                {service.num}
+              </span>
+              <h3 className="font-clash font-bold text-4xl md:text-5xl lg:text-7xl text-white uppercase tracking-tighter">
+                {service.title}
+              </h3>
+            </div>
+            
+            {/* Right: Desc & Capsule visual */}
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-8 w-full md:w-1/2 justify-end">
+              <p className="font-satoshi text-sm text-white/60 max-w-xs md:text-right">
+                {service.desc}
+              </p>
+              
+              {/* Unifex Stadium Visual Element */}
+              <div className="hidden md:flex items-center justify-center w-[120px] h-[60px] stadium-border overflow-hidden bg-[#1A1A1A] border border-white/10">
+                {/* Abstract shape representing the service */}
+                <div className={`w-8 h-8 rounded-full ${service.color} opacity-80 group-hover:scale-150 transition-transform duration-700 blur-sm`} />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      
     </section>
   );
 };

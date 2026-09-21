@@ -2,58 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@layer base {
+  :root {
+    --bg-light: #F2F2F2;
+    --bg-dark: #121212;
+    --accent: #06B6D4;
+    --text-dark: #121212;
+    --text-light: #F2F2F2;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+  
+  /* Unifex-style Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+  }
 }
 
-html,
-body,
-#root {
-  background: #05050A;
-  font-family: 'Satoshi', 'Inter', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer utilities {
+  .clip-text {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stadium-border {
+    border-radius: 9999px;
+  }
 }
 
-h1, h2, h3, h4, h5, h6, .font-clash {
-  font-family: 'Clash Display', sans-serif;
-}
-
-body {
-  min-height: 100vh;
-  color: #d7e2ea;
-  overflow-x: hidden;
-}
-
-.hero-heading {
-  background: linear-gradient(135deg, #8A2BE2 0%, #00FFFF 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  filter: drop-shadow(0 0 15px rgba(138,43,226,0.3));
-}
-
-/* Subtle scrollbar that matches the dark theme */
-::-webkit-scrollbar {
-  width: 10px;
-  background: #05050A;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #1f1f24;
-  border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #2a2a30;
-}
-
-img {
-  -webkit-user-drag: none;
-  user-select: none;
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
