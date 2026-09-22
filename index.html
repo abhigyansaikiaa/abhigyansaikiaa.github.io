@@ -26,6 +26,17 @@
     <!-- Main css -->
     <link rel="stylesheet" href="assets-unifex/css/main.css" />
     <style>
+      /* Prevent global horizontal scroll which breaks layout on Safari/mobile */
+      html, body {
+        overflow-x: hidden !important;
+        width: 100%;
+        max-width: 100vw;
+      }
+      #smooth-wrapper, #smooth-content {
+        overflow-x: hidden;
+        width: 100%;
+      }
+
       .footer-three-bottom-title { font-size: clamp(3rem, 12vw, 12rem); }
 
       /* Hero person cutout — full Unifex scale */
@@ -44,6 +55,55 @@
         object-fit: cover;
         object-position: top center;
         width: 100%;
+      }
+
+      /* =========================================================
+         MOBILE & TABLET OPTIMIZATIONS 
+         ========================================================= */
+      @media (max-width: 991px) {
+        /* Fix Hero Image overflowing screen */
+        .banner-three-man img {
+          height: clamp(300px, 60vh, 500px) !important;
+          max-width: 100vw !important;
+          object-fit: contain;
+        }
+        
+        /* Fix About Image too tall */
+        .about-three-thumb img {
+          max-height: 400px !important;
+        }
+
+        /* Responsive Typography Overrides for Giant Text */
+        .banner-three-title {
+          font-size: 15vw !important; /* 'developer' text */
+        }
+        .tw-text-120 {
+          font-size: clamp(32px, 8vw, 60px) !important;
+          line-height: 1.2 !important;
+        }
+        .tw-text-101 {
+          font-size: clamp(40px, 10vw, 80px) !important;
+        }
+        .tw-text-15 {
+          font-size: clamp(24px, 5vw, 40px) !important;
+          line-height: 1.3 !important;
+        }
+        .banner-three-left-title {
+          font-size: clamp(24px, 5vw, 36px) !important;
+        }
+        .tw-text-605 {
+          font-size: clamp(20px, 4vw, 30px) !important;
+        }
+      }
+
+      /* Disable Custom Cursor on Touch Devices to fix tap issues */
+      @media (pointer: coarse), (max-width: 991px) {
+        #magic-cursor {
+          display: none !important;
+        }
+        body, .tw-magic-cursor, a, button {
+          cursor: auto !important;
+        }
       }
     </style>
   </head>
