@@ -87,8 +87,13 @@
         }
 
         /* Responsive Typography Overrides for Giant Text */
+        .title-scale-short {
+          font-size: min(15vw, 150px) !important;
+        }
+        .title-scale-long {
+          font-size: 9.5vw !important; /* Fit MEDICAL LAB on mobile */
+        }
         .banner-three-title {
-          font-size: min(15vw, 150px) !important; /* Scale text down for mobile to fit */
           margin-bottom: 30px !important;
         }
         .tw-text-120 {
@@ -110,15 +115,40 @@
         }
       }
 
-      /* Global fixes for the DEVELOPER heading on ALL sizes */
+      /* Global fixes for the HERO heading on ALL sizes */
       .banner-three-title {
-        white-space: nowrap !important;
         text-align: center !important;
-        /* Allow the text to be as wide as needed, perfectly centered. 
-           Using vw ensures it fits exactly on one line without wrapping or overflowing horizontally */
-        font-size: 13vw !important; 
         margin-left: auto;
         margin-right: auto;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .hero-title-word {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        line-height: 0.9;
+        white-space: nowrap;
+        text-transform: uppercase;
+        margin: 0;
+      }
+      
+      .hero-title-word.title-long {
+        white-space: normal; /* Allow wrapping for long title */
+      }
+
+      /* Base sizing for short words (DEVELOPER, DESIGNER, CREATOR) */
+      .title-scale-short {
+        font-size: 13vw !important;
+      }
+      /* Reduced sizing for long word (MEDICAL LAB SCIENCES) */
+      .title-scale-long {
+        font-size: 7.5vw !important; 
       }
 
       /* Global fix for the Hero Cutout positioning to align nicely with the text */
@@ -308,7 +338,15 @@
                   <div class="banner-three-man position-absolute start-50 translate-middle-x">
                     <img src="abhigyan-cutout.png" alt="Abhigyan Saikia" />
                   </div>
-                  <h1 class="banner-three-title text-black tw-mb-30">developer</h1>
+                  <h1 class="banner-three-title text-black tw-mb-30" id="hero-title-container">
+                    <!-- Invisible placeholder for spacing to prevent layout jump -->
+                    <span style="visibility: hidden; pointer-events: none; user-select: none; line-height: 0.9; width: 100%;" class="title-scale-long title-long">MEDICAL LAB<br/>SCIENCES</span>
+                    
+                    <span class="hero-title-word title-scale-short">DEVELOPER</span>
+                    <span class="hero-title-word title-scale-short" style="opacity: 0;">DESIGNER</span>
+                    <span class="hero-title-word title-scale-short" style="opacity: 0;">CREATOR</span>
+                    <span class="hero-title-word title-scale-long title-long" style="opacity: 0;">MEDICAL LAB<br/>SCIENCES</span>
+                  </h1>
                   <div class="banner-three-wrap d-flex justify-content-between align-items-end position-relative z-1">
 
                     <!-- Left bio -->

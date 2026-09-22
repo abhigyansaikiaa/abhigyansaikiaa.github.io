@@ -634,4 +634,23 @@
       scrub: 1,
     },
   });
+
+  ///////////////////////
+  // 12. Hero Title Rotation
+  const titleWords = gsap.utils.toArray("#hero-title-container .hero-title-word");
+  if (titleWords.length > 1) {
+    const tl = gsap.timeline({ repeat: -1 });
+    
+    // Ensure initial state: first word visible, others hidden
+    gsap.set(titleWords, { opacity: 0 });
+    gsap.set(titleWords[0], { opacity: 1 });
+
+    titleWords.forEach((word, i) => {
+      const nextWord = titleWords[i + 1] || titleWords[0];
+      
+      // Keep current word visible for 2.5s, then crossfade out while next fades in
+      tl.to(word, { opacity: 0, duration: 0.6, ease: "power2.inOut" }, "+=2.5")
+        .to(nextWord, { opacity: 1, duration: 0.6, ease: "power2.inOut" }, "<");
+    });
+  }
 })(jQuery);
