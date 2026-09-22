@@ -642,15 +642,20 @@
     const tl = gsap.timeline({ repeat: -1 });
     
     // Ensure initial state: first word visible, others hidden
-    gsap.set(titleWords, { opacity: 0 });
-    gsap.set(titleWords[0], { opacity: 1 });
+    // We animate marginTop instead of y so we don't conflict with the CSS translate(-50%, -50%)
+    gsap.set(titleWords, { opacity: 0, marginTop: 40 });
+    gsap.set(titleWords[0], { opacity: 1, marginTop: 0 });
 
     titleWords.forEach((word, i) => {
       const nextWord = titleWords[i + 1] || titleWords[0];
       
-      // Keep current word visible for 2.5s, then crossfade out while next fades in
-      tl.to(word, { opacity: 0, duration: 0.6, ease: "power2.inOut" }, "+=2.5")
-        .to(nextWord, { opacity: 1, duration: 0.6, ease: "power2.inOut" }, "<");
+      // Current word moves up slightly and fades out, next word moves in from below
+      tl.to(word, { opacity: 0, marginTop: -40, duration: 0.8, ease: "power2.inOut" }, "+=2.5")
+        .fromTo(nextWord, 
+          { opacity: 0, marginTop: 40 }, 
+          { opacity: 1, marginTop: 0, duration: 0.8, ease: "power2.inOut" }, 
+          "<"
+        );
     });
   }
 })(jQuery);
