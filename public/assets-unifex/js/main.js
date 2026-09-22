@@ -69,10 +69,10 @@
   ////////////////////////////////////////////////////
   // 02. Sticky Js
   $(window).on("scroll", function () {
-    if ($(window).scrollTop() >= 260) {
-      $(".header").addClass("fixed-header");
+    if ($(window).scrollTop() >= 50) {
+      $(".header").addClass("scrolled-header");
     } else {
-      $(".header").removeClass("fixed-header");
+      $(".header").removeClass("scrolled-header");
     }
   });
 

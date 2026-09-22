@@ -135,6 +135,23 @@
           cursor: auto !important;
         }
       }
+
+      /* Custom Sticky Header */
+      .portfolio-header {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 100%;
+        transition: all 0.3s ease-in-out !important;
+        z-index: 1000 !important;
+      }
+      .scrolled-header {
+        background: rgba(242, 242, 242, 0.85) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+        padding-block: 8px !important; 
+      }
     </style>
   </head>
 
@@ -245,7 +262,7 @@
     </div>
 
     <!-- ==================== Header ==================== -->
-    <header class="header header-two header-three tw-transition-all tw-z-99 position-relative">
+    <header class="header header-two header-three tw-transition-all portfolio-header">
       <div class="container tw-container-1800-px">
         <nav class="d-flex align-items-center justify-content-between position-relative">
           <div class="header-three-logo tw-rounded-md">
@@ -363,7 +380,7 @@
               <div class="row">
                 <div class="col-xl-6">
                   <div class="about-three-thumb w-100 tw-clip-anim tw-rounded-lg" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-                    <img class="tw-anim-img w-100 tw-rounded-lg" data-animate="true" src="abhigyan.png" alt="Abhigyan Saikia" style="object-fit:cover;max-height:600px;" />
+                    <img class="tw-anim-img w-100 tw-rounded-lg" data-animate="true" src="abhigyan.webp" alt="Abhigyan Saikia" style="object-fit:cover;max-height:600px;" loading="lazy" />
                   </div>
                 </div>
                 <div class="col-xl-6">
@@ -528,7 +545,7 @@
                     </div>
                     <div class="portfolio-thumb not-hide-cursor fw-bold mb-0 tw-rounded-lg" data-cursor="View">
                       <a class="d-block cursor-hide tw-rounded-lg" href="https://toolkb.in/" target="_blank" rel="noopener noreferrer">
-                        <img class="w-100 tw-rounded-lg" src="assets/toolkb.png" alt="ToolKB.in" />
+                        <img class="w-100 tw-rounded-lg" src="assets/toolkb.webp" alt="ToolKB.in" loading="lazy" />
                       </a>
                     </div>
                   </div>
@@ -547,7 +564,7 @@
                     </div>
                     <div class="portfolio-thumb not-hide-cursor fw-bold mb-0 tw-rounded-lg" data-cursor="View">
                       <a class="d-block cursor-hide tw-rounded-lg" href="https://www.arogyarelief.in/" target="_blank" rel="noopener noreferrer">
-                        <img class="w-100 tw-rounded-lg" src="assets/arogyarelief.png" alt="Arogya Relief" />
+                        <img class="w-100 tw-rounded-lg" src="assets/arogyarelief.webp" alt="Arogya Relief" loading="lazy" />
                       </a>
                     </div>
                   </div>
@@ -566,7 +583,7 @@
                     </div>
                     <div class="portfolio-thumb not-hide-cursor fw-bold mb-0 tw-rounded-lg" data-cursor="View">
                       <a class="d-block cursor-hide tw-rounded-lg" href="#">
-                        <img class="w-100 tw-rounded-lg" src="assets/motionsubtitles.png" alt="Motion Subtitle Studio" />
+                        <img class="w-100 tw-rounded-lg" src="assets/motionsubtitles.webp" alt="Motion Subtitle Studio" loading="lazy" />
                       </a>
                     </div>
                   </div>
@@ -585,7 +602,7 @@
                     </div>
                     <div class="portfolio-thumb not-hide-cursor fw-bold mb-0 tw-rounded-lg" data-cursor="View">
                       <a class="d-block cursor-hide tw-rounded-lg" href="https://www.brandcey.in/" target="_blank" rel="noopener noreferrer">
-                        <img class="w-100 tw-rounded-lg" src="assets/brandcey.png" alt="Brandcey" />
+                        <img class="w-100 tw-rounded-lg" src="assets/brandcey.webp" alt="Brandcey" loading="lazy" />
                       </a>
                     </div>
                   </div>
@@ -623,7 +640,7 @@
                       </div>
                       <div><span class="feature-three-text tw-text-605 fw-medium text-white tw-transition-3 d-inline-block">—</span></div>
                     </div>
-                    <div class="hover__reveal-bg bg-img" data-background-image="qrivna_demo_pro.png"></div>
+                    <div class="hover__reveal-bg bg-img" data-background-image="qrivna_demo_pro.webp"></div>
                   </div>
 
                   <div class="feature-three-single hover__reveal-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
@@ -635,7 +652,7 @@
                       </div>
                       <div><span class="feature-three-text tw-text-605 fw-medium text-white tw-transition-3 d-inline-block">—</span></div>
                     </div>
-                    <div class="hover__reveal-bg bg-img" data-background-image="brollwriter_demo_pro.png"></div>
+                    <div class="hover__reveal-bg bg-img" data-background-image="brollwriter_demo_pro.webp"></div>
                   </div>
 
                   <div class="feature-three-single hover__reveal-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
@@ -647,7 +664,7 @@
                       </div>
                       <div><span class="feature-three-text tw-text-605 fw-medium text-white tw-transition-3 d-inline-block">—</span></div>
                     </div>
-                    <div class="hover__reveal-bg bg-img" data-background-image="dhankathaa_demo_pro.png"></div>
+                    <div class="hover__reveal-bg bg-img" data-background-image="dhankathaa_demo_pro.webp"></div>
                   </div>
 
                   <div class="feature-three-single hover__reveal-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
@@ -742,7 +759,7 @@
                   </div>
                   <div class="footer-three-top-info tw-p-705 tw-rounded-lg d-flex tw-gap-6">
                     <div class="footer-three-top-thumb tw-w-160-px">
-                      <img class="tw-rounded-lg w-100" src="abhigyan.png" alt="Abhigyan Saikia" style="object-fit:cover;height:140px;" />
+                      <img class="tw-rounded-lg w-100" src="abhigyan.webp" alt="Abhigyan Saikia" style="object-fit:cover;height:140px;" loading="lazy" />
                     </div>
                     <div class="footer-three-top-content d-flex justify-content-between flex-column">
                       <div>
