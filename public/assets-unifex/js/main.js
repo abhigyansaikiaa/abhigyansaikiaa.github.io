@@ -63,6 +63,13 @@
       .set(".preloader", {
         display: "none",
         zIndex: -1,
+      })
+      // Reveal the header smoothly
+      .add(() => {
+        const header = document.querySelector(".portfolio-header");
+        if (header) {
+          header.classList.remove("header-hidden");
+        }
       });
   });
 

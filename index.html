@@ -145,6 +145,10 @@
         transition: all 0.3s ease-in-out !important;
         z-index: 1000 !important;
       }
+      .header-hidden {
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
       .scrolled-header {
         background: rgba(242, 242, 242, 0.85) !important;
         backdrop-filter: blur(12px) !important;
@@ -262,7 +266,7 @@
     </div>
 
     <!-- ==================== Header ==================== -->
-    <header class="header header-two header-three tw-transition-all portfolio-header">
+    <header class="header header-two header-three tw-transition-all portfolio-header header-hidden">
       <div class="container tw-container-1800-px">
         <nav class="d-flex align-items-center justify-content-between position-relative">
           <div class="header-three-logo tw-rounded-md">
