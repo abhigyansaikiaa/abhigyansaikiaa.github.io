@@ -472,6 +472,35 @@
           .hero-info-col.text-right { text-align: right; align-items: flex-end; }
           .hero-info-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #a1a1aa; font-family: monospace; margin: 0; }
           .hero-info-row { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; font-weight: 700; margin: 0; }
+          
+          /* Mobile Overrides */
+          @media (max-width: 991px) {
+            .hero-character-wrapper {
+              height: 65vh;
+              align-items: flex-end;
+              padding-bottom: 5rem; /* Make room for CTA and text at bottom */
+            }
+            .hero-character-wrapper img {
+              height: 100%;
+              width: 150vw; /* Scale up slightly on mobile to avoid small cutout */
+            }
+            .hero-cta-block {
+              bottom: 2rem !important; /* Anchor button at very bottom */
+            }
+            .hero-mobile-side {
+              writing-mode: horizontal-tb; /* Make text horizontal */
+              transform: translateY(20px); /* Pre-animation position */
+              left: 0;
+              top: auto;
+              bottom: 8.5rem; /* Sit above the CTA button with ample space */
+              width: 100%;
+              justify-content: center;
+              flex-wrap: wrap;
+            }
+            .hero-mobile-side span {
+              margin: 0;
+            }
+          }
         </style>
 
         <section class="hero-transplant bg-black">

@@ -49,13 +49,16 @@
     gsap.config({
       nullTargetWarn: false,
     });
-    let smoother = ScrollSmoother.create({
-      smoothTouch: 0.2,
-      smooth: 4,
-      effects: true,
-      normalizeScroll: false,
-      ignoreMobileResize: true,
-    });
+    let smoother = null;
+    if (window.matchMedia("(min-width: 992px)").matches) {
+      smoother = ScrollSmoother.create({
+        smoothTouch: 0,
+        smooth: 4,
+        effects: true,
+        normalizeScroll: false,
+        ignoreMobileResize: true,
+      });
+    }
   }
 
   ////////////////////////////////////////////////////
