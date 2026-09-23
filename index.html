@@ -31,10 +31,12 @@
         overflow-x: hidden !important;
         width: 100%;
         max-width: 100vw;
+        position: relative;
       }
       #smooth-wrapper, #smooth-content {
-        overflow-x: hidden;
+        overflow-x: hidden !important;
         width: 100%;
+        max-width: 100vw;
       }
 
       .footer-three-bottom-title { font-size: clamp(3rem, 12vw, 12rem); }
@@ -350,6 +352,8 @@
           .hero-transplant {
             position: relative;
             height: 100vh;
+            height: 100dvh;
+            min-height: 100vh;
             width: 100%;
             overflow: hidden;
             display: flex;
@@ -399,6 +403,8 @@
             width: 100%;
             white-space: normal; /* Allow natural wrapping for AI AUTOMATION */
             word-break: break-word; /* Safe wrapping */
+            will-change: transform, opacity, clip-path; /* GPU acceleration */
+            -webkit-clip-path: inset(100% 0% 0% 0%); /* Safari initial state fallback */
           }
           .hero-character-wrapper {
             position: relative;
@@ -417,6 +423,7 @@
             height: 75vh;
             object-fit: contain;
             object-position: bottom;
+            will-change: transform; /* Hardware acceleration for mobile */
           }
           @media (min-width: 768px) {
             .hero-character-wrapper img { width: 60vw; height: 85vh; }
@@ -475,16 +482,16 @@
           <div class="hero-title-wrapper">
             <h1 id="hero-title-container" class="banner-three-title">
               <div style="visibility: hidden; pointer-events: none; width: 100%;">AI AUTOMATION</div>
-              <div class="hero-title-word" style="clip-path: inset(100% 0% 0% 0%); margin-top: 40px; opacity: 0;">DEVELOPER</div>
-              <div class="hero-title-word" style="opacity: 0; margin-top: 40px;">DESIGNER</div>
-              <div class="hero-title-word" style="opacity: 0; margin-top: 40px;">CREATOR</div>
-              <div class="hero-title-word" style="opacity: 0; margin-top: 40px;">AI AUTOMATION</div>
+              <div class="hero-title-word" style="clip-path: inset(100% 0% 0% 0%); -webkit-clip-path: inset(100% 0% 0% 0%); margin-top: 40px; opacity: 0;">DEVELOPER</div>
+              <div class="hero-title-word" style="clip-path: inset(100% 0% 0% 0%); -webkit-clip-path: inset(100% 0% 0% 0%); opacity: 0; margin-top: 40px;">DESIGNER</div>
+              <div class="hero-title-word" style="clip-path: inset(100% 0% 0% 0%); -webkit-clip-path: inset(100% 0% 0% 0%); opacity: 0; margin-top: 40px;">CREATOR</div>
+              <div class="hero-title-word" style="clip-path: inset(100% 0% 0% 0%); -webkit-clip-path: inset(100% 0% 0% 0%); opacity: 0; margin-top: 40px;">AI AUTOMATION</div>
             </h1>
           </div>
 
           <!-- MY CHARACTER -->
           <div class="hero-character-wrapper banner-three-man">
-            <img src="abhigyan-cutout.png" alt="Abhigyan Saikia" style="-webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%); mask-image: linear-gradient(to bottom, black 85%, transparent 100%);" />
+            <img src="abhigyan-cutout.png" alt="Abhigyan Saikia" style="-webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%); mask-image: linear-gradient(to bottom, black 85%, transparent 100%); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;" />
           </div>
 
           <!-- RESTORED CTA BLOCK -->
@@ -621,7 +628,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="service-three-thumb"><img src="assets-unifex/images/thumbs/service-three-thumb1.png" alt="Full Stack" /></div>
+                      <div class="service-three-thumb"><img src="assets-unifex/images/thumbs/service-three-thumb1.png" alt="Full Stack" loading="lazy" decoding="async" /></div>
                     </div>
                   </div>
 
@@ -640,7 +647,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="service-three-thumb"><img src="assets-unifex/images/thumbs/service-three-thumb2.png" alt="Web App" /></div>
+                      <div class="service-three-thumb"><img src="assets-unifex/images/thumbs/service-three-thumb2.png" alt="Web App" loading="lazy" decoding="async" /></div>
                     </div>
                   </div>
 
@@ -658,7 +665,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="service-three-thumb"><img src="assets-unifex/images/thumbs/service-three-thumb3.png" alt="Product" /></div>
+                      <div class="service-three-thumb"><img src="assets-unifex/images/thumbs/service-three-thumb3.png" alt="Product" loading="lazy" decoding="async" /></div>
                     </div>
                   </div>
 
@@ -677,7 +684,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="service-three-thumb"><img src="assets-unifex/images/thumbs/service-three-thumb4.png" alt="Automation" /></div>
+                      <div class="service-three-thumb"><img src="assets-unifex/images/thumbs/service-three-thumb4.png" alt="Automation" loading="lazy" decoding="async" /></div>
                     </div>
                   </div>
 
