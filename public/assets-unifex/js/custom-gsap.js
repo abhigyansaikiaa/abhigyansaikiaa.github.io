@@ -625,20 +625,6 @@
   });
 
   ///////////////////////
-  // 11. Portfolio Three Effect
-  gsap.to(".portfolio-three-shape", {
-    scrollTrigger: {
-      trigger: ".portfolio-three-area",
-      start: "top center-=200",
-      pin: ".portfolio-three-shape",
-      end: "bottom bottom-=200",
-      markers: false,
-      pinSpacing: false,
-      scrub: 1,
-    },
-  });
-
-  ///////////////////////
   // 11.5 Hero Character Parallax
   gsap.to(".hero-character-wrapper img", {
     y: 100, // Moves down slightly as user scrolls down
