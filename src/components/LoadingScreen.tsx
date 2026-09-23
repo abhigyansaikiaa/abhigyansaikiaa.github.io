@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, Variants } from "framer-motion";
+import { useAssetLoader } from "../hooks/useAssetLoader";
 
 const slideUp: Variants = {
   initial: { y: 0 },
@@ -43,8 +44,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
 }) => {
   const [dimension, setDimension] = useState({ width: 0, height: 0 });
   const [isMobile, setIsMobile] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
+  const { progress, isComplete } = useAssetLoader();
 
   useEffect(() => {
     setDimension({ width: window.innerWidth, height: window.innerHeight });
@@ -57,28 +57,6 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Mock progress loading from 0 to 100 over ~2 seconds
-  useEffect(() => {
-    const duration = 2000;
-    const interval = 20; // 50fps roughly
-    const steps = duration / interval;
-    const increment = 100 / steps;
-
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + increment;
-        if (next >= 100) {
-          clearInterval(timer);
-          setIsComplete(true);
-          return 100;
-        }
-        return next;
-      });
-    }, interval);
-
-    return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
