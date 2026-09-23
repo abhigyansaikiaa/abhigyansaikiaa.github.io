@@ -58,6 +58,7 @@
         normalizeScroll: false,
         ignoreMobileResize: true,
       });
+      window.ScrollSmootherInstance = smoother;
     }
   }
 

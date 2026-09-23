@@ -199,13 +199,29 @@
   });
 
   // Auto-close menu when a navigation item is clicked
-  $(".tw-main-menu-mobile nav ul li a").on("click", function () {
+  $(".tw-main-menu-mobile nav ul li a").on("click", function (e) {
+    e.preventDefault();
+    const targetHref = $(this).attr("href");
+
     setTimeout(() => {
       $(".tw-text-hover-effect-word").removeClass("animated-text");
     }, 1200);
 
     $(".tw-offcanvas-2-area").removeClass("opened");
     $(".body-overlay").removeClass("opened");
+
+    if (targetHref && targetHref.startsWith("#") && targetHref.length > 1) {
+      setTimeout(() => {
+        if (window.ScrollSmootherInstance) {
+          window.ScrollSmootherInstance.scrollTo(targetHref, true, "top top+=100");
+        } else {
+          const targetElement = $(targetHref);
+          if (targetElement.length) {
+            $("html, body").animate({ scrollTop: targetElement.offset().top - 100 }, 800);
+          }
+        }
+      }, 500);
+    }
   });
 
   ////////////////////////////////////////////////////
