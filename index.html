@@ -475,24 +475,32 @@
           
           /* Mobile Overrides */
           @media (max-width: 991px) {
+            #hero-title-container {
+              font-size: clamp(2.8rem, 13vw, 5rem); /* ~10-15% bigger */
+              transform: translateY(-8vh); /* Move upward */
+            }
             .hero-character-wrapper {
-              height: 65vh;
+              height: 55vh;
               align-items: flex-end;
-              padding-bottom: 5rem; /* Make room for CTA and text at bottom */
+              padding-bottom: 0;
+              margin-bottom: 6.5rem; /* Make room for CTA and text at bottom */
             }
             .hero-character-wrapper img {
               height: 100%;
               width: 150vw; /* Scale up slightly on mobile to avoid small cutout */
+              position: absolute;
+              left: 50%;
+              transform: translateX(-50%); /* Precisely center */
             }
             .hero-cta-block {
-              bottom: 2rem !important; /* Anchor button at very bottom */
+              bottom: 1.5rem !important; /* Anchor button at very bottom */
             }
             .hero-mobile-side {
               writing-mode: horizontal-tb; /* Make text horizontal */
               transform: translateY(20px); /* Pre-animation position */
               left: 0;
               top: auto;
-              bottom: 8.5rem; /* Sit above the CTA button with ample space */
+              bottom: 7rem; /* Sit above the CTA button with ample space */
               width: 100%;
               justify-content: center;
               flex-wrap: wrap;
