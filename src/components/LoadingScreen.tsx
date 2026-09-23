@@ -158,19 +158,16 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
                 <span className="invisible block font-clash text-2xl md:text-5xl font-bold tracking-tight uppercase leading-[1.6]">
                   MEDICAL LAB SCIENCES
                 </span>
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={index}
-                    initial={{ y: "35%", opacity: 0 }}
-                    animate={{ y: "0%", opacity: 1 }}
-                    exit={{ y: "-35%", opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
-                    className="absolute inset-0 flex items-center justify-center whitespace-nowrap font-clash text-2xl md:text-5xl font-bold tracking-tight uppercase leading-[1.6]"
-                    style={{ color: textColor }}
-                  >
-                    {words[index]}
-                  </motion.span>
-                </AnimatePresence>
+                <motion.span
+                  key={index}
+                  initial={{ y: "35%" }}
+                  animate={{ y: "0%" }}
+                  transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
+                  className="absolute inset-0 flex items-center justify-center whitespace-nowrap font-clash text-2xl md:text-5xl font-bold tracking-tight uppercase leading-[1.6]"
+                  style={{ color: textColor }}
+                >
+                  {words[index]}
+                </motion.span>
               </div>
             </div>
           </div>
