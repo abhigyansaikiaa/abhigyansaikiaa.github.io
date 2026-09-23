@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { motion, Variants, AnimatePresence } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const slideUp: Variants = {
   initial: { y: 0 },
@@ -24,15 +24,22 @@ interface LoadingScreenProps {
 const LoadingScreen: React.FC<LoadingScreenProps> = ({
   onComplete,
   words = [
-    "DEVELOPER",
-    "DESIGNER",
-    "CREATOR",
-    "MEDICAL LAB SCIENCES",
-    "ABHIGYAN",
+    "नमस्ते",
+    "Hello",
+    "Bonjour",
+    "स्वागत",
+    "Ciao",
+    "Olà",
+    "やあ",
+    "Hallå",
+    "Guten tag",
+    "प्रणाम",
+    "Hallo",
+    "आपका स्वागत है",
   ],
-  backgroundColor = "#121212",
+  backgroundColor = "#141516",
   textColor = "#ffffff",
-  accentColor = "#06b6d4", // cyan-400 equivalent approx for the portfolio
+  accentColor = "#e11d2a",
 }) => {
   const [dimension, setDimension] = useState({ width: 0, height: 0 });
   const [isMobile, setIsMobile] = useState(false);
@@ -155,15 +162,15 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
                 style={{ backgroundColor: accentColor }}
               />
               <div className="relative overflow-hidden">
-                <span className="invisible block font-clash text-2xl md:text-5xl font-bold tracking-tight uppercase leading-[1.6]">
-                  MEDICAL LAB SCIENCES
+                <span className="invisible block text-5xl font-light leading-[1.6] md:text-6xl">
+                  {words.reduce((a, b) => (a.length > b.length ? a : b), "")}
                 </span>
                 <motion.span
                   key={index}
                   initial={{ y: "35%" }}
                   animate={{ y: "0%" }}
                   transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-                  className="absolute inset-0 flex items-center justify-center whitespace-nowrap font-clash text-2xl md:text-5xl font-bold tracking-tight uppercase leading-[1.6]"
+                  className="absolute inset-0 flex items-center justify-center whitespace-nowrap text-5xl font-light leading-[1.6] md:text-6xl"
                   style={{ color: textColor }}
                 >
                   {words[index]}
@@ -172,7 +179,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
             </div>
           </div>
 
-          <div className="absolute bottom-8 left-6 md:left-12 z-[2] flex items-center gap-3">
+          <div className="absolute bottom-8 left-8 z-[2] flex items-center gap-3">
             <motion.span
               className="block h-1.5 w-1.5 rounded-full"
               style={{ backgroundColor: accentColor }}
@@ -180,22 +187,22 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
               transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
             />
             <span
-              className="font-satoshi text-[11px] font-bold uppercase tracking-[0.35em] opacity-60"
+              className="text-[11px] font-medium uppercase tracking-[0.35em] opacity-60"
               style={{ color: textColor }}
             >
               Loading experience
             </span>
           </div>
 
-          <div className="absolute bottom-4 right-6 md:right-12 z-[2] flex items-end tabular-nums">
+          <div className="absolute bottom-4 right-6 z-[2] flex items-end tabular-nums md:right-10">
             <span
-              className="font-clash font-bold text-[18vw] leading-none tracking-tighter md:text-[12vw]"
+              className="font-[var(--font-accent)] text-[18vw] leading-none tracking-tighter md:text-[12vw]"
               style={{ color: textColor }}
             >
               {String(Math.round(clamped)).padStart(2, "0")}
             </span>
             <span
-              className="mb-[2vw] ml-1 font-satoshi font-bold text-[4vw] md:mb-[1.5vw] md:text-[2.5vw]"
+              className="mb-[2vw] ml-1 text-[4vw] font-light md:mb-[1.5vw] md:text-[2.5vw]"
               style={{ color: accentColor }}
             >
               %
