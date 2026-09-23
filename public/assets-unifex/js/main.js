@@ -198,6 +198,16 @@
     $(".body-overlay").removeClass("opened");
   });
 
+  // Auto-close menu when a navigation item is clicked
+  $(".tw-main-menu-mobile nav ul li a").on("click", function () {
+    setTimeout(() => {
+      $(".tw-text-hover-effect-word").removeClass("animated-text");
+    }, 1200);
+
+    $(".tw-offcanvas-2-area").removeClass("opened");
+    $(".body-overlay").removeClass("opened");
+  });
+
   ////////////////////////////////////////////////////
   // 06. Sidebar Js
   $(".tw-menu-bar").on("click", function () {
