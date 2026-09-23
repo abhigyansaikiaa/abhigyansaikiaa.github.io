@@ -27,50 +27,110 @@
   "use strict";
 
   ////////////////////////////////////////////////////
-  // 01. PreLoader Js
+  // 01. PreLoader & Hero Reveal Js
   document.addEventListener("DOMContentLoaded", () => {
-    // Create GSAP timeline
+    // Hide navbar initially to prevent flash
+    const header = document.querySelector(".portfolio-header");
+    if (header) header.style.opacity = "0";
+
+    // Set initial states for hero elements
+    gsap.set(".banner-three-man", { opacity: 0, y: 30 }); // Subtle fade/slide for character
+    // Title word is handled inline in HTML
+    // Support content handled inline in HTML
+
     const tl = gsap.timeline();
-    const svg = document.getElementById("preloaderSvg");
-    const curve = "M0 502S175 272 500 272s500 230 500 230V0H0Z";
-    const flat = "M0 2S175 1 500 1s500 1 500 1V0H0Z";
-    // Text animation
-    tl.to(".preloader-heading .load-text, .preloader-heading .cont", {
-      delay: 1,
-      y: -80,
-      opacity: 0,
-      duration: 0.6,
-    })
-      // SVG curve animation
-      .to(svg, {
-        duration: 0.6,
-        attr: { d: curve },
-        ease: "power2.inOut",
-      })
-      // Flatten SVG
-      .to(svg, {
-        duration: 0.6,
-        attr: { d: flat },
-        ease: "power2.inOut",
-      })
-      // Slide preloader up
-      .to(".preloader", {
-        y: "-130%",
-        duration: 0.8,
-        ease: "power4.inOut",
-      })
-      // Remove from DOM flow
-      .set(".preloader", {
-        display: "none",
-        zIndex: -1,
-      })
-      // Reveal the header smoothly
-      .add(() => {
-        const header = document.querySelector(".portfolio-header");
-        if (header) {
-          header.classList.remove("header-hidden");
+    const svg = document.querySelector(".preloader-svg path");
+    const percentEl = document.querySelector(".preloader-percent");
+    const wordEl = document.querySelector(".preloader-word");
+    const preloaderWords = ["Hello", "नमस्ते", "Bonjour", "Hola", "Ciao", "مرحباً", "你好", "こんにちは"];
+    
+    // SVG paths matching reference
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const initialPath = `M0 0 L${width} 0 L${width} ${height} Q${width/2} ${height + 300} 0 ${height} Z`;
+    const finalPath = `M0 0 L${width} 0 L${width} 0 Q${width/2} 0 0 0 Z`;
+
+    if (svg) svg.setAttribute("d", initialPath);
+
+    // Simulated Loading
+    let dummy = { value: 0 };
+    let wordIndex = 0;
+
+    tl.to(dummy, {
+      value: 100,
+      duration: 1.8,
+      ease: "power2.inOut",
+      onUpdate: () => {
+        if (percentEl) percentEl.textContent = Math.round(dummy.value).toString().padStart(2, "0");
+        
+        let newIndex = Math.floor((dummy.value / 100) * preloaderWords.length);
+        if (newIndex >= preloaderWords.length) newIndex = preloaderWords.length - 1;
+        if (newIndex !== wordIndex) {
+          wordIndex = newIndex;
+          if (wordEl) wordEl.textContent = preloaderWords[wordIndex];
         }
-      });
+      }
+    })
+    // Preloader Text Exit
+    .to(".preloader-content, .preloader-percent, .preloader-dot-pulse", {
+      y: -50,
+      opacity: 0,
+      duration: 0.4,
+      ease: "power3.in"
+    }, "-=0.2")
+    // SVG Morph & Slide Up
+    .to(svg, {
+      attr: { d: finalPath },
+      duration: 1.0,
+      ease: "power4.inOut"
+    }, "slideUp")
+    .to(".custom-preloader", {
+      y: "-100vh",
+      duration: 1.0,
+      ease: "power4.inOut",
+      onComplete: () => {
+        const pl = document.querySelector(".custom-preloader");
+        if (pl) pl.style.display = "none";
+      }
+    }, "slideUp")
+    
+    // Hero Sequence Starts
+    .add(() => {
+      if (header) {
+        header.classList.remove("header-hidden");
+        gsap.to(header, { opacity: 1, duration: 1, ease: "power3.out" });
+      }
+    }, "-=0.2")
+    
+    // 1. Character Reveal
+    .to(".banner-three-man", {
+      opacity: 1,
+      duration: 1.4,
+      ease: "power3.out"
+    }, "-=0.5")
+    
+    // 2. Title clip-reveal (slides up from y:100% inside overflow-hidden h1)
+    .to(".hero-title-word:nth-child(2)", {
+      clipPath: "inset(0% 0% 0% 0%)",
+      opacity: 1,
+      marginTop: 0,
+      duration: 1.2,
+      ease: "power4.out"
+    }, "-=1.0")
+    
+    // 3. Side content staggered entrance
+    .to(".hero-support-mobile", {
+      x: 0,
+      opacity: 1,
+      duration: 1.0,
+      ease: "power3.out"
+    }, "-=0.8")
+    .to(".hero-support-desktop", {
+      y: 0,
+      opacity: 1,
+      duration: 1.0,
+      ease: "power3.out"
+    }, "<");
   });
 
   ////////////////////////////////////////////////////

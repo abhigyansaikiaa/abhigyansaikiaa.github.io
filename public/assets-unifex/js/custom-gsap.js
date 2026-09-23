@@ -636,26 +636,92 @@
   });
 
   ///////////////////////
+  // 11.5 Hero Character Parallax
+  gsap.to(".hero-character-wrapper img", {
+    y: 100, // Moves down slightly as user scrolls down
+    scrollTrigger: {
+      trigger: ".hero-transplant",
+      start: "top top",
+      end: "bottom top",
+      scrub: true,
+      markers: false,
+    }
+  });
+
+  ///////////////////////
   // 12. Hero Title Rotation
   const titleWords = gsap.utils.toArray("#hero-title-container .hero-title-word");
   if (titleWords.length > 1) {
     const tl = gsap.timeline({ repeat: -1 });
     
-    // Ensure initial state: first word visible, others hidden
-    // We animate marginTop instead of y so we don't conflict with the CSS translate(-50%, -50%)
-    gsap.set(titleWords, { opacity: 0, marginTop: 40 });
-    gsap.set(titleWords[0], { opacity: 1, marginTop: 0 });
+    // Ensure initial state: we only set initial state for subsequent words.
+    // The first one is animated in by main.js.
+    const otherWords = titleWords.slice(1);
+    gsap.set(otherWords, { opacity: 0, clipPath: "inset(100% 0% 0% 0%)", marginTop: 40 });
 
     titleWords.forEach((word, i) => {
       const nextWord = titleWords[i + 1] || titleWords[0];
       
-      // Current word moves up slightly and fades out, next word moves in from below
-      tl.to(word, { opacity: 0, marginTop: -40, duration: 0.8, ease: "power2.inOut" }, "+=2.5")
-        .fromTo(nextWord, 
-          { opacity: 0, marginTop: 40 }, 
-          { opacity: 1, marginTop: 0, duration: 0.8, ease: "power2.inOut" }, 
-          "<"
-        );
+      // Current word clips out upwards, next word clips in from below
+      tl.to(word, { 
+        opacity: 0, 
+        marginTop: -60,
+        clipPath: "inset(0% 0% 100% 0%)",
+        duration: 1.0, 
+        ease: "power4.inOut" 
+      }, i === 0 ? "+=3.5" : "+=2.5")
+      .fromTo(nextWord, 
+        { opacity: 0, marginTop: 40, clipPath: "inset(100% 0% 0% 0%)" }, 
+        { opacity: 1, marginTop: 0, clipPath: "inset(0% 0% 0% 0%)", duration: 1.0, ease: "power4.inOut" }, 
+        "<"
+      );
     });
   }
+
+  ///////////////////////
+  // 13. Timeline Section GSAP
+  if ($("#timeline-container").length) {
+    // Animate the vertical progress line
+    gsap.to(".timeline-progress", {
+      height: "100%",
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#timeline-container",
+        start: "top 20%",
+        end: "bottom 50%",
+        scrub: true,
+      }
+    });
+
+    // Stagger animate each row as it comes into view
+    gsap.utils.toArray(".timeline-row").forEach((row, index) => {
+      const title = row.querySelector(".timeline-row-title");
+      const desc = row.querySelector(".timeline-desc");
+      const card = row.querySelector(".timeline-card");
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: row,
+          start: "top 80%", // triggers when top of row hits 80% down viewport
+          toggleActions: "play none none reverse"
+        }
+      });
+
+      tl.to(title, {
+        opacity: 1,
+        x: 0,
+        filter: "blur(0px)",
+        duration: 0.8,
+        ease: "power3.out"
+      })
+      .to([desc, card], {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power3.out"
+      }, "-=0.6");
+    });
+  }
+
 })(jQuery);
