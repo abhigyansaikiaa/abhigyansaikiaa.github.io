@@ -406,34 +406,7 @@
             will-change: transform, opacity, clip-path; /* GPU acceleration */
             -webkit-clip-path: inset(100% 0% 0% 0%); /* Safari initial state fallback */
           }
-          .hero-character-wrapper {
-            position: relative;
-            z-index: 20;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            width: 100%;
-            height: 75vh;
-            pointer-events: none;
-          }
-          .hero-character-wrapper img {
-            position: relative;
-            z-index: 21;
-            width: 125vw;
-            height: 75vh;
-            object-fit: contain;
-            object-position: bottom;
-            will-change: transform; /* Hardware acceleration for mobile */
-          }
-          @media (min-width: 768px) {
-            .hero-character-wrapper img { width: 60vw; height: 85vh; }
-          }
-          @media (min-width: 1024px) {
-            .hero-character-wrapper img { width: 45vw; height: 85vh; }
-          }
-          @media (min-width: 1200px) {
-            .hero-character-wrapper { display: none !important; }
-          }
+
 
           /* Side Content Mobile */
           .hero-mobile-side {
@@ -482,19 +455,7 @@
               font-size: clamp(2.8rem, 13vw, 5rem); /* ~10-15% bigger */
               transform: translateY(-8vh); /* Move upward */
             }
-            .hero-character-wrapper {
-              height: 55vh;
-              align-items: flex-end;
-              padding-bottom: 0;
-              margin-bottom: 6.5rem; /* Make room for CTA and text at bottom */
-            }
-            .hero-character-wrapper img {
-              height: 100%;
-              width: 150vw; /* Scale up slightly on mobile to avoid small cutout */
-              position: absolute;
-              left: 50%;
-              transform: translateX(-50%); /* Precisely center */
-            }
+
             .hero-cta-block {
               bottom: 1.5rem !important; /* Anchor button at very bottom */
             }
@@ -529,10 +490,7 @@
             </h1>
           </div>
 
-          <!-- MY CHARACTER -->
-          <div class="hero-character-wrapper banner-three-man">
-            <img src="abhigyan-cutout.png" alt="Abhigyan Saikia" style="-webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%); mask-image: linear-gradient(to bottom, black 85%, transparent 100%); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;" />
-          </div>
+
 
           <!-- RESTORED CTA BLOCK -->
           <div class="hero-cta-block text-center position-absolute start-50 translate-middle-x" style="bottom: 12%; z-index: 25;">
