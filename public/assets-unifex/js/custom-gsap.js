@@ -627,15 +627,18 @@
 
   ///////////////////////
   // 11.5 Hero Character Parallax
-  gsap.to(".hero-character-wrapper img", {
-    y: 100, // Moves down slightly as user scrolls down
-    scrollTrigger: {
-      trigger: ".hero-transplant",
-      start: "top top",
-      end: "bottom top",
-      scrub: true,
-      markers: false,
-    }
+  let heroParallaxMM = gsap.matchMedia();
+  heroParallaxMM.add("(max-width: 1199px)", () => {
+    gsap.to(".hero-character-wrapper img", {
+      y: 100, // Moves down slightly as user scrolls down
+      scrollTrigger: {
+        trigger: ".hero-transplant",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        markers: false,
+      }
+    });
   });
 
   ///////////////////////
