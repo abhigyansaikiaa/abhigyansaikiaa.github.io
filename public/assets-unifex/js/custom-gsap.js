@@ -39,27 +39,17 @@
     });
   }
   smoothSctoll();
+  // ScrollSmoother disabled in favor of Lenis smooth scroll engine
+  // to prevent competing scroll loops and fixed-position offset conflicts
   if ($("#smooth-wrapper").length && $("#smooth-content").length) {
     gsap.registerPlugin(
       ScrollTrigger,
-      ScrollSmoother,
       TweenMax,
       ScrollToPlugin,
     );
     gsap.config({
       nullTargetWarn: false,
     });
-    let smoother = null;
-    if (window.matchMedia("(min-width: 992px)").matches) {
-      smoother = ScrollSmoother.create({
-        smoothTouch: 0,
-        smooth: 4,
-        effects: true,
-        normalizeScroll: false,
-        ignoreMobileResize: true,
-      });
-      window.ScrollSmootherInstance = smoother;
-    }
   }
 
   ////////////////////////////////////////////////////
@@ -478,7 +468,7 @@
 
   ///////////////////////
   // 08. Image Cliping Effect
-  document.addEventListener("DOMContentLoaded", () => {
+  const initClipAnim = () => {
     const initialClipPaths = [
       "polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)",
       "polygon(33.33% 0%, 33.33% 0%, 33.33% 0%, 33.33% 0%)",
@@ -545,18 +535,23 @@
           tl.to(
             validTargets,
             {
-              clipPath: (j, el) =>
-                finalClipPaths[Array.from(masks).indexOf(el)],
+              clipPath: (j, el) => finalClipPaths[Array.from(masks).indexOf(el)],
               duration: 1,
               ease: "power4.out",
               stagger: 0.1,
             },
-            i * 0.125,
+            i * 0.125
           );
         }
       });
     });
-  });
+  };
+
+  if (document.readyState !== "loading") {
+    initClipAnim();
+  } else {
+    document.addEventListener("DOMContentLoaded", initClipAnim);
+  }
 
   ///////////////////////
   // 09. Hover Reveal

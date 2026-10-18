@@ -1,0 +1,75 @@
+# Abhigyan Saikia — Full Stack Developer & Digital Product Builder
+> Personal Developer Portfolio Context & Machine-Readable Profile
+
+## Overview
+- Name: Abhigyan Saikia
+- Role: Full-Stack Web Developer
+- Location: Assam, India
+- Education: Bachelor of Medical Laboratory Science (BMLS) at Regional Institute of Paramedical and Nursing Sciences (RIPANS)
+- Primary Website: https://abhigyan-portfolio-eta.vercel.app/
+- Contact: work.abhigyansaikia@gmail.com
+- GitHub: https://github.com/abhigyansaikiaa
+- LinkedIn: https://www.linkedin.com/in/abhigyan-saikia-26641227b
+
+## Core Technical Skills
+- Frontend: React 18, Next.js, Vite, TypeScript, Native CSS 3D Transforms, Framer Motion, GSAP ScrollTrigger, Tailwind CSS
+- Backend: Node.js, Express, RESTful APIs, Webhooks, Microservices
+- Databases: MongoDB, PostgreSQL
+- Tooling & DevOps: Vercel, Git, Cloudflare, Sharp Image Optimization, Playwright E2E Testing
+
+## Verified Portfolio Projects
+1. ToolKB.in
+   - Live URL: https://toolkb.in/
+   - Description: Comprehensive suite of client-side web tools, calculators, and developer utilities engineered for speed and simplicity with zero analytics tracking.
+   - Category: Web Tool / Browser Utility Platform
+2. Brandcey
+   - Live URL: https://brandcey.in/
+   - Description: Direct freelance services marketplace connecting digital creators, designers, and web developers.
+   - Category: Creative SaaS Marketplace
+3. Arogya Relief
+   - Live URL: https://www.arogyarelief.in/
+   - Description: Mission-driven digital portal delivering streamlined access to emergency relief and healthcare services across India.
+   - Category: Healthcare Platform
+4. Motion Subtitle Studio
+   - Description: Browser-driven creator automation studio for kinetic subtitles and synced audio transcripts.
+   - Category: Automation Tool / Media Processing
+5. Qrivna
+   - Description: Modern reactive web application with interactive UI micro-animations and modular component architecture.
+   - Category: Web Application
+6. BrollWriter
+   - Description: AI-assisted video production workflow tool for YouTube creators to sequence narrative beats and b-roll schedules.
+   - Category: Creator SaaS
+7. Dhankathaa
+   - Description: Personal wealth intelligence dashboard and asset allocation visualizer.
+   - Category: FinTech Analytics
+8. GCMR.IN
+   - Live URL: https://gcmr.in
+   - Description: Healthcare and clinical pathology research management portal.
+   - Category: Clinical Pathology Platform
+9. ResumeIQ
+   - Description: Technical resume parser and ATS scoring engine.
+   - Category: Career Tech
+10. Notch Desktop
+    - Description: Dynamic Island and desktop notification overlay for rapid media control.
+    - Category: System Interface Utility
+11. Forge Engine
+    - Description: Developer build pipeline and asset optimization CLI toolchain.
+    - Category: DevOps & Tooling
+12. ESR Analyzer
+    - Description: Computer-vision automated erythrocyte sedimentation rate measurement unit for medical laboratory science.
+    - Category: Hardware / Computer Vision
+13. Revenue Command Center
+    - Description: Real-time business telemetry and SaaS metrics dashboard.
+    - Category: Operations Dashboard
+14. Vibe-Code Bug Tester
+    - Description: Autonomous software testing and UI defect discovery crawler.
+    - Category: Developer Tooling
+15. TheTapeChart
+    - Description: Order book and market depth tape chart visualizer.
+    - Category: Financial Tools
+
+## Public Endpoints
+- Canonical Homepage: https://abhigyan-portfolio-eta.vercel.app/
+- LLM Context: https://abhigyan-portfolio-eta.vercel.app/llms.txt
+- Robots Directives: https://abhigyan-portfolio-eta.vercel.app/robots.txt
+- Crawler Sitemap: https://abhigyan-portfolio-eta.vercel.app/sitemap.xml
