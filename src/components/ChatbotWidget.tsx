@@ -1,13 +1,138 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, X, Send, Bot, User, RefreshCw, Sparkles, Terminal, Copy, Check, RotateCcw } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Bot, X, Send, Copy, Check, RotateCcw, Sparkles } from 'lucide-react';
 import { sendChatMessage, ChatMessage } from '../lib/chatbot-client';
 
-const SUGGESTED_CHIPS = [
-  'Tell me about ToolKB',
-  'What technologies do you use?',
-  'How can I contact Abhigyan?',
-  'What is your background at RIPANS?',
+const INITIAL_SUGGESTED_CHIPS = [
+  'Tell me about Abhigyan',
+  'Show me some projects',
+  'What technologies does he work with?',
+  'Can we work together?',
 ];
+
+/**
+ * Safe in-browser markdown formatter for assistant messages.
+ * Parses bold, inline code, links, bullet lists, and numbered lists without dangerous HTML injection.
+ */
+const renderFormattedSpan = (text: string, keyPrefix: string): React.ReactNode[] => {
+  const tokenRegex = /(\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\([^)]+\))/g;
+  const parts = text.split(tokenRegex);
+
+  return parts.map((part, index) => {
+    const key = `${keyPrefix}-${index}`;
+    if (part.startsWith('**') && part.endsWith('**') && part.length >= 4) {
+      return (
+        <strong key={key} className="chat-strong">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    if (part.startsWith('`') && part.endsWith('`') && part.length >= 2) {
+      return (
+        <code key={key} className="chat-inline-code">
+          {part.slice(1, -1)}
+        </code>
+      );
+    }
+    const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (linkMatch) {
+      const [, label, url] = linkMatch;
+      const isAnchor = url.startsWith('#');
+      return (
+        <a
+          key={key}
+          href={url}
+          target={isAnchor ? undefined : '_blank'}
+          rel={isAnchor ? undefined : 'noopener noreferrer'}
+          className="chat-link"
+          onClick={(e) => {
+            if (isAnchor) {
+              e.preventDefault();
+              const target = document.querySelector(url);
+              if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+              }
+            }
+          }}
+        >
+          {label}
+        </a>
+      );
+    }
+    return <React.Fragment key={key}>{part}</React.Fragment>;
+  });
+};
+
+const SafeMarkdown: React.FC<{ content: string }> = ({ content }) => {
+  const lines = content.split('\n');
+  const elements: React.ReactNode[] = [];
+  let currentListItems: React.ReactNode[] = [];
+  let listType: 'ul' | 'ol' | null = null;
+
+  const flushList = () => {
+    if (currentListItems.length > 0 && listType) {
+      if (listType === 'ul') {
+        elements.push(
+          <ul key={`list-${elements.length}`} className="chat-bullet-list">
+            {currentListItems}
+          </ul>
+        );
+      } else {
+        elements.push(
+          <ol key={`list-${elements.length}`} className="chat-numbered-list">
+            {currentListItems}
+          </ol>
+        );
+      }
+      currentListItems = [];
+      listType = null;
+    }
+  };
+
+  lines.forEach((line, idx) => {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      flushList();
+      return;
+    }
+
+    // Unordered bullet item: "- " or "* "
+    if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      if (listType === 'ol') flushList();
+      listType = 'ul';
+      currentListItems.push(
+        <li key={`li-${idx}`}>
+          {renderFormattedSpan(trimmed.slice(2), `li-span-${idx}`)}
+        </li>
+      );
+      return;
+    }
+
+    // Numbered item: "1. ", "2. ", etc.
+    const numMatch = trimmed.match(/^(\d+)\.\s+(.*)$/);
+    if (numMatch) {
+      if (listType === 'ul') flushList();
+      listType = 'ol';
+      currentListItems.push(
+        <li key={`li-${idx}`} value={parseInt(numMatch[1], 10)}>
+          {renderFormattedSpan(numMatch[2], `li-span-${idx}`)}
+        </li>
+      );
+      return;
+    }
+
+    // Regular line / paragraph
+    flushList();
+    elements.push(
+      <p key={`p-${idx}`} className="chat-paragraph">
+        {renderFormattedSpan(trimmed, `p-span-${idx}`)}
+      </p>
+    );
+  });
+
+  flushList();
+
+  return <div className="chat-markdown-body">{elements}</div>;
+};
 
 export const ChatbotWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -16,31 +141,47 @@ export const ChatbotWidget: React.FC = () => {
   const [isLiveServer, setIsLiveServer] = useState<boolean>(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [lastFailedQuery, setLastFailedQuery] = useState<string | null>(null);
+  const [currentChips, setCurrentChips] = useState<string[]>(INITIAL_SUGGESTED_CHIPS);
+
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'init-1',
       sender: 'assistant',
-      text: "Hello! I am Abhigyan's portfolio assistant powered by the AskiDesk engine. Ask me about ToolKB, my verified tech stack, or freelance collaborations.",
+      text: "Hi, I am Abhigyan's portfolio assistant. You can ask me about his software projects (ToolKB, Arogya Relief, Motion Subtitles, Brandcey), technical skills, development philosophy, or how to work together.",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const launcherRef = useRef<HTMLButtonElement>(null);
+
+  // Auto-resize textarea to fit multiline input up to 120px
+  const autoResizeTextarea = useCallback(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${Math.min(el.scrollHeight, 120)}px`;
+  }, []);
 
   // Auto-scroll to bottom of conversation
   useEffect(() => {
     if (isOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [messages, isOpen]);
+  }, [messages, isOpen, isLoading]);
 
-  // Focus input on open
+  // Focus textarea when opened, return focus to launcher button when closed
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 150);
+      setTimeout(() => {
+        textareaRef.current?.focus();
+        autoResizeTextarea();
+      }, 120);
+    } else {
+      launcherRef.current?.focus();
     }
-  }, [isOpen]);
+  }, [isOpen, autoResizeTextarea]);
 
   // Escape key closes modal
   useEffect(() => {
@@ -62,16 +203,34 @@ export const ChatbotWidget: React.FC = () => {
           setTimeout(() => setCopiedId(null), 1800);
         })
         .catch(() => {
-          // Clipboard permission denied in restricted or headless context
+          // Clipboard fallback silently handled
         });
     }
   };
 
+  const handleResetConversation = () => {
+    setMessages([
+      {
+        id: `init-${Date.now()}`,
+        sender: 'assistant',
+        text: "Hi, I am Abhigyan's portfolio assistant. You can ask me about his software projects (ToolKB, Arogya Relief, Motion Subtitles, Brandcey), technical skills, development philosophy, or how to work together.",
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      },
+    ]);
+    setCurrentChips(INITIAL_SUGGESTED_CHIPS);
+    setLastFailedQuery(null);
+    setInputVal('');
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+    }
+  };
+
   const handleSend = async (textToSend?: string) => {
-    const text = (textToSend || inputVal).trim();
+    const rawText = textToSend !== undefined ? textToSend : inputVal;
+    const text = rawText.trim();
     if (!text || isLoading) return;
 
-    // Security guard: limit input length
+    // Security guard: cap input length
     const sanitizedText = text.slice(0, 500);
 
     const userMsg: ChatMessage = {
@@ -83,11 +242,15 @@ export const ChatbotWidget: React.FC = () => {
 
     setMessages((prev) => [...prev, userMsg]);
     setInputVal('');
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+    }
     setIsLoading(true);
     setLastFailedQuery(null);
 
     try {
-      const response = await sendChatMessage(sanitizedText);
+      // Pass active message history for multi-turn context awareness
+      const response = await sendChatMessage(sanitizedText, [...messages, userMsg]);
       setIsLiveServer(response.isLiveServer);
 
       const botMsg: ChatMessage = {
@@ -99,126 +262,180 @@ export const ChatbotWidget: React.FC = () => {
       };
 
       setMessages((prev) => [...prev, botMsg]);
+      if (response.suggestedFollowUps && response.suggestedFollowUps.length > 0) {
+        setCurrentChips(response.suggestedFollowUps);
+      }
     } catch (_err) {
       setLastFailedQuery(sanitizedText);
       const errorMsg: ChatMessage = {
         id: `err-${Date.now()}`,
         sender: 'system',
-        text: 'Unable to reach the response engine. Please check your connection or email work.abhigyansaikia@gmail.com directly.',
+        text: 'Unable to process your question right now. Please check your network connection or reach out directly at work.abhigyansaikia@gmail.com.',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, errorMsg]);
     } finally {
       setIsLoading(false);
+      setTimeout(() => textareaRef.current?.focus(), 50);
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputVal(e.target.value);
+    autoResizeTextarea();
+  };
+
   return (
     <div className="askidesk-chatbot-root">
-      {/* Discreet Floating Launcher */}
+      {/* Floating Launcher Button */}
       {!isOpen && (
         <button
+          ref={launcherRef}
           className="chatbot-launcher-btn"
           onClick={() => setIsOpen(true)}
-          aria-label="Open AskiDesk AI Assistant"
+          aria-label="Open portfolio AI assistant"
+          aria-expanded={false}
+          aria-controls="chatbot-dialog-panel"
           type="button"
         >
-          <div className="launcher-pulse-dot" />
-          <Bot size={22} className="launcher-icon" />
-          <span className="launcher-label">Ask AI</span>
+          <div className="launcher-pulse-dot" aria-hidden="true" />
+          <Bot size={20} className="launcher-icon" aria-hidden="true" />
+          <span className="launcher-label">Ask Portfolio AI</span>
         </button>
       )}
 
-      {/* Expandable Conversation Drawer */}
+      {/* Expandable Conversation Modal */}
       {isOpen && (
         <div
+          id="chatbot-dialog-panel"
           className="chatbot-dialog-panel"
           role="dialog"
           aria-modal="true"
-          aria-label="AskiDesk Assistant Conversation"
+          aria-label="Abhigyan Saikia Portfolio Assistant"
         >
           {/* Header */}
           <div className="chatbot-header">
             <div className="header-identity">
-              <div className="header-avatar">
+              <div className="header-avatar" aria-hidden="true">
                 <Bot size={18} />
               </div>
               <div className="header-meta">
                 <div className="header-title-row">
-                  <span className="header-name">AskiDesk</span>
-                  <span className={`engine-badge ${isLiveServer ? 'live' : 'local'}`}>
-                    {isLiveServer ? 'Live Server' : 'Portfolio Mode'}
+                  <span className="header-name">Abhigyan Assistant</span>
+                  <span
+                    className={`engine-badge ${isLiveServer ? 'live' : 'local'}`}
+                    title={isLiveServer ? 'Connected to live AskiDesk endpoint' : 'Running on grounded local portfolio intelligence'}
+                  >
+                    {isLiveServer ? 'Live Server' : 'Grounded'}
                   </span>
                 </div>
-                <span className="header-status">Grounded Portfolio Assistant</span>
+                <span className="header-status">Zero-hallucination portfolio guide</span>
               </div>
             </div>
 
-            <button
-              className="chatbot-close-btn"
-              onClick={() => setIsOpen(false)}
-              aria-label="Close Assistant Panel"
-              type="button"
-            >
-              <X size={18} />
-            </button>
+            <div className="header-actions">
+              <button
+                className="chatbot-header-btn"
+                onClick={handleResetConversation}
+                aria-label="Reset conversation"
+                title="Reset conversation"
+                type="button"
+              >
+                <RotateCcw size={15} />
+              </button>
+              <button
+                className="chatbot-header-btn chatbot-close-btn"
+                onClick={() => setIsOpen(false)}
+                aria-label="Close Assistant Panel"
+                title="Close (Esc)"
+                type="button"
+              >
+                <X size={17} />
+              </button>
+            </div>
           </div>
 
-          {/* Quick Suggestions Strip */}
-          <div className="chatbot-chips-strip">
-            {SUGGESTED_CHIPS.map((chip) => (
+          {/* Contextual Suggested Questions Strip */}
+          <div className="chatbot-chips-strip" role="group" aria-label="Suggested follow-up questions">
+            <div className="chips-icon-label" aria-hidden="true">
+              <Sparkles size={12} />
+              <span>Suggested:</span>
+            </div>
+            {currentChips.map((chip) => (
               <button
                 key={chip}
                 type="button"
                 className="chip-btn"
                 onClick={() => handleSend(chip)}
+                disabled={isLoading}
               >
                 {chip}
               </button>
             ))}
           </div>
 
-          {/* Scrollable Message List with Lenis isolation */}
+          {/* Scrollable Message History */}
           <div
             className="chatbot-messages-scroll"
             data-lenis-prevent="true"
             tabIndex={0}
-            role="region"
-            aria-label="Chat messages history"
+            role="log"
+            aria-live="polite"
+            aria-atomic="false"
+            aria-label="Chat conversation history"
+            onWheel={(e) => e.stopPropagation()}
           >
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`chat-bubble-row ${msg.sender === 'user' ? 'is-user' : msg.sender === 'system' ? 'is-system' : 'is-assistant'}`}
+                className={`chat-bubble-row ${
+                  msg.sender === 'user'
+                    ? 'is-user'
+                    : msg.sender === 'system'
+                    ? 'is-system'
+                    : 'is-assistant'
+                }`}
               >
                 <div className="bubble-content">
-                  <p className="bubble-text">{msg.text}</p>
+                  {msg.sender === 'assistant' ? (
+                    <SafeMarkdown content={msg.text} />
+                  ) : (
+                    <p className="bubble-text">{msg.text}</p>
+                  )}
+
                   <div className="bubble-footer-row">
                     <span className="bubble-timestamp">{msg.timestamp}</span>
+
                     {msg.sender === 'assistant' && (
                       <button
                         type="button"
-                        className="bubble-copy-btn"
+                        className="bubble-action-btn"
                         onClick={() => copyToClipboard(msg.id, msg.text)}
-                        aria-label="Copy message text"
-                        title="Copy text"
+                        aria-label="Copy response text"
+                        title="Copy response"
                       >
-                        {copiedId === msg.id ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                        {copiedId === msg.id ? (
+                          <Check size={12} className="text-emerald-400" />
+                        ) : (
+                          <Copy size={12} />
+                        )}
+                        <span className="sr-only">Copy</span>
                       </button>
                     )}
+
                     {msg.sender === 'system' && lastFailedQuery && (
                       <button
                         type="button"
                         className="bubble-retry-btn"
                         onClick={() => handleSend(lastFailedQuery)}
-                        aria-label="Retry message"
+                        aria-label="Retry sending previous question"
                         title="Retry sending"
                       >
                         <RotateCcw size={12} />
@@ -230,41 +447,57 @@ export const ChatbotWidget: React.FC = () => {
               </div>
             ))}
 
+            {/* Typing Feedback */}
             {isLoading && (
-              <div className="chat-bubble-row is-assistant">
-                <div className="bubble-content typing-indicator">
+              <div className="chat-bubble-row is-assistant" aria-live="assertive">
+                <div className="bubble-content typing-indicator" aria-label="Assistant is generating response">
                   <span className="typing-dot" />
                   <span className="typing-dot" />
                   <span className="typing-dot" />
                 </div>
               </div>
             )}
+
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Area */}
+          {/* Input Bar */}
           <div className="chatbot-input-bar">
-            <input
-              ref={inputRef}
-              type="text"
-              maxLength={500}
-              className="chatbot-input"
-              placeholder="Ask anything about projects or background..."
-              value={inputVal}
-              onChange={(e) => setInputVal(e.target.value)}
-              onKeyDown={handleKeyDown}
-              disabled={isLoading}
-              aria-label="Your message to portfolio assistant"
-            />
+            <div className="input-field-wrapper">
+              <textarea
+                ref={textareaRef}
+                rows={1}
+                maxLength={500}
+                className="chatbot-textarea"
+                placeholder="Ask about projects, skills, background..."
+                value={inputVal}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                disabled={isLoading}
+                aria-label="Your question to Abhigyan's portfolio assistant"
+              />
+              {inputVal.length > 350 && (
+                <span className="input-char-counter" aria-live="polite">
+                  {inputVal.length}/500
+                </span>
+              )}
+            </div>
+
             <button
               className="chatbot-send-btn"
               onClick={() => handleSend()}
               disabled={!inputVal.trim() || isLoading}
-              aria-label="Send message"
+              aria-label="Send question"
+              title="Send (Enter)"
               type="button"
             >
-              <Send size={16} />
+              <Send size={15} />
             </button>
+          </div>
+
+          {/* Minimal Keycap Helper */}
+          <div className="chatbot-subfooter" aria-hidden="true">
+            <span>Enter to send · Shift+Enter for new line · Esc to close</span>
           </div>
         </div>
       )}
