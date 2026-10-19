@@ -71,7 +71,7 @@ export const SiteLoader: React.FC<SiteLoaderProps> = ({ children }) => {
     if (typeof Image !== 'undefined') {
       const imgPromise = new Promise((resolve) => {
         const img = new Image();
-        img.src = '/assets/painted-sky.jpg';
+        img.src = './assets/painted-sky.jpg';
         img.onload = img.onerror = resolve;
       });
       readyPromises.push(imgPromise);

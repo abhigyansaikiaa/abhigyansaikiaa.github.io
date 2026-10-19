@@ -37,7 +37,7 @@ export const TerminalToRealityHero: React.FC = () => {
   // Preload critical assets in the background
   useEffect(() => {
     const urls = HERO_BROWSER_WINDOWS.map((w) => w.screenshot);
-    urls.push('/assets/painted-sky.jpg');
+    urls.push('./assets/painted-sky.jpg');
     preloadImages(urls, undefined, 3200);
   }, []);
 

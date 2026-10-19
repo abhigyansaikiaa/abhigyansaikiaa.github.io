@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404 — Page Not Found | Abhigyan Saikia</title>
-    <meta name="robots" content="NOINDEX,FOLLOW" />
-    <link rel="icon" href="/assets-unifex/images/logo/favicon.png" type="image/png" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="alternate icon" href="./favicon.ico" />
     <style>
       :root {
         --bg: #08080a;
@@ -111,9 +111,20 @@
         The requested address does not exist or has been relocated. You can return directly to the main portfolio or inspect selected production work.
       </p>
       <div class="actions-row">
-        <a href="/" class="btn btn-primary">Return to Homepage</a>
-        <a href="/#works" class="btn btn-secondary">Selected Work</a>
+        <a href="./" class="btn btn-primary" id="home-link">Return to Homepage</a>
+        <a href="./#works" class="btn btn-secondary" id="works-link">Selected Work</a>
       </div>
     </div>
+    <script>
+      (function() {
+        var pathSegments = window.location.pathname.split('/').filter(Boolean);
+        var isGitHubPages = window.location.hostname.endsWith('github.io');
+        var repoRoot = (isGitHubPages && pathSegments.length > 0) ? '/' + pathSegments[0] + '/' : './';
+        var homeLink = document.getElementById('home-link');
+        var worksLink = document.getElementById('works-link');
+        if (homeLink) homeLink.setAttribute('href', repoRoot);
+        if (worksLink) worksLink.setAttribute('href', repoRoot + '#works');
+      })();
+    </script>
   </body>
 </html>

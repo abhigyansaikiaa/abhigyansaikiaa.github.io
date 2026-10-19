@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Bot, X, Send, Copy, Check, RotateCcw, Sparkles } from 'lucide-react';
+import { Bot, X, Send, Copy, Check, RotateCcw, Sparkles, GripVertical } from 'lucide-react';
 import { sendChatMessage, ChatMessage } from '../lib/chatbot-client';
 
 const INITIAL_SUGGESTED_CHIPS = [
@@ -143,11 +143,29 @@ export const ChatbotWidget: React.FC = () => {
   const [lastFailedQuery, setLastFailedQuery] = useState<string | null>(null);
   const [currentChips, setCurrentChips] = useState<string[]>(INITIAL_SUGGESTED_CHIPS);
 
+  // Floating draggable positioning state
+  const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const widgetRef = useRef<HTMLDivElement>(null);
+  const dragStartRef = useRef<{
+    startX: number;
+    startY: number;
+    origX: number;
+    origY: number;
+    moved: boolean;
+  }>({
+    startX: 0,
+    startY: 0,
+    origX: 0,
+    origY: 0,
+    moved: false,
+  });
+
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'init-1',
       sender: 'assistant',
-      text: "Hi, I am Abhigyan's portfolio assistant. You can ask me about his software projects (ToolKB, Arogya Relief, Motion Subtitles, Brandcey), technical skills, development philosophy, or how to work together.",
+      text: "Hi, I am AskiDesk, Abhigyan's portfolio assistant. You can ask me about his software projects (ToolKB, Arogya Relief, Motion Subtitles, Brandcey), technical skills, development philosophy, or how to work together.",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -155,6 +173,96 @@ export const ChatbotWidget: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const launcherRef = useRef<HTMLButtonElement>(null);
+
+  // Helper keeping element safely clamped inside viewport padding
+  const clampToViewport = useCallback((x: number, y: number, isPanelOpen: boolean) => {
+    if (typeof window === 'undefined') return { x, y };
+    const width = isPanelOpen ? Math.min(410, window.innerWidth - 32) : 190;
+    const height = isPanelOpen ? Math.min(580, window.innerHeight - 32) : 56;
+    const pad = 16;
+    const maxX = Math.max(pad, window.innerWidth - width - pad);
+    const maxY = Math.max(pad, window.innerHeight - height - pad);
+    return {
+      x: Math.max(pad, Math.min(maxX, x)),
+      y: Math.max(pad, Math.min(maxY, y)),
+    };
+  }, []);
+
+  // Window resize re-clamping
+  useEffect(() => {
+    const handleResize = () => {
+      setPosition((prev) => {
+        if (!prev) return null;
+        return clampToViewport(prev.x, prev.y, isOpen);
+      });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isOpen, clampToViewport]);
+
+  // Adjust coordinates when dialog opens or closes so it stays fully visible
+  const handleToggleOpen = (open: boolean) => {
+    if (open) {
+      setPosition((prev) => {
+        if (!prev) {
+          const initialX = Math.max(16, window.innerWidth - 410 - 24);
+          const initialY = Math.max(16, window.innerHeight - 590 - 24);
+          return { x: initialX, y: initialY };
+        }
+        return clampToViewport(prev.x, prev.y, true);
+      });
+    } else {
+      setPosition((prev) => {
+        if (!prev) return null;
+        return clampToViewport(prev.x, prev.y, false);
+      });
+    }
+    setIsOpen(open);
+  };
+
+  // Pointer drag handlers
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (e.button !== 0) return; // Only primary mouse button or touch
+    const el = widgetRef.current;
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    dragStartRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      origX: rect.left,
+      origY: rect.top,
+      moved: false,
+    };
+
+    try {
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {}
+    setIsDragging(true);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!isDragging) return;
+    const dx = e.clientX - dragStartRef.current.startX;
+    const dy = e.clientY - dragStartRef.current.startY;
+
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
+      dragStartRef.current.moved = true;
+    }
+
+    const nextX = dragStartRef.current.origX + dx;
+    const nextY = dragStartRef.current.origY + dy;
+    const clamped = clampToViewport(nextX, nextY, isOpen);
+    setPosition(clamped);
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (!isDragging) return;
+    try {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch {}
+    setIsDragging(false);
+  };
 
   // Auto-resize textarea to fit multiline input up to 120px
   const autoResizeTextarea = useCallback(() => {
@@ -187,7 +295,7 @@ export const ChatbotWidget: React.FC = () => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
-        setIsOpen(false);
+        handleToggleOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -213,7 +321,7 @@ export const ChatbotWidget: React.FC = () => {
       {
         id: `init-${Date.now()}`,
         sender: 'assistant',
-        text: "Hi, I am Abhigyan's portfolio assistant. You can ask me about his software projects (ToolKB, Arogya Relief, Motion Subtitles, Brandcey), technical skills, development philosophy, or how to work together.",
+        text: "Hi, I am AskiDesk, Abhigyan's portfolio assistant. You can ask me about his software projects (ToolKB, Arogya Relief, Motion Subtitles, Brandcey), technical skills, development philosophy, or how to work together.",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       },
     ]);
@@ -293,21 +401,49 @@ export const ChatbotWidget: React.FC = () => {
   };
 
   return (
-    <div className="askidesk-chatbot-root">
-      {/* Floating Launcher Button */}
+    <div
+      ref={widgetRef}
+      className={`askidesk-chatbot-root ${isDragging ? 'is-dragging' : ''} ${isOpen ? 'is-open' : 'is-closed'}`}
+      style={
+        position
+          ? {
+              left: `${position.x}px`,
+              top: `${position.y}px`,
+              right: 'auto',
+              bottom: 'auto',
+            }
+          : undefined
+      }
+    >
+      {/* Floating Draggable Launcher Button */}
       {!isOpen && (
         <button
           ref={launcherRef}
-          className="chatbot-launcher-btn"
-          onClick={() => setIsOpen(true)}
-          aria-label="Open portfolio AI assistant"
+          className={`chatbot-launcher-btn ${isDragging ? 'is-dragging' : ''}`}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+          onClick={(e) => {
+            if (dragStartRef.current.moved) {
+              e.preventDefault();
+              return;
+            }
+            handleToggleOpen(true);
+          }}
+          aria-label="Open AskiDesk portfolio assistant (drag to reposition)"
           aria-expanded={false}
           aria-controls="chatbot-dialog-panel"
           type="button"
+          title="AskiDesk — Floating Portfolio Concierge (Drag to move)"
         >
+          <div className="launcher-drag-grip" aria-hidden="true" title="Drag to float anywhere">
+            <GripVertical size={13} className="drag-grip-icon" />
+          </div>
           <div className="launcher-pulse-dot" aria-hidden="true" />
-          <Bot size={20} className="launcher-icon" aria-hidden="true" />
-          <span className="launcher-label">Ask Portfolio AI</span>
+          <Bot size={18} className="launcher-icon" aria-hidden="true" />
+          <span className="launcher-label">AskiDesk</span>
+          <span className="launcher-badge" aria-hidden="true">AI</span>
         </button>
       )}
 
@@ -318,29 +454,39 @@ export const ChatbotWidget: React.FC = () => {
           className="chatbot-dialog-panel"
           role="dialog"
           aria-modal="true"
-          aria-label="Abhigyan Saikia Portfolio Assistant"
+          aria-label="AskiDesk Portfolio Assistant"
         >
-          {/* Header */}
-          <div className="chatbot-header">
+          {/* Header with Draggable Gripper */}
+          <div
+            className="chatbot-header"
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+            title="Click and drag to reposition AskiDesk"
+          >
             <div className="header-identity">
               <div className="header-avatar" aria-hidden="true">
                 <Bot size={18} />
               </div>
               <div className="header-meta">
                 <div className="header-title-row">
-                  <span className="header-name">Abhigyan Assistant</span>
+                  <span className="header-name">AskiDesk</span>
                   <span
                     className={`engine-badge ${isLiveServer ? 'live' : 'local'}`}
                     title={isLiveServer ? 'Connected to live AskiDesk endpoint' : 'Running on grounded local portfolio intelligence'}
                   >
-                    {isLiveServer ? 'Live Server' : 'Grounded'}
+                    {isLiveServer ? 'Live Server' : 'Portfolio AI'}
                   </span>
                 </div>
-                <span className="header-status">Zero-hallucination portfolio guide</span>
+                <span className="header-status">
+                  <GripVertical size={11} className="header-grip-inline" aria-hidden="true" />
+                  Floating Concierge · Drag to move
+                </span>
               </div>
             </div>
 
-            <div className="header-actions">
+            <div className="header-actions" onPointerDown={(e) => e.stopPropagation()}>
               <button
                 className="chatbot-header-btn"
                 onClick={handleResetConversation}
@@ -352,8 +498,8 @@ export const ChatbotWidget: React.FC = () => {
               </button>
               <button
                 className="chatbot-header-btn chatbot-close-btn"
-                onClick={() => setIsOpen(false)}
-                aria-label="Close Assistant Panel"
+                onClick={() => handleToggleOpen(false)}
+                aria-label="Close AskiDesk panel"
                 title="Close (Esc)"
                 type="button"
               >
@@ -469,12 +615,12 @@ export const ChatbotWidget: React.FC = () => {
                 rows={1}
                 maxLength={500}
                 className="chatbot-textarea"
-                placeholder="Ask about projects, skills, background..."
+                placeholder="Ask AskiDesk about projects, skills, background..."
                 value={inputVal}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
                 disabled={isLoading}
-                aria-label="Your question to Abhigyan's portfolio assistant"
+                aria-label="Your question to AskiDesk"
               />
               {inputVal.length > 350 && (
                 <span className="input-char-counter" aria-live="polite">
@@ -497,7 +643,7 @@ export const ChatbotWidget: React.FC = () => {
 
           {/* Minimal Keycap Helper */}
           <div className="chatbot-subfooter" aria-hidden="true">
-            <span>Enter to send · Shift+Enter for new line · Esc to close</span>
+            <span>AskiDesk Concierge · Enter to send · Shift+Enter for newline · Esc to close</span>
           </div>
         </div>
       )}

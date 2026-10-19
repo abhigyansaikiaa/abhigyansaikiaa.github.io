@@ -393,7 +393,7 @@ export function processGroundedQuery(query: string, history?: ChatMessage[]): Ch
     lower === 'help'
   ) {
     return {
-      reply: `Hello! I am Abhigyan's portfolio assistant. You can ask me about his software projects (ToolKB, Arogya Relief, Motion Subtitles, Brandcey), his verified tech stack, his medical laboratory background at RIPANS, or how to get in touch for collaborations.`,
+      reply: `Hello! I am AskiDesk, Abhigyan's portfolio assistant. You can ask me about his software projects (ToolKB, Arogya Relief, Motion Subtitles, Brandcey), his verified tech stack, his medical laboratory background at RIPANS, or how to get in touch for collaborations.`,
       intent: 'greeting',
       confidence: 0.98,
       detectedLanguage: 'en',
@@ -404,7 +404,7 @@ export function processGroundedQuery(query: string, history?: ChatMessage[]): Ch
 
   // 12. FALLBACK GROUNDED (Zero hallucination & honest guidance)
   return {
-    reply: `I am Abhigyan's portfolio assistant, dedicated to providing accurate information about his background, verified projects (such as **ToolKB** and **Arogya Relief**), technical skills, and collaboration opportunities.\n\nFor details not covered here, or for bespoke project quotes, please reach out directly at **[${GROUNDED_KNOWLEDGE.contact.email}](mailto:${GROUNDED_KNOWLEDGE.contact.email})** or visit the [Contact Section](#contact).`,
+    reply: `I am AskiDesk, Abhigyan's portfolio assistant, dedicated to providing accurate information about his background, verified projects (such as **ToolKB** and **Arogya Relief**), technical skills, and collaboration opportunities.\n\nFor details not covered here, or for bespoke project quotes, please reach out directly at **[${GROUNDED_KNOWLEDGE.contact.email}](mailto:${GROUNDED_KNOWLEDGE.contact.email})** or visit the [Contact Section](#contact).`,
     intent: 'general_assistance',
     confidence: 0.88,
     detectedLanguage: 'en',

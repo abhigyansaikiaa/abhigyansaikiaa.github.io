@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FerrisWheelGallery, FerrisWheelItem } from './ui/ferris-wheel-gallery';
-import FerrisWheelGalleryDemo from './ui/demo';
-import { ExternalLink, Layers, ArrowUpRight, Sparkles } from 'lucide-react';
+import { Layers, ArrowUpRight } from 'lucide-react';
 
 interface VerifiedPortfolioProject extends FerrisWheelItem {
   id: string;
@@ -17,7 +16,7 @@ const VERIFIED_PROJECT_ITEMS: VerifiedPortfolioProject[] = [
     title: 'ToolKB.in',
     discipline: 'Browser Utility Platform',
     year: '2026',
-    src: '/assets/toolkb.webp',
+    src: './assets/toolkb.webp',
     alt: 'ToolKB.in developer utilities and client-side web tools',
     link: 'https://toolkb.in/',
     external: true,
@@ -29,7 +28,7 @@ const VERIFIED_PROJECT_ITEMS: VerifiedPortfolioProject[] = [
     title: 'Arogya Relief',
     discipline: 'Healthcare Platform',
     year: '2025',
-    src: '/assets/arogyarelief.webp',
+    src: './assets/arogyarelief.webp',
     alt: 'Arogya Relief medical emergency coordination portal',
     link: 'https://www.arogyarelief.in/',
     external: true,
@@ -41,7 +40,7 @@ const VERIFIED_PROJECT_ITEMS: VerifiedPortfolioProject[] = [
     title: 'Motion Subtitle Studio',
     discipline: 'Creator Tool',
     year: '2025',
-    src: '/assets/motionsubtitles.webp',
+    src: './assets/motionsubtitles.webp',
     alt: 'Motion Subtitle Studio automated captioning interface',
     link: 'https://github.com/abhigyansaikiaa/Motion-Subtitle-Studio',
     external: true,
@@ -53,7 +52,7 @@ const VERIFIED_PROJECT_ITEMS: VerifiedPortfolioProject[] = [
     title: 'Brandcey',
     discipline: 'Services Marketplace',
     year: '2026',
-    src: '/assets/brandcey.webp',
+    src: './assets/brandcey.webp',
     alt: 'Brandcey freelance services marketplace platform',
     link: 'https://www.brandcey.in/',
     external: true,
@@ -65,7 +64,7 @@ const VERIFIED_PROJECT_ITEMS: VerifiedPortfolioProject[] = [
     title: 'Qrivna',
     discipline: 'Interactive Web Experience',
     year: '2025',
-    src: '/qrivna_demo_pro.webp',
+    src: './qrivna_demo_pro.webp',
     alt: 'Qrivna interactive web experience demo',
     link: 'https://github.com/abhigyansaikiaa',
     external: true,
@@ -77,7 +76,7 @@ const VERIFIED_PROJECT_ITEMS: VerifiedPortfolioProject[] = [
     title: 'BrollWriter',
     discipline: 'Production Scripting SaaS',
     year: '2025',
-    src: '/brollwriter_demo_pro.webp',
+    src: './brollwriter_demo_pro.webp',
     alt: 'BrollWriter video sequencing and script interface',
     link: 'https://github.com/abhigyansaikiaa',
     external: true,
@@ -89,7 +88,7 @@ const VERIFIED_PROJECT_ITEMS: VerifiedPortfolioProject[] = [
     title: 'Dhankathaa',
     discipline: 'Wealth & Asset Analytics',
     year: '2025',
-    src: '/dhankathaa_demo_pro.webp',
+    src: './dhankathaa_demo_pro.webp',
     alt: 'Dhankathaa personal finance and portfolio dashboard',
     link: 'https://github.com/abhigyansaikiaa',
     external: true,
@@ -101,7 +100,7 @@ const VERIFIED_PROJECT_ITEMS: VerifiedPortfolioProject[] = [
     title: 'ResumeIQ',
     discipline: 'Career Tech',
     year: '2025',
-    src: '/resumeiq-hero.png',
+    src: './resumeiq-hero.png',
     alt: 'ResumeIQ ATS benchmark and resume analysis tool',
     link: 'https://github.com/abhigyansaikiaa',
     external: true,
@@ -111,7 +110,6 @@ const VERIFIED_PROJECT_ITEMS: VerifiedPortfolioProject[] = [
 ];
 
 export const ProjectShowcase: React.FC = () => {
-  const [viewMode, setViewMode] = useState<'projects' | 'demo'>('projects');
   const [activeIdx, setActiveIdx] = useState(0);
   const currentProject = VERIFIED_PROJECT_ITEMS[activeIdx] || VERIFIED_PROJECT_ITEMS[0];
 
@@ -129,81 +127,58 @@ export const ProjectShowcase: React.FC = () => {
             A curated collection of web platforms, developer utilities, and medical technology systems built for production.
           </p>
 
-          {/* Mode Switcher: Verified Projects vs Interactive Component Demo */}
-          <div className="mt-6 flex items-center justify-center gap-2">
+          {/* Rebalanced Verified Applications Button / Pill */}
+          <div className="mt-6 flex items-center justify-center">
             <button
               type="button"
-              onClick={() => setViewMode('projects')}
-              className={`px-4 py-1.5 text-xs font-mono rounded-full border transition-all ${
-                viewMode === 'projects'
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'bg-card text-muted-foreground border-border hover:border-foreground/30'
-              }`}
+              onClick={() => setActiveIdx(0)}
+              className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-mono rounded-full border border-primary/40 bg-primary/10 text-primary hover:bg-primary/20 hover:border-primary transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/40"
+              aria-label={`View Verified Applications (${VERIFIED_PROJECT_ITEMS.length})`}
             >
-              Verified Applications ({VERIFIED_PROJECT_ITEMS.length})
-            </button>
-            <button
-              type="button"
-              onClick={() => setViewMode('demo')}
-              className={`px-4 py-1.5 text-xs font-mono rounded-full border flex items-center gap-1.5 transition-all ${
-                viewMode === 'demo'
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'bg-card text-muted-foreground border-border hover:border-foreground/30'
-              }`}
-            >
-              <Sparkles size={12} />
-              <span>Interactive Study Tour (demo.tsx)</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              <span>Verified Applications ({VERIFIED_PROJECT_ITEMS.length})</span>
             </button>
           </div>
         </div>
 
-        {/* Gallery Display */}
-        {viewMode === 'demo' ? (
-          <div className="showcase-gallery-wrap">
-            <FerrisWheelGalleryDemo autoplay={true} />
+        {/* Ferris Wheel Interactive Gallery Component (Module B) */}
+        <div className="showcase-gallery-wrap">
+          <FerrisWheelGallery
+            items={VERIFIED_PROJECT_ITEMS}
+            active={activeIdx}
+            onActiveChange={setActiveIdx}
+            autoplay={false}
+          />
+        </div>
+
+        {/* Active Project Live Link Handoff */}
+        <div className="showcase-active-bar">
+          <div className="active-project-meta">
+            <span className="active-tag">{currentProject.discipline}</span>
+            <h3 className="active-name">{currentProject.title}</h3>
+            <p className="active-desc">{currentProject.description}</p>
+            <div className="active-tags-row">
+              {currentProject.tags.map((t) => (
+                <span key={t} className="active-tech-pill">
+                  {t}
+                </span>
+              ))}
+            </div>
           </div>
-        ) : (
-          <>
-            {/* Ferris Wheel Interactive Gallery Component (Module B) */}
-            <div className="showcase-gallery-wrap">
-              <FerrisWheelGallery
-                items={VERIFIED_PROJECT_ITEMS}
-                active={activeIdx}
-                onActiveChange={setActiveIdx}
-                autoplay={false}
-              />
-            </div>
 
-            {/* Active Project Live Link Handoff */}
-            <div className="showcase-active-bar">
-              <div className="active-project-meta">
-                <span className="active-tag">{currentProject.discipline}</span>
-                <h3 className="active-name">{currentProject.title}</h3>
-                <p className="active-desc">{currentProject.description}</p>
-                <div className="active-tags-row">
-                  {currentProject.tags.map((t) => (
-                    <span key={t} className="active-tech-pill">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="active-project-action">
-                <a
-                  href={currentProject.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="active-cta-button"
-                  aria-label={`Open ${currentProject.title} in new tab`}
-                >
-                  <span>Visit Live Project</span>
-                  <ArrowUpRight size={16} />
-                </a>
-              </div>
-            </div>
-          </>
-        )}
+          <div className="active-project-action">
+            <a
+              href={currentProject.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="active-cta-button"
+              aria-label={`Open ${currentProject.title} in new tab`}
+            >
+              <span>Visit Live Project</span>
+              <ArrowUpRight size={16} />
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );

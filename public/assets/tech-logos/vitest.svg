@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="100%" height="100%">
+  <defs>
+    <linearGradient id="vitest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4EBC5D"/>
+      <stop offset="100%" stop-color="#729B1B"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#vitest-grad)" d="M128 251.6a6.7 6.7 0 0 1-9.9 2.2L3 170.8A6.7 6.7 0 0 1 0 165.3V65.2a6.7 6.7 0 0 1 10.7-5.4l69.8 50.8a13.5 13.5 0 0 0 19.7-4.3L158 4.7a6.7 6.7 0 0 1 5.9-3.4h92.8c5.2 0 8.4 5.6 5.9 10.1L128 251.6z"/>
+  <circle cx="198" cy="58" r="32" fill="#FCC72B"/>
+</svg>

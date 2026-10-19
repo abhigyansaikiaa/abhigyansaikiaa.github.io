@@ -22,8 +22,8 @@ export const SHOWCASE_PROJECTS: GalleryProject[] = [
     subtitle: 'High-performance client-side developer utility & productivity suite',
     description:
       'A comprehensive suite of client-side developer utilities providing zero-latency code converters, formatters, cryptography hashing, and payload parsers directly in the browser with no server roundtrips.',
-    screenshot: '/assets/toolkb.webp',
-    fallbackScreenshot: '/assets/toolkb.png',
+    screenshot: './assets/toolkb.webp',
+    fallbackScreenshot: './assets/toolkb.png',
     liveUrl: 'https://toolkb.in/',
     githubUrl: 'https://github.com/abhigyansaikiaa/toolkb',
     tech: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Web Crypto API'],
@@ -35,8 +35,8 @@ export const SHOWCASE_PROJECTS: GalleryProject[] = [
     subtitle: 'Emergency medical supply coordination and crisis triage platform',
     description:
       'Engineered to track critical medical inventory and coordinate frontline clinic triage during disaster scenarios. Features offline-first local persistence, emergency routing, and triage severity ranking.',
-    screenshot: '/assets/arogyarelief.webp',
-    fallbackScreenshot: '/assets/arogyarelief.png',
+    screenshot: './assets/arogyarelief.webp',
+    fallbackScreenshot: './assets/arogyarelief.png',
     liveUrl: 'https://arogyarelief.vercel.app/',
     githubUrl: 'https://github.com/abhigyansaikiaa/arogyarelief',
     tech: ['React', 'TypeScript', 'Tailwind CSS', 'Leaflet', 'Node.js'],
@@ -48,8 +48,8 @@ export const SHOWCASE_PROJECTS: GalleryProject[] = [
     subtitle: 'Automated video transcription and kinetic typography animation suite',
     description:
       'A creative studio tool combining the Web Audio API and HTML5 Canvas to deliver real-time audio-waveform transcription, customizable kinetic text motion, and exportable animated subtitle tracks.',
-    screenshot: '/assets/motionsubtitles.webp',
-    fallbackScreenshot: '/assets/motionsubtitles.png',
+    screenshot: './assets/motionsubtitles.webp',
+    fallbackScreenshot: './assets/motionsubtitles.png',
     liveUrl: 'https://motionsubtitles.vercel.app/',
     githubUrl: 'https://github.com/abhigyansaikiaa/motionsubtitles',
     tech: ['Web Audio API', 'HTML5 Canvas', 'TypeScript', 'Tailwind CSS'],
@@ -61,8 +61,8 @@ export const SHOWCASE_PROJECTS: GalleryProject[] = [
     subtitle: 'B2B creative services platform and design asset exchange',
     description:
       'A multi-vendor digital marketplace connecting agencies with specialized creative directors. Includes milestone escrow tracking, interactive design asset previews, and real-time project messaging.',
-    screenshot: '/assets/brandcey.webp',
-    fallbackScreenshot: '/assets/brandcey.png',
+    screenshot: './assets/brandcey.webp',
+    fallbackScreenshot: './assets/brandcey.png',
     liveUrl: 'https://brandcey.vercel.app/',
     githubUrl: 'https://github.com/abhigyansaikiaa/brandcey',
     tech: ['React 19', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Framer Motion'],

@@ -38,6 +38,8 @@ export type ToolDockProps = Omit<
   tilt?: boolean;
   /** Accessible name for the list. */
   label?: string;
+  /** Callback fired when the active/hovered item index changes. */
+  onActiveChange?: (index: number | null) => void;
 };
 
 /** Fixed per position, so the row leans the same way on every render. */
@@ -195,6 +197,7 @@ export function ToolDock({
   tilt = true,
   label = "Tools",
   className,
+  onActiveChange,
   ...props
 }: ToolDockProps) {
   const rail = React.useRef<HTMLUListElement>(null);
@@ -246,12 +249,14 @@ export function ToolDock({
     setActive(nearest);
     setText(items[nearest].label);
     setAt(centers[nearest]);
+    onActiveChange?.(nearest);
   };
 
   const release = () => {
     pointer.set(Number.POSITIVE_INFINITY);
     current.current = null;
     setActive(null);
+    onActiveChange?.(null);
   };
 
   // The row fits its container, `size` or smaller, with room to open up
@@ -273,7 +278,7 @@ export function ToolDock({
         className="relative w-fit"
         style={
           {
-            "--tool-dock-size": `clamp(36px, min(${size}px, calc((100vw - 3rem) / ${span})), ${size}px)`,
+            "--tool-dock-size": `clamp(30px, min(${size}px, calc((100vw - 2rem) / ${span})), ${size}px)`,
             "--tool-dock-rise": rise,
             paddingTop: `calc(var(--tool-dock-size) * ${rise} + 1.75rem)`,
           } as React.CSSProperties

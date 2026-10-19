@@ -2692,29 +2692,73 @@
    ========================================================================== */
 .askidesk-chatbot-root {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: clamp(1.25rem, 3vw, 2.5rem);
+  right: clamp(1.25rem, 3vw, 2.5rem);
   z-index: 999;
+  touch-action: none;
+}
+
+.askidesk-chatbot-root.is-dragging {
+  cursor: grabbing !important;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@keyframes askidesk-floating-bob {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
 }
 
 .chatbot-launcher-btn {
-  background: #0d121c;
+  background: rgba(13, 18, 28, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
-  padding: 0.75rem 1.25rem;
+  padding: 0.7rem 1.15rem 0.7rem 0.85rem;
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  cursor: pointer;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75), 0 0 20px rgba(225, 29, 42, 0.18);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  gap: 0.6rem;
+  cursor: grab;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.8), 0 0 22px rgba(225, 29, 42, 0.22);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   color: #ffffff;
+  animation: askidesk-floating-bob 3.8s ease-in-out infinite;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
 }
 
 .chatbot-launcher-btn:hover {
+  animation-play-state: paused;
   border-color: var(--browser-accent);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.9), 0 0 28px rgba(225, 29, 42, 0.35);
   transform: translateY(-2px);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 24px rgba(225, 29, 42, 0.3);
+}
+
+.chatbot-launcher-btn.is-dragging {
+  cursor: grabbing !important;
+  animation: none !important;
+  transform: scale(1.05) !important;
+  border-color: var(--browser-accent);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95), 0 0 32px rgba(225, 29, 42, 0.45);
+}
+
+.launcher-drag-grip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.4);
+  margin-right: -0.15rem;
+  cursor: grab;
+}
+
+.launcher-drag-grip:hover {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .launcher-pulse-dot {
@@ -2729,6 +2773,18 @@
   font-size: 0.88rem;
   font-weight: 700;
   letter-spacing: -0.01em;
+}
+
+.launcher-badge {
+  font-family: monospace;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: var(--browser-accent);
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 10px rgba(225, 29, 42, 0.5);
 }
 
 /* Chat Dialog Panel */
@@ -2767,6 +2823,22 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.chatbot-header:active,
+.askidesk-chatbot-root.is-dragging .chatbot-header {
+  cursor: grabbing !important;
+}
+
+.header-grip-inline {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.2rem;
+  opacity: 0.6;
 }
 
 .header-identity {
@@ -3908,7 +3980,13 @@
   padding: 1rem 0.5rem 1.25rem;
   display: flex;
   justify-content: center;
-  overflow: visible;
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: none;
+}
+
+.skills-dock-container::-webkit-scrollbar {
+  display: none;
 }
 
 /* Dock explicit bounding & anti-overflow */
@@ -3949,10 +4027,13 @@
   justify-content: center !important;
   border-radius: 0.65rem !important;
   overflow: hidden !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
 }
 
-[data-slot="tool-dock-tile"] img {
+[data-slot="tool-dock-tile"] img,
+[data-slot="tool-dock-tile"] svg {
   width: 58% !important;
   height: 58% !important;
   max-width: 28px !important;
@@ -4000,10 +4081,12 @@
   transition: all 0.25s ease;
 }
 
-.skill-spec-card:hover {
-  border-color: rgba(225, 29, 42, 0.3);
-  background: rgba(22, 22, 29, 0.85);
+.skill-spec-card:hover,
+.skill-spec-card.is-highlighted {
+  border-color: rgba(225, 29, 42, 0.45);
+  background: rgba(26, 26, 35, 0.95);
   transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(225, 29, 42, 0.15);
 }
 
 .skill-card-top {

@@ -97,7 +97,7 @@ export const EditorialSections: React.FC = () => {
             <div className="portrait-image-card">
               <div className="portrait-frame">
                 <img
-                  src="/abhigyan.jpg"
+                  src="./abhigyan.jpg"
                   alt="Abhigyan Saikia — Full-Stack Developer & Product Architect"
                   className="portrait-img"
                   loading="lazy"
@@ -184,7 +184,7 @@ export const EditorialSections: React.FC = () => {
               <p className="pillar-text">
                 Technical write-ups, architecture notes, and developer guides covering 3D web interfaces, CSS perspective rendering, automated workflows, and practical full-stack deployment patterns.
               </p>
-              <a href="/llms.txt" target="_blank" className="pillar-link">
+              <a href="./llms.txt" target="_blank" className="pillar-link">
                 <span>Inspect Technical Documentation</span>
                 <ArrowRight size={14} />
               </a>
@@ -362,19 +362,19 @@ export const EditorialSections: React.FC = () => {
             </div>
 
             <div className="dev-endpoints-grid">
-              <a href="/llms.txt" target="_blank" className="dev-endpoint-card">
+              <a href="./llms.txt" target="_blank" className="dev-endpoint-card">
                 <span className="dev-endpoint-badge">TEXT/MARKDOWN</span>
                 <code className="dev-endpoint-path">/llms.txt</code>
                 <p className="dev-endpoint-desc">Comprehensive system prompt context, project directory, and raw text representations.</p>
               </a>
 
-              <a href="/sitemap.xml" target="_blank" className="dev-endpoint-card">
+              <a href="./sitemap.xml" target="_blank" className="dev-endpoint-card">
                 <span className="dev-endpoint-badge">XML</span>
                 <code className="dev-endpoint-path">/sitemap.xml</code>
                 <p className="dev-endpoint-desc">Index of all canonical website routes and update frequencies for search crawlers.</p>
               </a>
 
-              <a href="/robots.txt" target="_blank" className="dev-endpoint-card">
+              <a href="./robots.txt" target="_blank" className="dev-endpoint-card">
                 <span className="dev-endpoint-badge">TXT</span>
                 <code className="dev-endpoint-path">/robots.txt</code>
                 <p className="dev-endpoint-desc">Crawler access permissions and direct references to machine-readable sitemaps.</p>
@@ -407,11 +407,11 @@ export const EditorialSections: React.FC = () => {
         <div className="footer-bottom-row">
           <span>&copy; {new Date().getFullYear()} Abhigyan Saikia. All rights reserved.</span>
           <div className="footer-endpoints">
-            <a href="/llms.txt" target="_blank">llms.txt</a>
+            <a href="./llms.txt" target="_blank">llms.txt</a>
             <span>•</span>
-            <a href="/sitemap.xml" target="_blank">sitemap.xml</a>
+            <a href="./sitemap.xml" target="_blank">sitemap.xml</a>
             <span>•</span>
-            <a href="/robots.txt" target="_blank">robots.txt</a>
+            <a href="./robots.txt" target="_blank">robots.txt</a>
           </div>
         </div>
       </footer>

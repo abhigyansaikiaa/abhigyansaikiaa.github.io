@@ -27,10 +27,25 @@ This repository has been structured securely so you can safely upload it to a pu
    git push -u origin main
    ```
 
-## 🌍 How to Deploy on Vercel
+## 🌍 Deployment Options
+
+### Option A: GitHub Pages (Automated via GitHub Actions)
+The repository is optimized for GitHub Pages hosting with relative asset paths, Jekyll bypass (`.nojekyll`), and automated CI/CD:
+1. Push your code to GitHub:
+   ```bash
+   git add .
+   git commit -m "Optimize for GitHub Pages hosting"
+   git push origin main
+   ```
+2. Navigate to your GitHub repository **Settings** &rarr; **Pages**.
+3. Under **Build and deployment** &rarr; **Source**, select **GitHub Actions**.
+4. GitHub Actions will automatically run the test suite, build the bundle, and publish the site to:
+   `https://<username>.github.io/<repository-name>/`
+
+### Option B: Deploy on Vercel
 1. Go to [Vercel.com](https://vercel.com) and log in with your GitHub account.
 2. Click **"Add New Project"**.
-3. Import your newly created GitHub repository.
+3. Import your GitHub repository (`portfolio-2`).
 4. Vercel will automatically detect that this is a **Vite** project.
    - **Framework Preset:** Vite
    - **Build Command:** `npm run build`
@@ -38,3 +53,4 @@ This repository has been structured securely so you can safely upload it to a pu
 5. Click **Deploy**. Vercel will handle the rest!
 
 Your site will be live securely in seconds.
+

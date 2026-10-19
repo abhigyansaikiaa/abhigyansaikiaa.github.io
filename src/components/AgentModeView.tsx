@@ -41,16 +41,16 @@ export const AgentModeView: React.FC<AgentModeViewProps> = ({ onSwitchToHuman })
           <h2>Machine-Readable Endpoints & System Context</h2>
           <ul className="agent-link-list">
             <li>
-              <code>/llms.txt</code> — <a href="/llms.txt" target="_blank">Full Context & Raw Markdown Summary for AI Coding Agents</a>
+              <code>/llms.txt</code> — <a href="./llms.txt" target="_blank">Full Context & Raw Markdown Summary for AI Coding Agents</a>
             </li>
             <li>
               <code>/developers</code> — <a href="#developers">Public Route Inventory & Technical API Schemas</a>
             </li>
             <li>
-              <code>/sitemap.xml</code> — <a href="/sitemap.xml" target="_blank">Search & Agent Crawler Sitemap</a>
+              <code>/sitemap.xml</code> — <a href="./sitemap.xml" target="_blank">Search & Agent Crawler Sitemap</a>
             </li>
             <li>
-              <code>/robots.txt</code> — <a href="/robots.txt" target="_blank">Crawler Directives & Indexing Permissions</a>
+              <code>/robots.txt</code> — <a href="./robots.txt" target="_blank">Crawler Directives & Indexing Permissions</a>
             </li>
           </ul>
         </section>
