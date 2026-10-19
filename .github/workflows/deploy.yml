@@ -43,6 +43,13 @@ jobs:
       - name: Build production bundle
         run: npm run build
 
+      - name: Verify production build output
+        run: |
+          test -f dist/index.html || (echo "dist/index.html does not exist!" && exit 1)
+          grep -q "assets/" dist/index.html || (echo "dist/index.html does not reference compiled assets!" && exit 1)
+          ! grep -q "src/main.tsx" dist/index.html || (echo "dist/index.html still references main.tsx!" && exit 1)
+          echo "Production build output verified successfully."
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
