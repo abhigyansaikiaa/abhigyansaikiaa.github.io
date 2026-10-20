@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dead Model Check: AI Model Deprecation &amp; Shutdown Scanner</title>
+<meta name="description" content="Free, 100% client-side scanner. Paste your code, config, or logs to detect deprecated OpenAI, Anthropic, and Google AI model IDs before they cause breaking outages.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0b0e13">
+<link rel="canonical" href="https://abhigyansaikiaa.github.io/dead-model-check/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://abhigyansaikiaa.github.io/dead-model-check/">
+<meta property="og:title" content="Dead Model Check: AI Model Deprecation &amp; Shutdown Scanner">
+<meta property="og:description" content="Scan code and configuration files for known deprecated AI model IDs before they cause problems. Runs 100% in your browser.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dead Model Check: AI Model Deprecation &amp; Shutdown Scanner">
+<meta name="twitter:description" content="Scan code and configuration files for known deprecated AI model IDs before they cause problems. Runs 100% in your browser.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A0%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#0b0e13; --panel:#12161f; --panel2:#171c28; --line:#232b3d;
+    --text:#e8ecf4; --muted:#9aa6bd; --red:#ff5a5a; --amber:#ffb224;
+    --green:#3ddc84; --accent:#5b8cff; --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55}
+  .wrap{max-width:880px;margin:0 auto;padding:20px 18px 64px}
+  .top-nav{display:flex;justify-content:space-between;align-items:center;padding:12px 0 20px;border-bottom:1px solid var(--line);margin-bottom:12px;font-size:13.5px}
+  .back-link{color:var(--muted);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:color .15s ease}
+  .back-link:hover{color:var(--text)}
+  .portfolio-tag{color:var(--muted);font-family:var(--mono);font-size:12px}
+  header{padding:16px 0 8px}
+  .kicker{display:inline-block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);border:1px solid #4a3a12;background:#241c07;padding:4px 10px;border-radius:999px}
+  h1{font-size:clamp(28px,5vw,44px);line-height:1.12;margin:16px 0 10px;font-weight:800}
+  h1 .red{color:var(--red)}
+  .sub{color:var(--muted);font-size:17px;max-width:640px}
+  .countdown{display:flex;gap:10px;margin:22px 0 6px;flex-wrap:wrap}
+  .cd{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-width:86px;text-align:center}
+  .cd b{display:block;font-size:24px;font-variant-numeric:tabular-nums}
+  .cd span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .privacy{font-size:13px;color:var(--muted)}
+  .privacy b{color:var(--green)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:22px}
+  textarea{width:100%;min-height:210px;background:#0d1119;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:14px;font-family:var(--mono);font-size:13.5px;line-height:1.5;resize:vertical}
+  textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+  button{cursor:pointer;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:11px 18px;font-size:15px;font-weight:600}
+  button.primary{background:var(--red);border-color:var(--red);color:#fff}
+  button.primary:hover{filter:brightness(1.1)}
+  button.ghost{background:transparent}
+  .filelabel{cursor:pointer;border:1px dashed var(--line);border-radius:10px;padding:10px 16px;font-size:14px;color:var(--muted)}
+  input[type=file]{display:none}
+  #results{margin-top:24px;display:none}
+  .verdict{border-radius:14px;padding:20px;border:1px solid var(--line)}
+  .verdict.bad{background:#2a1114;border-color:#5c1d22}
+  .verdict.good{background:#0e2417;border-color:#1d4d2f}
+  .verdict h2{margin:0 0 6px;font-size:26px}
+  .verdict p{margin:0;color:var(--muted)}
+  .verdict.bad p{color:#e8b4b4}
+  .verdict.good p{color:#a9d9bf}
+  table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+  th,td{text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  td code, .mono{font-family:var(--mono);font-size:13px;background:#0d1119;border:1px solid var(--line);border-radius:6px;padding:1px 6px;white-space:nowrap}
+  .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;padding:2px 8px;border-radius:999px;text-transform:uppercase}
+  .badge.dead{background:#5c1d22;color:#ffb3b3}
+  .badge.next{background:#4a3a12;color:#ffd98a}
+  .badge.ft{background:#2c2350;color:#c4b5fd}
+  .hits{color:var(--muted);font-size:12.5px;margin-top:6px}
+  .hits div{font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px}
+  .cta{background:linear-gradient(135deg,#16233f,#101725);border:1px solid #2c3d63;border-radius:14px;padding:22px;margin-top:24px}
+  .cta h3{margin:0 0 8px;font-size:22px}
+  .cta p{color:var(--muted);margin:0 0 14px;max-width:620px}
+  .cta .price{color:var(--text);font-weight:800}
+  .cta a.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:10px}
+  h2.section{font-size:22px;margin:38px 0 6px}
+  .small{font-size:13px;color:var(--muted)}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.twocol{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .card h4{margin:0 0 6px;font-size:15px}
+  .card p{margin:0;color:var(--muted);font-size:13.5px}
+  footer{margin-top:44px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px}
+  a{color:var(--accent)}
+  .sharemsg{font-size:13px;color:var(--green);margin-left:8px}
+
+  /* ===== Polish: overflow guards, motion, mobile ===== */
+  html,body{overflow-x:clip;max-width:100%}
+  img,svg,table,textarea{max-width:100%}
+  .wrap{width:100%}
+  td code{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+  .hits div{max-width:100%}
+  .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px}
+  .tablewrap table{margin-top:0;min-width:560px}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes rowIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes pulseRed{0%,100%{box-shadow:0 0 0 0 rgba(255,90,90,.35)}50%{box-shadow:0 0 0 7px rgba(255,90,90,0)}}
+  @keyframes scanmove{0%{transform:translateX(-100%)}100%{transform:translateX(250%)}}
+  @keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  header{animation:fadeUp .6s ease both}
+  .panel,.cta,.card{animation:fadeUp .6s ease both}
+  .kicker{animation:pulseRed 2.4s ease-in-out infinite}
+  .verdict{animation:fadeUp .45s ease both}
+  tbody tr.rowin{animation:rowIn .4s ease both}
+  button{transition:transform .12s ease,filter .12s ease,background .12s ease;min-height:46px;-webkit-tap-highlight-color:transparent}
+  button:hover{transform:translateY(-1px)}
+  button:active{transform:translateY(0) scale(.98)}
+  button:disabled{opacity:.55;cursor:wait;transform:none}
+  .cd b{transition:transform .2s ease}
+  #scanbar{display:none;height:6px;background:#0d1119;border:1px solid var(--line);border-radius:99px;overflow:hidden;margin-top:14px}
+  #scanbar.on{display:block}
+  #scanfill{height:100%;width:40%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--red));animation:scanmove .8s linear infinite}
+  .cta{background-size:160% 160%;animation:fadeUp .6s ease both,gradShift 9s ease infinite}
+  textarea{transition:border-color .15s ease, box-shadow .15s ease}
+  .disclaimer-box{background:#111622;border:1px solid #23304a;border-radius:10px;padding:12px 14px;margin-top:16px;font-size:12.5px;color:var(--muted);line-height:1.5}
+  @media(max-width:640px){
+    .wrap{padding:14px 12px 48px}
+    textarea{font-size:16px;min-height:170px}
+    .row button,.row .filelabel{flex:1 1 100%;text-align:center}
+    .row{gap:8px}
+    .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .cd{min-width:0;padding:8px 4px}
+    .cd b{font-size:19px}
+    th,td{padding:8px 8px;font-size:13px}
+    .verdict h2{font-size:22px}
+    h2.section{font-size:19px;margin-top:30px}
+    .sharemsg{margin-left:0;display:block;margin-top:6px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top-nav" aria-label="Main Navigation">
+    <a href="https://abhigyansaikiaa.github.io/" class="back-link">
+      <span aria-hidden="true">&larr;</span> Back to Portfolio
+    </a>
+    <span class="portfolio-tag">Abhigyan Saikia // Utility</span>
+  </nav>
+
+  <header>
+    <span class="kicker">OpenAI shutdown window: October 23, 2026</span>
+    <h1>17 AI models reach shutdown.<br><span class="red">Is your app calling one of them?</span></h1>
+    <p class="sub">On October 23, 2026, OpenAI deprecation schedules mark 17 model IDs for retirement. Requests to retired IDs fail with hard API errors without automatic remapping. Paste your code, config, or logs below to inspect your exposure.</p>
+    <div class="countdown" id="countdown">
+      <div class="cd"><b id="cd-d">-</b><span>days</span></div>
+      <div class="cd"><b id="cd-h">-</b><span>hours</span></div>
+      <div class="cd"><b id="cd-m">-</b><span>minutes</span></div>
+      <div class="cd"><b id="cd-s">-</b><span>seconds</span></div>
+    </div>
+    <p class="privacy" id="cd-note">Time left until the October 23, 2026 00:00 UTC shutdown threshold.</p>
+    <p class="privacy"><b>Private by design:</b> Scans execute 100% locally in your browser. No source code, config files, or logs are uploaded or transmitted.</p>
+  </header>
+
+  <div class="panel">
+    <textarea id="input" placeholder="Paste code, a .env file, package.json, workflow JSON, API logs, anything text. Example: model: &quot;gpt-4o-2024-05-13&quot;"></textarea>
+    <div id="scanbar"><div id="scanfill"></div></div>
+    <div class="row">
+      <button class="primary" id="scanBtn">Scan now</button>
+      <label class="filelabel" for="fileInput">Upload a file instead</label>
+      <input type="file" id="fileInput" accept=".js,.ts,.tsx,.jsx,.py,.json,.txt,.env,.md,.yml,.yaml,.toml,.rb,.go,.java,.php,.cs,.sh">
+      <button class="ghost" id="sampleBtn">Load a sample</button>
+      <button class="ghost" id="clearBtn">Clear</button>
+    </div>
+  </div>
+
+  <div id="results"></div>
+
+  <div class="cta" id="cta" style="display:none">
+    <h3>Want it fixed for you?</h3>
+    <p><span class="price">$149 fixed fee.</span> We update your dead model calls to recommended replacements, inspect the surrounding parameters (token limits, temperature, structured output format, response parsers), and verify syntax before handing it back. Send your repository or config files to get started.</p>
+    <p class="small">Fine-tune retraining and architectural pipeline migrations are quoted separately.</p>
+    <a class="btn" id="ctaBtn" href="mailto:work.abhigyansaikia@gmail.com?subject=Dead%20model%20fix%20(%24149)">Get the $149 fix</a>
+  </div>
+
+  <h2 class="section">The October 23 list</h2>
+  <p class="small">The 11 base models and snapshots listed for October 23, 2026 retirement, with recommended migration paths. Calling a bare alias (for example <span class="mono">o4-mini</span>) points to the same underlying version and breaks once the snapshot retires.</p>
+  <div class="panel" style="margin-top:12px">
+    <div class="tablewrap">
+    <table id="refTable">
+      <thead><tr><th>Model ID that retires</th><th>Also matched as</th><th>Recommended Target</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    </div>
+    <p class="small" style="margin-top:12px">Plus 6 fine-tuned variants: <span class="mono">ft-gpt-3.5-turbo</span>, <span class="mono">ft-gpt-4</span>, <span class="mono">ft-gpt-4.1-nano-2025-04-14</span>, <span class="mono">ft-o4-mini-2025-04-16</span>, <span class="mono">ft-babbage-002</span> and <span class="mono">ft-davinci-002</span>. Fine-tuned models built on retiring base models require export and retraining. Legacy Completions variants of GPT-3.5 Turbo, GPT-4, and GPT-4 Turbo are scheduled on the same date.</p>
+  </div>
+
+  <h2 class="section">Later deprecation waves</h2>
+  <p class="small">The scanner also flags subsequent scheduled retirements so you can audit once rather than scramble repeatedly.</p>
+  <div class="twocol" style="margin-top:12px">
+    <div class="card"><h4>November 30, 2026: Endpoints &amp; APIs</h4><p>Retirement of older OpenAI Assistants API primitives and legacy evaluation endpoints. Anthropic's <span class="mono">claude-sonnet-4-5-20250929</span> is scheduled on Anthropic platforms (cloud partners maintain independent schedules).</p></div>
+    <div class="card"><h4>January 14, 2027: GPT-4o Snapshots</h4><p><span class="mono">gpt-4o-2024-08-06</span>, <span class="mono">gpt-4o-2024-11-20</span>, <span class="mono">gpt-4o-mini-2024-07-18</span>, <span class="mono">gpt-4.1-2025-04-14</span> and <span class="mono">gpt-4.1-mini-2025-04-14</span> scheduled for retirement.</p></div>
+    <div class="card"><h4>December 1 and 11, 2026</h4><p><span class="mono">gpt-image-1.5</span> and <span class="mono">gpt-image-1-mini</span> scheduled on December 1. <span class="mono">o3</span> and <span class="mono">o3-pro</span> snapshots on December 11.</p></div>
+    <div class="card"><h4>February 26, 2027</h4><p><span class="mono">whisper-1</span> audio transcription endpoint scheduled for retirement; pipelines pinned to this snapshot will need migration.</p></div>
+  </div>
+
+  <div class="disclaimer-box">
+    <strong>Auditing &amp; Verification Note:</strong> Deprecation dates, model identifiers, and replacement options are compiled from provider deprecation tables and community technical reporting. Because vendor timelines and model availability are subject to change, verify specific IDs against official provider documentation (<a href="https://platform.openai.com/docs/deprecations" target="_blank" rel="noopener">OpenAI Deprecations</a>, Anthropic Documentation, Google Cloud AI) before deploying changes to production. This utility provides text pattern matching and does not guarantee complete elimination of runtime failures.
+  </div>
+
+  <footer>
+    <p>Built by Abhigyan Saikia, <a href="https://abhigyansaikiaa.github.io/">abhigyansaikiaa.github.io</a>. Identified an unlisted model ID or date correction? Email <a href="mailto:work.abhigyansaikia@gmail.com">work.abhigyansaikia@gmail.com</a>.</p>
+  </footer>
+</div>
+<script>
+"use strict";
+/* ============ Data: compiled from provider deprecation reporting ============ */
+var WAVES = [
+  {
+    date: "2026-10-23", label: "Deprecation: Oct 23, 2026", primary: true,
+    models: [
+      { id: "gpt-3.5-turbo-0125", aliases: ["gpt-3.5-turbo"], replacement: "gpt-5.6-terra" },
+      { id: "gpt-4-0613", aliases: ["gpt-4"], replacement: "gpt-5.6-sol" },
+      { id: "gpt-4-1106-preview", aliases: [], replacement: "gpt-5.6-sol" },
+      { id: "gpt-4-turbo-2024-04-09", aliases: ["gpt-4-turbo"], replacement: "gpt-5.6-sol" },
+      { id: "gpt-4.1-nano-2025-04-14", aliases: ["gpt-4.1-nano"], replacement: "gpt-5.6-luna" },
+      { id: "gpt-4o-2024-05-13", aliases: [], replacement: "gpt-5.6-sol", note: "Pinned GPT-4o snapshot from 2024." },
+      { id: "gpt-image-1", aliases: [], replacement: "gpt-image-2.5" },
+      { id: "o1-2024-12-17", aliases: ["o1"], replacement: "gpt-5.6-sol" },
+      { id: "o1-pro-2025-03-19", aliases: ["o1-pro"], replacement: "gpt-5.6-sol (reasoning tier)" },
+      { id: "o3-mini-2025-01-31", aliases: ["o3-mini"], replacement: "gpt-5.6-sol" },
+      { id: "o4-mini-2025-04-16", aliases: ["o4-mini"], replacement: "gpt-5.6-terra" },
+      { id: "ft-gpt-3.5-turbo", aliases: [], replacement: "Rebuild on gpt-5.6-terra", ft: true },
+      { id: "ft-gpt-4", aliases: [], replacement: "Rebuild on gpt-5.6-sol", ft: true },
+      { id: "ft-gpt-4.1-nano-2025-04-14", aliases: [], replacement: "Rebuild on gpt-5.6-luna", ft: true },
+      { id: "ft-o4-mini-2025-04-16", aliases: [], replacement: "Rebuild on gpt-5.6-terra", ft: true },
+      { id: "ft-babbage-002", aliases: [], replacement: "Rebuild on gpt-5.6-terra", ft: true },
+      { id: "ft-davinci-002", aliases: [], replacement: "Rebuild on gpt-5.6-terra", ft: true }
+    ]
+  },
+  {
+    date: "2026-11-19", label: "Deprecation: Nov 19, 2026", primary: false,
+    models: [ { id: "gemini-3.6-flash", aliases: [], replacement: "Check Google's model table" } ]
+  },
+  {
+    date: "2026-11-30", label: "Deprecation: Nov 30, 2026", primary: false,
+    models: [ { id: "claude-sonnet-4-5-20250929", aliases: [], replacement: "claude-sonnet-5-5", note: "Anthropic platforms. Bedrock and Vertex set independent dates." } ]
+  },
+  {
+    date: "2026-12-01", label: "Deprecation: Dec 1, 2026", primary: false,
+    models: [
+      { id: "gpt-image-1.5", aliases: [], replacement: "Check OpenAI deprecations page" },
+      { id: "gpt-image-1-mini", aliases: [], replacement: "Check OpenAI deprecations page" }
+    ]
+  },
+  {
+    date: "2026-12-11", label: "Deprecation: Dec 11, 2026", primary: false,
+    models: [
+      { id: "o3-pro", aliases: [], replacement: "Check OpenAI deprecations page" },
+      { id: "o3", aliases: [], replacement: "Check OpenAI deprecations page" }
+    ]
+  },
+  {
+    date: "2027-01-14", label: "Deprecation: Jan 14, 2027", primary: false,
+    models: [
+      { id: "gpt-4o-2024-08-06", aliases: ["gpt-4o"], replacement: "gpt-6-luna" },
+      { id: "gpt-4o-2024-11-20", aliases: [], replacement: "gpt-6-luna" },
+      { id: "gpt-4o-mini-2024-07-18", aliases: ["gpt-4o-mini"], replacement: "gpt-6-luna" },
+      { id: "gpt-4.1-2025-04-14", aliases: ["gpt-4.1"], replacement: "gpt-6-luna" },
+      { id: "gpt-4.1-mini-2025-04-14", aliases: ["gpt-4.1-mini"], replacement: "gpt-6-luna" }
+    ]
+  },
+  {
+    date: "2027-02-26", label: "Deprecation: Feb 26, 2027", primary: false,
+    models: [ { id: "whisper-1", aliases: [], replacement: "Check OpenAI deprecations page" } ]
+  }
+];
+
+/* ============ Detection engine ============ */
+function escapeRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+
+var ENTRIES = [];
+var BASE_LOOKUP = {};
+WAVES.forEach(function(w){
+  w.models.forEach(function(m){
+    ENTRIES.push({ pattern: m.id, modelId: m.id, replacement: m.replacement, note: m.note || "", wave: w, isAlias: false, ft: !!m.ft });
+    BASE_LOOKUP[m.id.toLowerCase()] = { modelId: m.id, replacement: m.replacement, wave: w };
+    (m.aliases || []).forEach(function(a){
+      ENTRIES.push({ pattern: a, modelId: m.id, replacement: m.replacement, note: m.note || "", wave: w, isAlias: true, ft: !!m.ft });
+      BASE_LOOKUP[a.toLowerCase()] = { modelId: m.id, replacement: m.replacement, wave: w };
+    });
+  });
+});
+ENTRIES.sort(function(x, y){ return y.pattern.length - x.pattern.length; });
+var PATTERN_MAP = {};
+ENTRIES.forEach(function(e){ PATTERN_MAP[e.pattern.toLowerCase()] = e; });
+var MASTER_RE = new RegExp("(" + ENTRIES.map(function(e){ return escapeRe(e.pattern); }).join("|") + ")", "gi");
+var FT_RE = /ft:([a-z0-9][a-z0-9.\-]*)/gi;
+
+function lineOf(text, idx){
+  var start = text.lastIndexOf("\n", idx - 1) + 1;
+  var end = text.indexOf("\n", idx);
+  if (end === -1) end = text.length;
+  var lineNo = text.slice(0, idx).split("\n").length;
+  var snippet = text.slice(start, end).trim();
+  if (snippet.length > 140) snippet = snippet.slice(0, 140) + "...";
+  return { lineNo: lineNo, snippet: snippet };
+}
+
+function scan(text){
+  var found = {};
+  function add(key, data, idx){
+    if (!found[key]) found[key] = { modelId: data.modelId, replacement: data.replacement, wave: data.wave, ft: !!data.ft, aliases: {}, count: 0, hits: [] };
+    found[key].count++;
+    if (data.aliasUsed) found[key].aliases[data.aliasUsed] = true;
+    if (found[key].hits.length < 3) found[key].hits.push(lineOf(text, idx));
+  }
+  // Pass 1: Fine-tune IDs in ft:base:... syntax
+  var ftRanges = [];
+  var m;
+  FT_RE.lastIndex = 0;
+  while ((m = FT_RE.exec(text)) !== null){
+    var base = m[1].toLowerCase().replace(/-+$/, "");
+    var info = BASE_LOOKUP[base];
+    ftRanges.push([m.index, m.index + m[0].length]);
+    if (info){
+      add("ft:" + info.modelId, { modelId: info.modelId, replacement: info.replacement, wave: info.wave, ft: true, aliasUsed: "ft:" + base }, m.index);
+    } else {
+      add("ft:unknown:" + base, { modelId: "ft:" + base, replacement: "Base model dependent. Verify base model status.", wave: null, ft: true, aliasUsed: "ft:" + base }, m.index);
+    }
+  }
+  function inFtRange(idx){ for (var i = 0; i < ftRanges.length; i++){ if (idx >= ftRanges[i][0] && idx < ftRanges[i][1]) return true; } return false; }
+  // Pass 2: Direct model IDs & aliases. Explicit boundary verification without lookbehinds for cross-browser safety
+  MASTER_RE.lastIndex = 0;
+  while ((m = MASTER_RE.exec(text)) !== null){
+    if (m[0].length === 0){ MASTER_RE.lastIndex++; continue; }
+    var prevCh = m.index > 0 ? text.charAt(m.index - 1) : "";
+    var nextCh = text.charAt(m.index + m[0].length);
+    var afterNext = text.charAt(m.index + m[0].length + 1);
+    var badPrev = prevCh !== "" && /[\w.\-]/.test(prevCh);
+    var badNext = /[\w\-]/.test(nextCh) || (nextCh === "." && /\d/.test(afterNext));
+    if (badPrev || badNext){ MASTER_RE.lastIndex = m.index + 1; continue; }
+    if (inFtRange(m.index)) continue;
+    var e = PATTERN_MAP[m[1].toLowerCase()];
+    if (!e) continue;
+    add(e.modelId, { modelId: e.modelId, replacement: e.replacement, wave: e.wave, ft: e.ft, aliasUsed: e.isAlias ? m[1] : null }, m.index);
+  }
+  return Object.keys(found).map(function(k){ var f = found[k]; f.key = k; f.aliasList = Object.keys(f.aliases); return f; });
+}
+
+/* ============ UI Logic ============ */
+var $ = function(id){ return document.getElementById(id); };
+function esc(s){ return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+
+function countUp(el, target){
+  if (!window.requestAnimationFrame){ el.textContent = target; return; }
+  var start = null;
+  function step(ts){
+    if (!start) start = ts;
+    var p = Math.min(1, (ts - start) / 550);
+    el.textContent = Math.round(target * p);
+    if (p < 1) requestAnimationFrame(step); else el.textContent = target;
+  }
+  requestAnimationFrame(step);
+}
+
+function renderReport(list, sharedNote){
+  var box = $("results");
+  var primary = list.filter(function(f){ return f.wave && f.wave.primary; });
+  var next = list.filter(function(f){ return !(f.wave && f.wave.primary); });
+  var target = Date.UTC(2026, 9, 23, 0, 0, 0);
+  var isPast = Date.now() >= target;
+  var html = "";
+  if (sharedNote) html += '<div class="verdict" style="margin-bottom:14px"><p>' + esc(sharedNote) + '</p></div>';
+  if (primary.length){
+    var headline = isPast ? "Your app is calling retired model IDs." : "Your app breaks on Friday.";
+    var subtext = isPast
+      ? '<span id="vcount">0</span>' + (primary.length === 1 ? " model" : " models") + ' in your text reached shutdown on October 23, 2026. Every active call to ' + (primary.length === 1 ? "it" : "them") + ' fails until the model ID is updated.'
+      : '<span id="vcount">0</span>' + (primary.length === 1 ? " model" : " models") + ' in your text shut' + (primary.length === 1 ? "s" : "s") + ' down on October 23, 2026. Every call to ' + (primary.length === 1 ? "it" : "them") + ' will fail until the model ID is replaced.';
+    html += '<div class="verdict bad"><h2>' + esc(headline) + '</h2><p>' + subtext + '</p></div>';
+  } else {
+    var goodSubtext = isPast
+      ? "No retired October 23 models detected in what you pasted. Check the upcoming shutdown waves below if anything was flagged there."
+      : "No October 23 shutdown models found in what you pasted. Check the dying-next list below if anything was flagged there.";
+    html += '<div class="verdict good"><h2>You are clear for the October 23 wave.</h2><p>' + esc(goodSubtext) + '</p></div>';
+  }
+  function rows(items, badgeClass, badgeText){
+    var h = '<div class="tablewrap"><table><thead><tr><th>Model found</th><th>Shutdown</th><th>Recommended Target</th></tr></thead><tbody>';
+    items.forEach(function(f, i){
+      h += '<tr class="rowin" style="animation-delay:' + (i * 70) + 'ms"><td><code>' + esc(f.modelId) + '</code> <span class="badge ' + badgeClass + '">' + badgeText + '</span>' + (f.ft ? ' <span class="badge ft">fine-tune</span>' : '');
+      if (f.aliasList.length) h += '<div class="hits">matched as: ' + f.aliasList.map(function(a){ return esc(a); }).join(", ") + '</div>';
+      h += '<div class="hits">' + f.count + (f.count === 1 ? " occurrence" : " occurrences");
+      f.hits.forEach(function(hit){ h += '<div>line ' + hit.lineNo + ': ' + esc(hit.snippet) + '</div>'; });
+      h += '</div></td><td>' + (f.wave ? esc(f.wave.label) : "Unknown wave") + '</td><td><code>' + esc(f.replacement) + '</code></td></tr>';
+    });
+    return h + '</tbody></table></div>';
+  }
+  if (primary.length) html += rows(primary, "dead", isPast ? "retired" : "dies Oct 23");
+  if (next.length){
+    html += '<h2 class="section" style="margin-top:26px">Later waves in your text</h2>';
+    html += rows(next, "next", "later wave");
+  }
+  html += '<div class="row" style="margin-top:16px"><button class="ghost" id="shareBtn">Copy shareable report link</button><span class="sharemsg" id="shareMsg"></span></div>';
+  box.innerHTML = html;
+  box.style.display = "block";
+  var vc = $("vcount");
+  if (vc) countUp(vc, primary.length);
+  $("cta").style.display = "block";
+  var sb = $("shareBtn");
+  if (sb) sb.addEventListener("click", function(){
+    var payload = { v: 1, found: list.map(function(f){ return f.modelId; }), when: new Date().toISOString().slice(0, 10) };
+    var link = location.href.split("#")[0] + "#r=" + btoa(unescape(encodeURIComponent(JSON.stringify(payload)))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    function done(){ $("shareMsg").textContent = "Link copied. Anyone opening it sees this findings list (no source code is shared)."; }
+    if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(link).then(done, function(){ prompt("Copy this link:", link); }); }
+    else { prompt("Copy this link:", link); }
+  });
+  // Enrich the CTA email with the findings
+  var ids = list.map(function(f){ return f.modelId; });
+  if (ids.length){
+    $("ctaBtn").href = "mailto:work.abhigyansaikia@gmail.com?subject=" + encodeURIComponent("Dead model fix ($149)") + "&body=" + encodeURIComponent("Hi, your scanner flagged these models in my code:\n\n" + ids.join("\n") + "\n\nHere is the repo / files: ");
+  }
+  box.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function doScan(){
+  var text = $("input").value;
+  if (!text.trim()){ alert("Paste some code, config or logs first, or load the sample."); return; }
+  var btn = $("scanBtn");
+  btn.disabled = true;
+  btn.textContent = "Scanning...";
+  $("scanbar").className = "on";
+  setTimeout(function(){
+    renderReport(scan(text), null);
+    btn.disabled = false;
+    btn.textContent = "Scan now";
+    $("scanbar").className = "";
+  }, 450);
+}
+
+$("scanBtn").addEventListener("click", doScan);
+$("clearBtn").addEventListener("click", function(){ $("input").value = ""; $("results").style.display = "none"; $("cta").style.display = "none"; });
+$("sampleBtn").addEventListener("click", function(){
+  $("input").value = [
+    "// production config, last touched March 2024",
+    "const chat = await openai.chat.completions.create({ model: \"gpt-4o-2024-05-13\", messages });",
+    "const fast = await openai.chat.completions.create({ model: 'o4-mini', messages });",
+    "const legacy = await openai.completions.create({ model: \"gpt-4\", prompt });",
+    "const tuned = \"ft:gpt-3.5-turbo-0125:acme:support:v2\";",
+    "const images = await openai.images.generate({ model: \"gpt-image-1\", prompt });",
+    "const current = await openai.chat.completions.create({ model: \"gpt-5.6-sol\", messages });",
+    "const mini = await openai.chat.completions.create({ model: \"gpt-4o-mini\", messages });",
+    "const reasoner = await openai.chat.completions.create({ model: \"o1-pro-2025-03-19\", messages });"
+  ].join("\n");
+  doScan();
+});
+$("fileInput").addEventListener("change", function(ev){
+  var f = ev.target.files[0];
+  if (!f) return;
+  var r = new FileReader();
+  r.onload = function(){ $("input").value = String(r.result || ""); doScan(); };
+  r.readAsText(f);
+});
+
+/* Reference table initialization */
+(function(){
+  var tb = document.querySelector("#refTable tbody");
+  var w = WAVES[0];
+  var html = "";
+  w.models.forEach(function(m){
+    if (m.ft) return;
+    html += '<tr><td><code>' + esc(m.id) + '</code></td><td>' + (m.aliases.length ? m.aliases.map(function(a){ return '<code>' + esc(a) + '</code>'; }).join(" ") : '<span class="small">dated snapshot only</span>') + '</td><td><code>' + esc(m.replacement) + '</code></td></tr>';
+  });
+  tb.innerHTML = html;
+})();
+
+/* Countdown to Oct 23, 2026 00:00 UTC */
+(function(){
+  var target = Date.UTC(2026, 9, 23, 0, 0, 0);
+  function tick(){
+    var diff = target - Date.now();
+    if (diff <= 0){
+      $("cd-d").textContent = "0"; $("cd-h").textContent = "0"; $("cd-m").textContent = "0"; $("cd-s").textContent = "0";
+      $("cd-note").innerHTML = '<b style="color:var(--amber)">Notice:</b> The October 23, 2026 shutdown deadline has passed. Calls to retired model IDs return hard API errors. If your application is failing, migrate using the recommended replacements below.';
+      return;
+    }
+    var d = Math.floor(diff / 86400000), h = Math.floor(diff / 3600000) % 24, mi = Math.floor(diff / 60000) % 60, s = Math.floor(diff / 1000) % 60;
+    $("cd-d").textContent = d; $("cd-h").textContent = h; $("cd-m").textContent = mi; $("cd-s").textContent = s;
+    var sEl = $("cd-s");
+    if (sEl) {
+      sEl.style.transform = "scale(1.18)";
+      setTimeout(function(){ sEl.style.transform = ""; }, 160);
+    }
+    setTimeout(tick, 1000);
+  }
+  tick();
+})();
+
+/* Shared report link decoder */
+(function(){
+  if (location.hash.indexOf("#r=") === 0){
+    try {
+      var payload = JSON.parse(decodeURIComponent(escape(atob(location.hash.slice(3).replace(/-/g, "+").replace(/_/g, "/")))));
+      if (payload && payload.found && payload.found.length){
+        var list = payload.found.map(function(id){
+          var info = BASE_LOOKUP[id.toLowerCase()];
+          var isFt = id.indexOf("ft") === 0;
+          var lookupId = isFt ? id.replace(/^ft[-:]/, "") : id;
+          var inf2 = BASE_LOOKUP[lookupId.toLowerCase()] || info;
+          return { modelId: id, replacement: inf2 ? inf2.replacement : "See reference table below", wave: inf2 ? inf2.wave : null, ft: isFt, aliasList: [], count: 0, hits: [], key: id };
+        });
+        renderReport(list, "Shared scan report from " + (payload.when || "a previous scan") + ". The findings list below was shared by the person who ran the scan. Paste your own code above to run yours.");
+      }
+    } catch (e) { /* ignore malformed links */ }
+  }
+})();
+</script>
+</body>
+</html>

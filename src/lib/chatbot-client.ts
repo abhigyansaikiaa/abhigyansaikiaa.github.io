@@ -47,6 +47,16 @@ export const GROUNDED_KNOWLEDGE = {
   },
 
   projects: {
+    deadModelCheck: {
+      name: 'Dead Model Check',
+      url: '/dead-model-check/',
+      tagline: 'Client-Side AI Model Deprecation & Shutdown Scanner',
+      description:
+        'A browser-native scanner that detects deprecated OpenAI, Anthropic, and Google AI model IDs in code and configuration files before breaking production outages. Runs 100% locally with zero external network requests.',
+      architecture:
+        'Client-side text parsing with strict Content Security Policy, zero external telemetry, and offline safety.',
+      stack: ['HTML5', 'Vanilla JavaScript', 'Strict CSP'],
+    },
     toolkb: {
       name: 'ToolKB',
       url: 'https://toolkb.in',

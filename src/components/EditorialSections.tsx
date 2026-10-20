@@ -362,6 +362,12 @@ export const EditorialSections: React.FC = () => {
             </div>
 
             <div className="dev-endpoints-grid">
+              <a href="./dead-model-check/" className="dev-endpoint-card">
+                <span className="dev-endpoint-badge">UTILITY</span>
+                <code className="dev-endpoint-path">/dead-model-check/</code>
+                <p className="dev-endpoint-desc">Scan code and configuration files for known deprecated AI model IDs before they cause problems.</p>
+              </a>
+
               <a href="./llms.txt" target="_blank" className="dev-endpoint-card">
                 <span className="dev-endpoint-badge">TEXT/MARKDOWN</span>
                 <code className="dev-endpoint-path">/llms.txt</code>
@@ -407,6 +413,8 @@ export const EditorialSections: React.FC = () => {
         <div className="footer-bottom-row">
           <span>&copy; {new Date().getFullYear()} Abhigyan Saikia. All rights reserved.</span>
           <div className="footer-endpoints">
+            <a href="./dead-model-check/">dead-model-check</a>
+            <span>•</span>
             <a href="./llms.txt" target="_blank">llms.txt</a>
             <span>•</span>
             <a href="./sitemap.xml" target="_blank">sitemap.xml</a>
