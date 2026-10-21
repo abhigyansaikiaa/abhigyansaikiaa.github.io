@@ -126,7 +126,7 @@ export const AgentModeView: React.FC<AgentModeViewProps> = ({ onSwitchToHuman })
           <ul>
             <li>
               <strong>Direct Email:</strong>{' '}
-              <a href="mailto:hello@abhigyansaikia.in">hello@abhigyansaikia.in</a>
+              <a href="mailto:work@abhigyansaikia.in">work@abhigyansaikia.in</a>
             </li>
             <li>
               <strong>GitHub Repository & Code:</strong>{' '}

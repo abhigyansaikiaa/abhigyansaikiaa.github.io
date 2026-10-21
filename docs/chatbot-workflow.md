@@ -99,7 +99,7 @@ To provide a resilient, zero-failure experience on Vercel and local static previ
     - Creator: Abhigyan Saikia (Medical Laboratory Science student at RIPANS, Mizoram).
     - Verified Projects: ToolKB.in, Arogya Relief, Motion Subtitle Studio, Brandcey.
     - Verified Tech Stack: React 19, TypeScript, Next.js, Node.js, Python, PostgreSQL, Tailwind.
-    - Contact: `hello@abhigyansaikia.in`.
+    - Contact: `work@abhigyansaikia.in`.
   - If a visitor asks about unverified projects or personal topics outside the portfolio scope, it politely admits uncertainty and directs the visitor to direct email contact.
 
 ### User Interface: `src/components/ChatbotWidget.tsx`

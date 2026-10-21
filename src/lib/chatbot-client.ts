@@ -124,11 +124,11 @@ export const GROUNDED_KNOWLEDGE = {
       'Performance audits, UI optimization, and code modernization',
     ],
     pricing:
-      'Abhigyan evaluates projects on a milestone or scope basis rather than arbitrary flat rates. For custom estimates, please provide project scope and timeline via hello@abhigyansaikia.in.',
+      'Abhigyan evaluates projects on a milestone or scope basis rather than arbitrary flat rates. For custom estimates, please provide project scope and timeline via work@abhigyansaikia.in.',
   },
 
   contact: {
-    email: 'hello@abhigyansaikia.in',
+    email: 'work@abhigyansaikia.in',
     github: 'https://github.com/abhigyansaikiaa',
     linkedin: 'https://www.linkedin.com/in/abhigyan-saikia-26641227b/',
     location: 'Assam, India (collaborates globally via remote workflows)',
