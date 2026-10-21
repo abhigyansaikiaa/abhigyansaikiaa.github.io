@@ -43,5 +43,5 @@ Because `D:\chatbot` is an external server application that may not always be ac
      - Abhigyan's biography and Medical Laboratory Science studies at RIPANS.
      - Projects: ToolKB (`toolkb.in`), Arogya Relief, Motion Subtitles, Brandcey.
      - Technical stack: React, TypeScript, Next.js, Node.js, Python, Tailwind.
-     - Contact details: `work.abhigyansaikia@gmail.com`, Assam, India.
+     - Contact details: `hello@abhigyansaikia.in`, Assam, India.
    - Displays clear telemetry status: "Live AskiDesk Connected" vs "Portfolio Standby Mode".

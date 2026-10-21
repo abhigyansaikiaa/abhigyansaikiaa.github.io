@@ -44,7 +44,7 @@ graph TD
    - Contextualizing Abhigyan's dual discipline: Bachelor of Medical Laboratory Science (BSc MLT) at RIPANS combined with full-stack systems engineering.
 
 6. **Contact Section (`#contact`)**:
-   - Direct email card (`work.abhigyansaikia@gmail.com`) with Animate UI Copy Button.
+   - Direct email card (`hello@abhigyansaikia.in`) with Animate UI Copy Button.
    - Interactive submission form with Animate UI Liquid Button.
    - Verified location (Assam, India) and social links (GitHub, LinkedIn).
 

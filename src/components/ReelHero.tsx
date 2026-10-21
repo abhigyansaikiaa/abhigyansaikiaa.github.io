@@ -249,7 +249,7 @@ export const ReelHero: React.FC = () => {
             </div>
 
             <a
-              href="mailto:work.abhigyansaikia@gmail.com"
+              href="mailto:hello@abhigyansaikia.in"
               className="reel-contact-cta"
             >
               <span>Let's Talk</span>
@@ -294,7 +294,7 @@ export const ReelHero: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="mailto:work.abhigyansaikia@gmail.com"
+                  href="mailto:hello@abhigyansaikia.in"
                   className="mobile-talk-link"
                   onClick={() => setMobileMenuOpen(false)}
                 >

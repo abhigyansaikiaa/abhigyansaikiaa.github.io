@@ -31,7 +31,7 @@ export const EditorialSections: React.FC = () => {
     setTimeout(() => {
       setFormStatus('sent');
       // Direct mailto handoff
-      window.location.href = `mailto:work.abhigyansaikia@gmail.com?subject=Project Inquiry from ${encodeURIComponent(
+      window.location.href = `mailto:hello@abhigyansaikia.in?subject=Project Inquiry from ${encodeURIComponent(
         formData.name
       )}&body=${encodeURIComponent(formData.message + '\n\nFrom: ' + formData.email)}`;
     }, 600);
@@ -218,7 +218,7 @@ export const EditorialSections: React.FC = () => {
                   </div>
                   <div>
                     <span className="contact-label">DIRECT EMAIL</span>
-                    <h3 className="contact-heading">work.abhigyansaikia@gmail.com</h3>
+                    <h3 className="contact-heading">hello@abhigyansaikia.in</h3>
                   </div>
                 </div>
 
@@ -228,7 +228,7 @@ export const EditorialSections: React.FC = () => {
 
                 <div className="contact-card-actions">
                   <a
-                    href="mailto:work.abhigyansaikia@gmail.com"
+                    href="mailto:hello@abhigyansaikia.in"
                     className="direct-mail-btn"
                   >
                     <span>Send Email</span>
@@ -236,7 +236,7 @@ export const EditorialSections: React.FC = () => {
                   </a>
 
                   {/* Animate UI: Animated Copy to Clipboard Button */}
-                  <CopyButton textToCopy="work.abhigyansaikia@gmail.com" label="Copy Email Address" />
+                  <CopyButton textToCopy="hello@abhigyansaikia.in" label="Copy Email Address" />
                 </div>
               </div>
 

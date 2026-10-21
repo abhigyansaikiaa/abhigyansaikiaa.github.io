@@ -378,7 +378,7 @@ export const ChatbotWidget: React.FC = () => {
       const errorMsg: ChatMessage = {
         id: `err-${Date.now()}`,
         sender: 'system',
-        text: 'Unable to process your question right now. Please check your network connection or reach out directly at work.abhigyansaikia@gmail.com.',
+        text: 'Unable to process your question right now. Please check your network connection or reach out directly at hello@abhigyansaikia.in.',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       setMessages((prev) => [...prev, errorMsg]);

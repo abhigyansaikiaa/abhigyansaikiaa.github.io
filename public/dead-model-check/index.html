@@ -173,7 +173,7 @@
     <h3>Want it fixed for you?</h3>
     <p><span class="price">$149 fixed fee.</span> We update your dead model calls to recommended replacements, inspect the surrounding parameters (token limits, temperature, structured output format, response parsers), and verify syntax before handing it back. Send your repository or config files to get started.</p>
     <p class="small">Fine-tune retraining and architectural pipeline migrations are quoted separately.</p>
-    <a class="btn" id="ctaBtn" href="mailto:work.abhigyansaikia@gmail.com?subject=Dead%20model%20fix%20(%24149)">Get the $149 fix</a>
+    <a class="btn" id="ctaBtn" href="mailto:hello@abhigyansaikia.in?subject=Dead%20model%20fix%20(%24149)">Get the $149 fix</a>
   </div>
 
   <h2 class="section">The October 23 list</h2>
@@ -202,7 +202,7 @@
   </div>
 
   <footer>
-    <p>Built by Abhigyan Saikia, <a href="https://abhigyansaikiaa.github.io/">abhigyansaikiaa.github.io</a>. Identified an unlisted model ID or date correction? Email <a href="mailto:work.abhigyansaikia@gmail.com">work.abhigyansaikia@gmail.com</a>.</p>
+    <p>Built by Abhigyan Saikia, <a href="https://abhigyansaikiaa.github.io/">abhigyansaikiaa.github.io</a>. Identified an unlisted model ID or date correction? Email <a href="mailto:hello@abhigyansaikia.in">hello@abhigyansaikia.in</a>.</p>
   </footer>
 </div>
 <script>
@@ -410,7 +410,7 @@ function renderReport(list, sharedNote){
   // Enrich the CTA email with the findings
   var ids = list.map(function(f){ return f.modelId; });
   if (ids.length){
-    $("ctaBtn").href = "mailto:work.abhigyansaikia@gmail.com?subject=" + encodeURIComponent("Dead model fix ($149)") + "&body=" + encodeURIComponent("Hi, your scanner flagged these models in my code:\n\n" + ids.join("\n") + "\n\nHere is the repo / files: ");
+    $("ctaBtn").href = "mailto:hello@abhigyansaikia.in?subject=" + encodeURIComponent("Dead model fix ($149)") + "&body=" + encodeURIComponent("Hi, your scanner flagged these models in my code:\n\n" + ids.join("\n") + "\n\nHere is the repo / files: ");
   }
   box.scrollIntoView({ behavior: "smooth", block: "start" });
 }

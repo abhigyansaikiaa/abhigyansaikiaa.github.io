@@ -83,13 +83,13 @@ describe('Chatbot Grounded Client Engine', () => {
     const res = processGroundedQuery('Can we work together?');
     expect(res.intent).toBe('services_collaboration');
     expect(res.reply).toContain('Collaboration & Services');
-    expect(res.reply).toContain('work.abhigyansaikia@gmail.com');
+    expect(res.reply).toContain('hello@abhigyansaikia.in');
   });
 
   it('provides contact information', () => {
     const res = processGroundedQuery('How can I contact Abhigyan?');
     expect(res.intent).toBe('contact_inquiry');
-    expect(res.reply).toContain('work.abhigyansaikia@gmail.com');
+    expect(res.reply).toContain('hello@abhigyansaikia.in');
     expect(res.reply).toContain('github.com/abhigyansaikiaa');
     expect(res.reply).toContain('linkedin.com/in/abhigyan-saikia-26641227b');
   });
@@ -98,7 +98,7 @@ describe('Chatbot Grounded Client Engine', () => {
     const res = processGroundedQuery('What is the square root of 987654321?');
     expect(res.intent).toBe('general_assistance');
     expect(res.reply).toContain('portfolio assistant');
-    expect(res.reply).toContain('work.abhigyansaikia@gmail.com');
+    expect(res.reply).toContain('hello@abhigyansaikia.in');
   });
 
   it('sanitizes input and caps length safely', async () => {
